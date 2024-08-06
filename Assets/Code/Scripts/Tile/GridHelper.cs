@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
 using Code.Scripts.Structs;
+using Code.Scripts.Tile.HabitatSuitability;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
@@ -22,10 +24,10 @@ namespace Code.Scripts.Tile
 
         private readonly SortedDictionary<Coordinate, Transform> _coordinateToTransformMap = new();
 
-        public List<Transform> listSealedArea = new();
         public int widthAndHeight;
 
         private List<Coordinate> _riverSources = new();
+        private List<Transform> _sealedBorders = new List<Transform>();
 
         private void Awake()
         {
@@ -51,7 +53,6 @@ namespace Code.Scripts.Tile
             _tileMap.Clear();
             _tempTileMap.Clear();
             _coordinateToTransformMap.Clear();
-            listSealedArea.Clear();
             _riverSources.Clear();
         }
 
@@ -70,19 +71,80 @@ namespace Code.Scripts.Tile
                     new TileData(tileComponent.GetBiome(), tileComponent.GetDirection(),
                         tileComponent.GetRiverConfiguration()));
                 _coordinateToTransformMap.Add(coordinate, tile);
-
-                // list all sealed area for expansion
-                if (tile.GetComponent<Tile>().GetBiome() == Biome.Sealed 
-                    || TileHelper.Instance.FindActiveTile(tile.gameObject).CompareTag("RiverSealed"))
-                {
-                    listSealedArea.Add(tile);
-                }
             }
 
             widthAndHeight = (int)Mathf.Sqrt(_tileMap.Count) - 1; //WORKS ONLY WITH SQUARED GRID-MAPS
 
             // get the river tile that are located on the border
             _riverSources = GetRiverSources();
+        }
+
+        public List<(Transform, Transform[])> GetSealedBorders()
+        {
+            List<(Transform, Transform[])> result = new List<(Transform, Transform[])>();
+            Coordinate[] neighborOffsets = 
+            {
+                new (1, 0),
+                new (-1, 0),
+                new (0, 1),
+                new (0, -1),
+                new (1, 1),
+                new (-1, 1),
+                new (1, -1),
+                new (-1, -1)
+            };
+
+            foreach (var kvp in _tileMap)
+            {
+                if (kvp.Value.Biome is not (Biome.Sealed or Biome.RiverSealed)) continue;
+        
+                Transform[] outsiders = new Transform[8];
+                int outsiderCount = 0;
+                bool isBorder = false;
+
+                for (int i = 0; i < 8; i++)
+                {
+                    Coordinate neighborCoord = new Coordinate(
+                        kvp.Key.X + neighborOffsets[i].X,
+                        kvp.Key.Z + neighborOffsets[i].Z
+                    );
+
+                    if (_tileMap.TryGetValue(neighborCoord, out TileData neighborData))
+                    {
+                        if (neighborData.Biome is Biome.Sealed or Biome.RiverSealed) continue;
+                
+                        isBorder = true;
+                        outsiders[outsiderCount++] = GetTransformFromCoordinate(neighborCoord);
+                    }
+                    else
+                    {
+                        isBorder = true;
+                    }
+                }
+
+                if (!isBorder) continue;
+        
+                Transform[] finalOutsiders = new Transform[outsiderCount];
+                Array.Copy(outsiders, finalOutsiders, outsiderCount);
+                result.Add((GetTransformFromCoordinate(kvp.Key), finalOutsiders));
+            }
+
+            _sealedBorders = result.ConvertAll(tuple => tuple.Item1);
+    
+            return result;
+        }
+        
+        public void DrawSealedBorderGizmos()
+        {
+            Gizmos.color = Color.red; // You can change this color as needed
+            
+            foreach (var border in _sealedBorders)
+            {
+                if (border != null)
+                {
+                    Gizmos.DrawSphere(border.position, 0.5f); // You can adjust the size (0.5f) as needed
+                }
+            }
         }
 
         #region quest-conditionnals
@@ -300,66 +362,6 @@ namespace Code.Scripts.Tile
 
         #endregion
 
-        #region kernel-convolution
-
-        public List<Coordinate> FindMatchingPattern(int[,] kernel, double threshold = 0.8)
-        {
-            List<Coordinate> matches = new List<Coordinate>();
-
-            int kernelWidth = kernel.GetLength(0);
-            int kernelHeight = kernel.GetLength(1);
-            int kernelHalfWidth = Mathf.FloorToInt(kernelWidth / 2f);
-            int kernelHalfHeight = Mathf.FloorToInt(kernelHeight / 2f);
-
-            int nonWildcards = 0;
-
-            for (int i = 0; i < kernelWidth; i++)
-            {
-                for (int j = 0; j < kernelHeight; j++)
-                {
-                    if (kernel[i, j] != -1)
-                    {
-                        nonWildcards++;
-                    }
-                }
-            }
-
-            foreach (Coordinate coordinate in _tileMap.Keys)
-            {
-                if (coordinate.X < kernelHalfWidth
-                    || coordinate.X > widthAndHeight - kernelHalfWidth
-                    || coordinate.Z < kernelHalfHeight
-                    || coordinate.Z > widthAndHeight - kernelHalfHeight) continue;
-
-                double count = 0;
-
-                for (int i = 0; i < kernelWidth; i++)
-                {
-                    for (int j = 0; j < kernelHeight; j++)
-                    {
-                        if (kernel[i, j] == -1) continue;
-
-                        Coordinate neighborCoordinate = new Coordinate(coordinate.X - kernelHalfWidth + i,
-                            coordinate.Z - kernelHalfHeight + j);
-
-                        if (neighborCoordinate.X < 0 || neighborCoordinate.Z < 0
-                                                     || neighborCoordinate.X > widthAndHeight ||
-                                                     neighborCoordinate.Z > widthAndHeight) continue;
-
-                        if ((int)_tileMap[neighborCoordinate].Biome == kernel[i, j]) count++;
-                    }
-                }
-
-                double similarity = count > 0 ? count / nonWildcards : 0;
-
-                if (similarity >= threshold) matches.Add(coordinate);
-            }
-
-            return matches;
-        }
-
-        #endregion
-
         #region helpers
 
         public List<Coordinate> GetCloseByNeighbors(Coordinate center)
@@ -550,7 +552,7 @@ namespace Code.Scripts.Tile
         {
             tileMap ??= _tileMap;
 
-            for (int i = 0; i < widthAndHeight; i++)
+            for (int i = 0; i <= widthAndHeight; i++) // This will go from 0 to 63
             {
                 if (IsBiomeEqual(i, 0, Biome.River, tileMap))
                     _riverSources.Add(new Coordinate(i, 0));

@@ -119,7 +119,8 @@ namespace Code.Scripts.Tile
 
         public RiverConfiguration GetRiverConfiguration()
         {
-            if (GetBiome() != Biome.River) return RiverConfiguration.None;
+            if (GetBiome() != Biome.River
+                || GetBiome() != Biome.RiverSealed) return RiverConfiguration.None;
 
             foreach (Transform child in transform.GetChild(5))
             {

@@ -11,78 +11,106 @@ namespace Code.Scripts.Tile
     {
         public static SealedAreaManager Instance { get; private set; }
 
-        private List<Transform> _sealedSurfaces = new ();
-        [SerializeField] private List<Biome> ignoredArea = new()
+        private void Awake()
         {
-            Biome.Sealed,
-            Biome.River
-        };
-
-        private void Start()
-        {
-            Instance = this;
-
-            if (!ignoredArea.Contains(Biome.Sealed))
+            if (Instance == null)
             {
-                ignoredArea.Add(Biome.Sealed);
+                Instance = this;
             }
-
-            _sealedSurfaces = GridHelper.Instance.listSealedArea;
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void ExpansionSealedArea()
         {
-            var temp = new List<Transform>();
-            var instance = Instance;
+            List<(Transform, Transform[])> sealedBorders = GridHelper.Instance.GetSealedBorders();
+            int expandedTiles = 0;
 
-            foreach (Transform surface in _sealedSurfaces)
+            foreach (var (borderTile, neighbors) in sealedBorders)
             {
-                var neighborList = TileHelper.Instance.FindCloseByNeighbors(surface);
-                
-            }
-            
-            foreach (var area in instance._sealedSurfaces)
-            {
-                var neighborList = TileHelper.Instance.FindCloseByNeighbors(area);
-                foreach (var neighbor in neighborList)
+                foreach (var neighbor in neighbors)
                 {
-                    var activeTile = TileHelper.Instance.FindActiveTile(neighbor.gameObject);
-                    var activeTileBiome = TileHelper.Instance.GetBiomeFromTag(activeTile.tag);
+                    Tile neighborTile = neighbor.GetComponent<Tile>();
+                    if (neighborTile == null) continue;
 
-                    if (!instance.ignoredArea.Contains(activeTileBiome)
-                        && !activeTile.CompareTag("IgnoreTile"))
+                    Biome currentBiome = neighborTile.GetBiome();
+                    if (currentBiome == Biome.IgnoreTile || currentBiome == Biome.Sealed ||
+                        currentBiome == Biome.RiverSealed) continue;
+
+                    if (currentBiome == Biome.River)
                     {
-                        activeTile.gameObject.SetActive(false);
-                        var sealedArea = TileHelper.Instance.FindTileWithTag(neighbor.gameObject, "Sealed");
-                        sealedArea.gameObject.SetActive(true);
-                        Transform parent = sealedArea.parent;
-                        Tile tile = parent.GetComponent<Tile>();
-                        tile.placedTile = sealedArea;
-
-                        // set the height back when the expanded area is hovered
-                        var parentPos = parent.position;
-                        parent.position = new Vector3(parentPos.x, 5, parentPos.z);
-
-                        GridHelper.Instance.UpdateGridAt(new Coordinate(neighbor.position.x, neighbor.position.z),
-                            new TileData(tile.GetBiome(), tile.GetDirection(), tile.GetRiverConfiguration()));
-
-                        temp.Add(neighbor);
+                        ReplaceWithRiverSealed(neighborTile);
                     }
+                    else
+                    {
+                        ReplaceWithSealed(neighborTile);
+                    }
+
+                    expandedTiles++;
                 }
             }
 
-            // todo: maybe count the amount of sealed surface tiles that are placed
+            if (expandedTiles > 0)
+            {
+                NotifyExpansion(expandedTiles);
+            }
+        }
+
+        private void ReplaceWithRiverSealed(Tile tile)
+        {
+            Transform riverSealed = TileHelper.Instance.FindTileWithTag(tile.gameObject, "RiverSealed");
+            if (riverSealed == null) return;
+
+            string activeRiverConfig = TileHelper.Instance.FindActiveRiverConfiguration(tile.placedTile);
+            ActivateMatchingRiverSealed(riverSealed, activeRiverConfig);
+
+            UpdateTile(tile, Biome.RiverSealed, riverSealed);
+        }
+
+        private void ActivateMatchingRiverSealed(Transform riverSealed, string activeRiverConfig)
+        {
+            foreach (Transform child in riverSealed)
+            {
+                child.gameObject.SetActive(child.CompareTag(activeRiverConfig));
+            }
+        }
+
+        private void ReplaceWithSealed(Tile tile)
+        {
+            Transform sealedTile = TileHelper.Instance.FindTileWithTag(tile.gameObject, "Sealed");
+            if (sealedTile == null) return;
+
+            UpdateTile(tile, Biome.Sealed, sealedTile);
+        }
+
+        private void UpdateTile(Tile tile, Biome newBiome, Transform newPlacedTile)
+        {
+            tile.placedTile.gameObject.SetActive(false);
+            newPlacedTile.gameObject.SetActive(true);
+            tile.placedTile = newPlacedTile;
+
+            Coordinate coord = GridHelper.Instance.GetTileCoordinate(tile.transform);
+            GridHelper.Instance.UpdateGridAt(coord,
+                new TileData(newBiome, tile.GetDirection(), tile.GetRiverConfiguration()));
+        }
+
+        private void NotifyExpansion(int expandedTiles)
+        {
+            string message = string.Format(
+                LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "sealed_surface_grown"),
+                expandedTiles
+            );
+
             GameManager.Instance.AddNotification(
                 Notification.Create(
                     NotificationType.Event,
-                    LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "sealed_surface_grown"),
+                    message,
                     3f,
                     ImageProvider.GetImageFromEvent(GameEvent.SealedSurfaceSpreading)
                 )
             );
-
-            instance._sealedSurfaces.Clear();
-            instance._sealedSurfaces = temp;
         }
     }
 }

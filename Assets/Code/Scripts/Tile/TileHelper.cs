@@ -828,7 +828,7 @@ namespace Code.Scripts.Tile
             }
         }
 
-        private string FindActiveRiverConfiguration(Transform riverTile)
+        public string FindActiveRiverConfiguration(Transform riverTile)
         {
             return riverTile.Cast<Transform>()
                 .FirstOrDefault(child => child.gameObject.activeSelf)?.tag ?? string.Empty;
