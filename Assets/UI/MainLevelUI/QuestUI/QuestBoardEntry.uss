@@ -1,0 +1,121 @@
+* {
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+}
+
+.boardFullSize {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.row {
+    height: 23%;
+}
+
+.questSlot {
+    width: 20%;
+    padding: 20px;
+}
+
+.boardEntryContainer {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-radius: 25px;
+}
+
+.boardEntryContainer:hover,
+.boardEntryContainer.achieved:hover,
+.boardEntryContainer.not-achieved:hover {
+    border-left-color: rgb(255, 204, 0);
+    border-right-color: rgb(255, 204, 0);
+    border-top-color: rgb(255, 204, 0);
+    border-bottom-color: rgb(255, 204, 0);
+}
+
+.boardEntryContainer.achieved {
+    border-left-color: rgba(99, 173, 132, 0.8);
+    border-right-color: rgba(99, 173, 132, 0.8);
+    border-top-color: rgba(99, 173, 132, 0.8);
+    border-bottom-color: rgba(99, 173, 132, 0.8);
+}
+
+.boardEntryContainer.not-achieved {
+    border-left-color: rgba(235, 130, 117, 0.8);
+    border-right-color: rgba(235, 130, 117, 0.8);
+    border-top-color: rgba(235, 130, 117, 0.8);
+    border-bottom-color: rgba(235, 130, 117, 0.8);
+}
+
+.boardIconContainer {
+    height: 65%;
+    width: 65%;
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+    max-height: 65%;
+    min-height: 65%;
+    min-width: 65%;
+    max-width: 65%;
+}
+
+.boardNameContainer {
+    width: 100%;
+}
+
+.boardNameLabel {
+    font-size: 18px;
+    -unity-text-align: upper-center;
+    white-space: normal;
+    margin-top: 0;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+.boardSelectButton {
+    position: absolute;
+    width: 25%;
+    height: 50px;
+    background-image: resource('pin_white');
+    -unity-background-scale-mode: scale-to-fit;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.boardSelectButton:hover {
+    background-image: resource('pin_black');
+}
+
+.boardSelectButton.selected {
+    -unity-background-image-tint-color: rgb(255, 204, 0);
+}
+
+.pinHoverContainer {
+    position: absolute;
+    left: -22%;
+    bottom: 35%;
+    padding: 10px;
+    border-radius: 25px;
+    width: auto;
+    max-width: 400px;
+    max-height: 200px;
+    background-color: rgb(106, 106, 106);
+    flex-wrap: wrap;
+}
+
+.pinLabel {
+    white-space: normal;
+}

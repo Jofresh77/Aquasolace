@@ -1,0 +1,174 @@
+.popup-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(106, 106, 106, 0.44);
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+}
+
+.center-container {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.window-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.popup-window {
+    position: absolute;
+    background-color: rgba(111, 158, 212, 0.8);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+    border-color: rgba(36, 36, 35, 0.8);
+    border-width: 10px;
+    border-radius: 25px;
+    padding: 0;
+}
+
+.text-container {
+    flex-direction: row;
+    justify-content: space-around;
+    height: auto;
+    align-items: center;
+    margin: 15px 15px 5px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.btn-container {
+    flex-direction: row;
+    height: auto;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.popup-msg {
+    font-size: 28px;
+    -unity-text-align: middle-left;
+    white-space: normal;
+    height: 100%;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.popup-btn {
+    padding: 15px;
+    color: rgb(255, 255, 255);
+    border-radius: 25px;
+    border-color: rgb(36, 36, 35);
+    border-width: 6px;
+    font-size: 20px;
+    height: 68px;
+}
+
+.btn-skip {
+    background-color: rgb(0, 79, 140);
+}
+
+.btn-previous {
+    background-color: rgba(248, 181, 113, 0.6);
+    color: black;
+}
+
+.btn-next {
+    background-color: rgba(248, 181, 113, 0.6);
+    color: black;
+}
+
+.btn-close {
+    background-color: rgb(0, 79, 140);
+}
+
+.mascot-container {
+    position: absolute;
+    -unity-background-scale-mode: scale-to-fit;
+    width: 150px;
+    height: 150px;
+    right: -70px;
+    top: -70px;
+}
+
+.mascot {
+    background-image: resource('nabu_mascot_2');
+}
+
+.mascot-full-body {
+    background-image: resource('nabu_mascot_1');
+    width: 250px;
+    height: 250px;
+    top: -120px;
+    right: -124px;
+}
+
+.hint-window {
+    border-left-color: rgb(255, 204, 0);
+    border-right-color: rgb(255, 204, 0);
+    border-top-color: rgb(255, 204, 0);
+    border-bottom-color: rgb(255, 204, 0);
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+}
+
+.quest-board-video-Deutsch {
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+    background-image: url('project://database/Assets/UI/TutorialResources/quest_tutorial_Deutsch.renderTexture?fileID=8400000&guid=51f0f5bcb901b6d4cb76995c6be2f2a0&type=2#quest_tutorial_Deutsch');
+}
+
+.quest-board-video-English {
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+    background-image: url('project://database/Assets/UI/TutorialResources/quest_tutorial_English.renderTexture?fileID=8400000&guid=b9f93eecab61bf94db5c17bb94a43f83&type=2#quest_tutorial_English');
+}
+
+.biodiversity-image-1 {
+    background-image: url('project://database/Assets/UI/TutorialResources/biodiversity-1.png?fileID=2800000&guid=a16e2f7d7f2d45a4dbc06f8e8f147826&type=3#biodiversity-1');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+}
+
+.biodiversity-image-2-Deutsch {
+    background-image: url('project://database/Assets/UI/TutorialResources/biodiversity-2-Deutsch.png?fileID=2800000&guid=55c4e733ded1a35438096959594bc057&type=3#biodiversity-2-Deutsch');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+}
+
+.biodiversity-image-2-English {
+    background-image: url('project://database/Assets/UI/TutorialResources/biodiversity-2-English.png?fileID=2800000&guid=ea6670b65a598df4985c9801804bb6b7&type=3#biodiversity-2-English');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+}
+
+.biodiversity-image-3-Deutsch {
+    background-image: url('project://database/Assets/UI/TutorialResources/biodiversity-3-Deutsch.png?fileID=2800000&guid=639afa5dfa7bc7248ace650ff3bad149&type=3#biodiversity-3-Deutsch');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+}
+
+.biodiversity-image-3-English {
+    background-image: url('project://database/Assets/UI/TutorialResources/biodiversity-3-English.png?fileID=2800000&guid=01717c7aff12bc746b340da0823c8746&type=3#biodiversity-3-English');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100%;
+    height: 100%;
+}

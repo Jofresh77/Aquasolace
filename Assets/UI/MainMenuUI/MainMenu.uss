@@ -1,0 +1,56 @@
+.logo {
+}
+
+.btn {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-size: 24px;
+    color: rgb(0, 104, 180);
+    -unity-font: url('project://database/Assets/Fonts/SourceSans/SourceSansPro-Black.ttf?fileID=12800000&guid=485d66dce72f88248b9ee38b0c7cb3ba&type=3#SourceSansPro-Black');
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans/SourceSansPro-Black%20SDF%201.asset?fileID=11400000&guid=ce544b64ed982024c89300d4ccfe2921&type=2#SourceSansPro-Black SDF 1');
+    -unity-text-align: middle-center;
+    border-left-color: rgb(0, 104, 180);
+    border-right-color: rgb(0, 104, 180);
+    border-top-color: rgb(0, 104, 180);
+    border-bottom-color: rgb(0, 104, 180);
+    background-color: rgb(255, 255, 255);
+    width: 60%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    height: 15%;
+}
+
+.btn:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 104, 180);
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out-circ;
+}
+
+.btn:hover > * > .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.unity-popup-field__input {
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0);
+    border-width: 0;
+    margin: 0;
+}
+
+.unity-base-popup-field__arrow {
+    width: 15px;
+    height: 15px;
+    -unity-background-image-tint-color: rgb(0, 104, 180);
+}
+
+.unity-base-popup-field__text {
+    -unity-text-align: middle-center;
+    margin-right: 0;
+}

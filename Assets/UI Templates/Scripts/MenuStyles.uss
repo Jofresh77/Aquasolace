@@ -1,0 +1,41 @@
+.pause-menu-button {
+    width: 300px;
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+    -unity-font-style: bold;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.49);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.pause-menu-button:hover {
+    width: 300px;
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+    -unity-font-style: bold;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.78);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.pause-menu-button:active {
+    width: 300px;
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+    -unity-font-style: bold;
+    font-size: 16px;
+    color: rgb(7, 7, 7);
+    background-color: rgb(255, 255, 255);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}

@@ -1,0 +1,125 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameUI/GameUiEditor.uss?fileID=7433441132597879392&amp;guid=ff44a1f0d76404b4ab6309c848efdbef&amp;type=3#GameUiEditor" />
+    <Style src="project://database/Assets/UI/GameUI/PopupWindow.uss?fileID=7433441132597879392&amp;guid=f3255fc5768a5f945998da8679d19e37&amp;type=3#PopupWindow" />
+    <Style src="project://database/Assets/Pause.uss?fileID=7433441132597879392&amp;guid=1360badf8a7ce4cb08948b9c949b2d12&amp;type=3#Pause" />
+    <Style src="project://database/Assets/UI/GameUI/NotificationWindow.uss?fileID=7433441132597879392&amp;guid=fc1652821654f374bab2208102e7b112&amp;type=3#NotificationWindow" />
+    <ui:GroupBox name="Top" picking-mode="Ignore" style="flex-direction: row; justify-content: space-between;">
+        <ui:VisualElement name="placeholder" picking-mode="Ignore" style="display: flex; min-width: 150px;" />
+        <ui:VisualElement name="WaterLevel" picking-mode="Ignore" style="padding-left: 40px; top: -30px; display: none; visibility: hidden;">
+            <ui:GroupBox name="WaterLevelGroup" style="align-items: flex-start; rotate: 270deg; justify-content: center; align-self: flex-start; translate: 0 0; min-height: 150px; padding-left: 0; margin-left: 0; width: auto;">
+                <ui:VisualElement name="WaterLevelContainer" class="waterLevelContainer" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: flex-start;">
+                    <ui:ProgressBar value="35" title="                          " low-value="0" high-value="100" name="waterLevelBar" class="water-level-bar" style="flex-direction: column-reverse;">
+                        <ui:Label tabindex="-1" text="30 %" parse-escape-sequences="true" display-tooltip-when-elided="true" name="waterLevelLabel" style="rotate: 90deg; -unity-text-align: upper-center; align-self: center; justify-content: space-around; position: absolute; top: 57px; left: 47px; font-size: 18px;" />
+                        <ui:Label tabindex="-1" text="∨" parse-escape-sequences="true" display-tooltip-when-elided="true" name="waterLevelCaret" style="rotate: 90deg; -unity-text-align: upper-center; align-self: center; justify-content: space-around; position: absolute; top: 57px; left: 36px; font-size: 18px; -unity-font-style: bold;" />
+                    </ui:ProgressBar>
+                </ui:VisualElement>
+            </ui:GroupBox>
+        </ui:VisualElement>
+        <ui:VisualElement name="Timer" style="height: 71px;">
+            <ui:GroupBox name="TimerAndPauseGroup" class="backgroundBlur allCorners" style="align-self: center; align-items: center;">
+                <ui:Label tabindex="-1" text="March 2021" parse-escape-sequences="true" display-tooltip-when-elided="true" name="elapsedTimeLabel" enable-rich-text="true" style="margin-top: 4px; margin-right: 0; margin-left: 0; padding-right: 10px; font-size: 20px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-color: rgba(255, 255, 255, 0); letter-spacing: 1px; word-spacing: 1px; width: auto; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; color: rgb(255, 255, 255);" />
+            </ui:GroupBox>
+        </ui:VisualElement>
+        <ui:VisualElement name="Thermometer" picking-mode="Ignore">
+            <ui:GroupBox name="ThermometerGroup" picking-mode="Ignore" style="align-items: flex-end; justify-content: flex-start; align-self: flex-end; min-height: 150px; width: auto; display: flex; top: -30px;">
+                <ui:VisualElement name="TemperatureContainer" picking-mode="Ignore" style="flex-grow: 1; align-items: stretch; justify-content: center; align-self: flex-end; rotate: 270deg;">
+                    <ui:VisualElement name="bottomCircle" picking-mode="Ignore" style="flex-grow: 1; position: absolute; background-color: rgb(0, 0, 0); min-width: 40px; min-height: 40px; max-width: 40px; max-height: 40px; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; top: 59px; left: -32px; rotate: 90deg; -unity-text-align: upper-left; align-self: center; justify-content: center; align-items: center;">
+                        <ui:Label tabindex="-1" text="30°" parse-escape-sequences="true" display-tooltip-when-elided="true" name="temperatureLabel" style="rotate: 0; justify-content: center; align-items: center; color: rgb(255, 255, 255); -unity-text-align: middle-center; flex-direction: column; align-self: center; position: absolute; margin-top: 2px; margin-right: 2px; padding-bottom: 2px; padding-left: 4px; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:ProgressBar value="80" title="                          " low-value="0" high-value="100" name="temperatureBar" picking-mode="Ignore" class="temperature-bar" style="align-items: stretch; justify-content: space-around; background-color: rgba(0, 0, 0, 0); flex-direction: column; align-self: auto; rotate: 0; min-width: 100px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" />
+                    <ui:Label tabindex="-1" text="∨" parse-escape-sequences="true" display-tooltip-when-elided="true" name="temperatureCaret" style="rotate: 90deg; justify-content: center; align-items: center; -unity-text-align: middle-center; flex-direction: column; align-self: center; position: absolute; font-size: 16px; -unity-font-style: bold; color: rgb(255, 255, 255); left: 11px; top: 68px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 16px; white-space: nowrap;" />
+                </ui:VisualElement>
+            </ui:GroupBox>
+        </ui:VisualElement>
+    </ui:GroupBox>
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-self: flex-start; align-items: center; justify-content: center; visibility: hidden; display: none;">
+        <ui:GroupBox style="align-items: auto; justify-content: center; align-self: center;">
+            <ui:DropdownField name="tempLocale" style="min-width: auto; -unity-font: url(&apos;project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&amp;guid=d287f11caeaed4a428d71ed0b612ba62&amp;type=3#SwiftCom-Regular&apos;);" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+    <ui:VisualElement name="BottomContainer" picking-mode="Ignore" style="flex-grow: 1; align-items: stretch; justify-content: flex-end; align-self: stretch;">
+        <ui:GroupBox name="BlurContainer" class="backgroundBlur" style="width: auto; align-self: center; margin-top: 0; padding-top: 0; padding-bottom: 7px; margin-left: 0; padding-left: 0; margin-right: 0; margin-bottom: 0;">
+            <ui:GroupBox name="InputPossibilitiesGroup" style="align-self: center; flex-direction: row; justify-content: space-between;">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row; align-items: stretch; justify-content: center;">
+                    <ui:Label tabindex="-1" text="InputPossibilitiesLabel" parse-escape-sequences="true" display-tooltip-when-elided="true" name="InputPossibilitiesLabel" style="color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&amp;guid=d287f11caeaed4a428d71ed0b612ba62&amp;type=3#SwiftCom-Regular&apos;); -unity-font-definition: url(&apos;project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&amp;guid=a85f57de198344743a35fb0f3cb5cc3f&amp;type=2#SwiftCom-Regular SDF 1&apos;);" />
+                </ui:VisualElement>
+            </ui:GroupBox>
+            <ui:GroupBox name="TileSelectGroup" style="flex-direction: row; justify-content: space-between; align-items: stretch; align-self: center; padding-bottom: 0; margin-bottom: 0;">
+                <ui:VisualElement name="Meadow" class="tileSelect" style="-unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-slice-scale: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                    <ui:VisualElement name="BiomeNameContainer" class="textContainer">
+                        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BiomeNameLabel" text="1" enable-rich-text="true" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Image" class="meadow biomeImage" style="flex-grow: 1;" />
+                    <ui:VisualElement name="CountContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CountLabel" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Farmland" class="tileSelect" style="-unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-slice-scale: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                    <ui:VisualElement name="BiomeNameContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BiomeNameLabel" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Image" class="farmland biomeImage" style="flex-grow: 1;" />
+                    <ui:VisualElement name="CountContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CountLabel" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ForestPine" class="tileSelect" style="-unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-slice-scale: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                    <ui:VisualElement name="BiomeNameContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BiomeNameLabel" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Image" class="biomeImage forestPine" style="flex-grow: 1;" />
+                    <ui:VisualElement name="CountContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CountLabel" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ForestDeciduous" class="tileSelect" style="-unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-slice-scale: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                    <ui:VisualElement name="BiomeNameContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BiomeNameLabel" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Image" class="biomeImage forestDeciduous" style="flex-grow: 1;" />
+                    <ui:VisualElement name="CountContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CountLabel" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ForestMixed" class="tileSelect" style="-unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-slice-scale: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                    <ui:VisualElement name="BiomeNameContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BiomeNameLabel" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Image" class="biomeImage forestMixed" style="flex-grow: 1;" />
+                    <ui:VisualElement name="CountContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CountLabel" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="River" class="tileSelect" style="-unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-slice-scale: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                    <ui:VisualElement name="BiomeNameContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BiomeNameLabel" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Image" class="biomeImage river" style="flex-grow: 1;" />
+                    <ui:VisualElement name="CountContainer" class="textContainer">
+                        <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CountLabel" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:GroupBox>
+        </ui:GroupBox>
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; flex-shrink: 0; display: none;">
+            <ui:Label tabindex="-1" text="GWL Influence:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="gwlinf" style="color: rgb(255, 255, 255);" />
+            <ui:Label tabindex="-1" text="Temperature Influence:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="tempinf" style="color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="HighlightContainer" picking-mode="Ignore" class="center-container" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;">
+        <ui:VisualElement name="tutorialHintWater" picking-mode="Ignore" class="hint-window" style="flex-grow: 1; position: absolute; width: 112px; height: 149px; top: 24px; left: 44px;" />
+        <ui:VisualElement name="tutorialHintTemperature" picking-mode="Ignore" class="hint-window" style="flex-grow: 1; position: absolute; width: 73px; height: 166px; top: 5px; left: auto; display: flex; right: 25px;" />
+        <ui:VisualElement name="tutorialHintTileSelection" picking-mode="Ignore" class="hint-window" style="flex-grow: 1; position: absolute; width: 671px; height: 126px; top: auto; left: 625px; display: flex; right: auto; bottom: 0;" />
+        <ui:VisualElement name="tutorialHintTimer" picking-mode="Ignore" class="hint-window" style="flex-grow: 1; position: absolute; width: 175px; height: 88px; top: 3px; left: 889px;" />
+        <ui:VisualElement name="tutorialHintQuestLog" picking-mode="Ignore" class="hint-window" style="flex-grow: 1; position: absolute; width: 466px; height: 234px; top: 424px; left: -24px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="NotificationsContainer" picking-mode="Ignore" style="position: absolute; align-self: flex-end; bottom: 20px; right: 20px; height: 612px; width: 20%; overflow: hidden; min-height: auto; min-width: auto;">
+        <ui:VisualElement name="NotificationsList" picking-mode="Ignore" style="overflow: hidden; min-height: auto; max-height: none; max-width: 100%; min-width: 100%; justify-content: flex-end; align-items: auto; width: 100%; height: 100%;" />
+    </ui:VisualElement>
+    <ui:VisualElement picking-mode="Ignore" name="fixNotPlacingBehindUI" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;">
+        <ui:VisualElement name="waterDrop" class="hint-window" style="flex-grow: 1; position: absolute; width: 91px; height: 127px; top: 35px; left: 54px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+        <ui:VisualElement name="temperatureBar" class="hint-window" style="flex-grow: 1; position: absolute; width: 40px; height: 136px; top: 21px; left: auto; display: flex; right: 42px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

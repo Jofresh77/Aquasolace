@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7ae5ec50bd4f72873a6b91edae003f, type: 3}
+  m_Name: ReviveSpecies_CiconiaCiconia
+  m_EditorClassIdentifier: 
+  questName: species_ciconiaciconia_name
+  description: species_ciconiaciconia_description
+  isPersistAchievement: 0
+  isRemoveQuestAfterAchieved: 0
+  isEndRequired: 0
+  isSelected: 0
+  rewardBiome: 0
+  rewardAmount: 12
+  questIcon: {fileID: 2800000, guid: 30c47728e4b386347b89deb14843d3b3, type: 3}
+  achievementMsg: positive
+  failureMsg: negative
+  speciesSo: {fileID: 11400000, guid: 821be483f41ec4091b329908a2447bbd, type: 2}
+  biomeRequirements: []
+  minTotalHabitatSize: 10
+  maxSpeciesPerHabitat: 5
+  speciesPerTile: 0.1
+  maxDistanceFromCentroid: 10
+  maxAmountTileInHabitat: 45
+  gizmoColor: {r: 0, g: 1, b: 0, a: 0.5}

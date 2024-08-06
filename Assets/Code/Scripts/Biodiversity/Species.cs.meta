@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b6334e185db649ba80dc5acb79f2f588
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - image: {instanceID: 0}
+  - model: {instanceID: 0}
+  - spawnSound: {instanceID: 0}
+  - unspawnSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 2c84d7e304f12439e97fddcdb1b752ec, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

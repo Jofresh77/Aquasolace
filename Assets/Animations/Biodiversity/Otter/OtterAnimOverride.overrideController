@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: OtterAnimOverride
+  m_Controller: {fileID: 9100000, guid: 36d923537b6bbe741b0f55e5a4dd2b0c, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 5670503b0ddde3c4eba272d40c87d473, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d61429d0f6657d640920223aa66663c5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4bd73a96e2eb8e64ebb195f6615c2b5f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 576c4f8815b72d848b61052935e69913, type: 2}

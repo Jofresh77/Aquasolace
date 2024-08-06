@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Notifications_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: c26fab16c609314439f806b82c67b983, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 294939942912
+    m_Localized: Ground water level has reached a healthy state!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 404478386176
+    m_Localized: Ground water level has fallen below a healthy state!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 902929473536
+    m_Localized: Ground water should now increase more easily!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 934437085184
+    m_Localized: Ground water increase has become more difficult!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1209310797824
+    m_Localized: Sufficient Deciduous forest planted!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1254802219008
+    m_Localized: Deciduous forest area has become insufficient!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1343402696704
+    m_Localized: Sufficient Mixed forest planted!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1361668890624
+    m_Localized: Mixed forest area has become insufficient!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1442023366656
+    m_Localized: Sufficient meadow grounded!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1457303216128
+    m_Localized: Meadow area has become insufficient!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1524722458624
+    m_Localized: Sufficient Pine forest area reached!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1538173591552
+    m_Localized: Pine forest area has fallen below sufficient levels!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1604082884608
+    m_Localized: Sufficient Mixed forest area reached!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1618683256832
+    m_Localized: Mixed forest area has fallen below sufficient levels!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1707816411136
+    m_Localized: Bufobufo species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1723012374528
+    m_Localized: Bufobufo species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1795737411584
+    m_Localized: Castorfiber species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1839416893440
+    m_Localized: Castorfiber species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1916566921216
+    m_Localized: Ciconiaciconia species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1931263762432
+    m_Localized: Ciconiaciconia species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2025732071424
+    m_Localized: Dendrocoposmajor species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2039665549312
+    m_Localized: Dendrocoposmajor species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2105759391744
+    m_Localized: Haliaeetusalbicilla species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2138013589504
+    m_Localized: Haliaeetusalbicilla species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230334414848
+    m_Localized: Lepuseuropaeus species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2243617775616
+    m_Localized: Lepuseuropaeus species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2312609882112
+    m_Localized: Podicepscristatus species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2329194160128
+    m_Localized: Podicepscristatus species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2395397054464
+    m_Localized: Lutralutra species has been revived!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2417446510592
+    m_Localized: Lutralutra species has disappeared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3446183452672
+    m_Localized: Bufobufo species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3503498616832
+    m_Localized: Castorfiber species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3547161321472
+    m_Localized: Ciconiaciconia species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3603344023552
+    m_Localized: Dendrocoposmajor species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3647308718080
+    m_Localized: Haliaeetusalbicilla species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3697111883776
+    m_Localized: Lepuseuropaeus species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3763478355968
+    m_Localized: Podicepscristatus species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3804007915520
+    m_Localized: Lutralutra species habitat was removed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4042449903616
+    m_Localized: The sealed surface has grown.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4265180028928
+    m_Localized: No more resources available..
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4480289103872
+    m_Localized: You cannot remove rivers connecting to the outer world.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4638452113408
+    m_Localized: You cannot place rivers on the border of the map.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4765740851200
+    m_Localized: You first need to make a second branching before disconnecting the
+      river.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4872297144320
+    m_Localized: You cannot place river too closely.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4966094364672
+    m_Localized: River must be connected to an already existing one.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

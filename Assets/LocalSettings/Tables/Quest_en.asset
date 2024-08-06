@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Quest_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 02c5b3cb74461914589f62c791716976, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 26340909056
+    m_Localized: By clicking on the pin icon, you can pin up to two quests for the
+      quest log.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 343887470592
+    m_Localized: pinned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1420048863133696
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11272597329829888
+    m_Localized: 'Reward:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11277504787144704
+    m_Localized: Save the drinking water!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11277992773443584
+    m_Localized: 'Can you save our water?
+
+      Save our water by reshaping the
+      landscape. Your goal is to raise the groundwater level to over 60%.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279187294445568
+    m_Localized: Water march
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279238062301184
+    m_Localized: The slower the water flows, the more of it can seep into the groundwater.
+      Build meanders and loops.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279616841506816
+    m_Localized: Green wonder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279618825412608
+    m_Localized: Deciduous forests are excellent water reservoirs and habitats for
+      many different species such as the common toad and great spotted woodpecker.
+      Reforest the deciduous forests with 50 fields.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280161295720448
+    m_Localized: Diversity in green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280163761971200
+    m_Localized: Mixed forests are varied and therefore more resilient than monocultures
+      in the forest. In mixed forests you will find species such as the great spotted
+      woodpecker and the white-tailed eagle. Reforest the mixed forests with 50 fields.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280559679102976
+    m_Localized: Splendor of blossoms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280580352827392
+    m_Localized: Meadows are not only beautiful to look at, they are also valuable
+      habitats for many species such as brown hares. You will also find otters and
+      great crested grebes near the water. Place 50 fields in meadows.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280750419271680
+    m_Localized: Evergreen mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280815011553280
+    m_Localized: Nowhere in Germany do so many pine trees grow as in Brandenburg.
+      Although they are not as good at storing water as deciduous and mixed forests,
+      coniferous forests also store water and CO2. You will find species such as
+      beavers near water. Place an area of coniferous forest fields.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281248559980544
+    m_Localized: Forest network
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281257363824640
+    m_Localized: Many species benefit from larger forest areas, as they can migrate
+      without disturbance in contiguous forest areas. Place 20 contiguous mixed forest
+      fields.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281600306896896
+    m_Localized: Toad rescuer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281985725685760
+    m_Localized: 'Amphibians are severely threatened in Brandenburg due to the drought.
+      Locally, their populations have declined by 60 - 100%. Can you save the common
+      toad? To reproduce, common toads prefer medium to large bodies of water, often
+      near woodland.
+
+
+      Fun fact: The males can sometimes be carried piggyback
+      on the female''s back to the spawning waters.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282374227288064
+    m_Localized: Beaver lodge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282380007038976
+    m_Localized: 'Beavers build dams and dam up water. They are a keystone species
+      that strongly influences their habitat. In your mission to save the water,
+      they are your allies. Settle beavers and receive 15 pine trees as a reward.
+
+
+      Fun
+      fact: Beavers have very poor eyesight. They can only see in black and white.
+      However, their sense of smell is their most important sense and helps them
+      track down enemies and food.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282625000529920
+    m_Localized: Rattle the first!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282627034767360
+    m_Localized: "White storks prefer varied, open cultural landscapes with wet meadows,
+      flowing waters and pastures. Unfortunately, there are fewer and fewer of these,
+      which is why white storks are now an endangered species. Can you reintroduce
+      them?\n\nFun fact: The white stork is also known as the \u201Crattling stork\u201D,
+      which is due to the loud, characteristic rattling of its beak at the nest."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283138555305984
+    m_Localized: Now it's getting colorful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283140551794688
+    m_Localized: "Great spotted woodpeckers can be found in forests, parks and gardens.
+      Can you reintroduce them?\n\nFun fact: Great spotted woodpeckers create so-called
+      \u201Cwoodpecker forges\u201D, where they wedge food into bark crevices and
+      then chisel it open with their beaks."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283543989313536
+    m_Localized: Kings in the sky
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283545474097152
+    m_Localized: 'White-tailed eagles prefer to build their nests in forests with
+      old, stable trees. They go in search of food on large lakes or rivers. You
+      can attract the sea eagle to get 15 water fields as a reward.
+
+
+      Fun fact:
+      The eyrie of a white-tailed eagle can reach a diameter of up to two meters.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283842405654528
+    m_Localized: Bunny Oasis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283843756220416
+    m_Localized: 'Brown hares can be found in fields, pastures and meadows. Their
+      populations are now stable throughout Germany.
+
+
+      Fun fact: Brown hares
+      can sprint at speeds of up to 70 kilometers per hour.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11284117950455808
+    m_Localized: Diving dancers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11284119137443840
+    m_Localized: "Great crested grebes can be found in waters with sufficient riparian
+      vegetation. They are relatively common and their population is increasing.\n\nFun
+      fact: Great crested grebes perform a \u201Cpenguin dance\u201D on the water
+      during courtship."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13478846368833536
+    m_Localized: Otter rescue mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13478910168391680
+    m_Localized: 'Otters need shallow rivers with overgrown banks and floodplains.
+      They benefit from clear, fish-rich waters with sufficient hiding places. Despite
+      protective measures, otter populations are declining. They are threatened with
+      extinction.
+
+
+      Fun fact: You can recognize their tracks by their 5 webbed
+      toes.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13912771696156672
+    m_Localized: 'No active quest selected.
+
+      Open the quest board first.'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

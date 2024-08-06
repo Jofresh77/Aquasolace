@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: StringTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: StringTable
+  m_TableCollectionNameGuidString: 9341091472fed2b469f5e6a72eae9e58
+  m_Entries:
+  - m_Id: 42446286848
+    m_Key: water_level_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20628023209984
+    m_Key: temperature_unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22012042866688
+    m_Key: input_possibilities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36366620487680
+    m_Key: loading_screen_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48807777595392
+    m_Key: ls_exit_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51390252511232
+    m_Key: ls_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53904490295296
+    m_Key: pause_menu_resume_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53999768104960
+    m_Key: pause_menu_back_to_main_menu_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4803807507374080
+    m_Key: quit_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592413970767872
+    m_Key: main_menu_play_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592442672390144
+    m_Key: main_menu_settings_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592468295393280
+    m_Key: main_menu_quit_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5607501704339456
+    m_Key: pause_menu_quit_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7624117468143616
+    m_Key: email_headline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7625093054865408
+    m_Key: email_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7625930384744448
+    m_Key: email_input_placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626267598397440
+    m_Key: email_consent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626855652401152
+    m_Key: email_skip_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626949676113920
+    m_Key: email_submit_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7629420666429440
+    m_Key: email_input_invalid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7630434962382848
+    m_Key: email_toc_invalid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7634304832774144
+    m_Key: game_state_lost_headline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7634511934922752
+    m_Key: game_state_lost_gwl_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635555561644032
+    m_Key: game_state_lost_temp_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635807605760000
+    m_Key: game_state_won_headline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635988938104832
+    m_Key: game_state_won_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636164276789248
+    m_Key: game_state_restart_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636205422911488
+    m_Key: game_state_main_menu_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636235819032576
+    m_Key: game_state_continue_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8010434475597824
+    m_Key: main_menu_credits_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8310811051941888
+    m_Key: credit_asset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8311042845958144
+    m_Key: credit_asset_info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8311426100486144
+    m_Key: credit_pub
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 752907293597892632
+  references:
+    version: 2
+    RefIds:
+    - rid: 752907293597892632
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1704796608006

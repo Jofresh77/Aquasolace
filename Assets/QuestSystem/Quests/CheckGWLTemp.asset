@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6144ebca97334df98e0d51447bfe6462, type: 3}
+  m_Name: CheckGWLTemp
+  m_EditorClassIdentifier: 
+  questName: check_tmp_gwl_name
+  description: check_tmp_gwl_description
+  isPersistAchievement: 0
+  isRemoveQuestAfterAchieved: 0
+  isEndRequired: 1
+  isSelected: 0
+  rewardBiome: 3
+  rewardAmount: 9
+  questIcon: {fileID: 2800000, guid: 38cb9a476aa7d794a934675facf00cd8, type: 3}
+  achievementMsg: positive
+  failureMsg: negative
+  properTemp: 20
+  normalizedTemp: 10
+  properGwl: 500
+  normalizedGwl: 200

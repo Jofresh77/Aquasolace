@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6334e185db649ba80dc5acb79f2f588, type: 3}
+  m_Name: DendrocoposMajor
+  m_EditorClassIdentifier: 
+  speciesName: DendrocoposMajor
+  speciesVisualPrefab: {fileID: 5367219524379310457, guid: b4cdd6bbde3148d47adef400df3f1376, type: 3}
+  spawnSound: {fileID: 8300000, guid: 09531124f6fe23843bac32c4e05263b0, type: 3}
+  despawnSound: {fileID: 8300000, guid: d4100a663ea63ec4a8d9fc64c5c5e80b, type: 3}
+  periodicSounds:
+  - {fileID: 8300000, guid: d8defee5faa2336499ed501444ec0d9d, type: 3}
+  - {fileID: 8300000, guid: b1e9c68640addcf4bbc426f707ecefad, type: 3}
+  spawnInterval: 10

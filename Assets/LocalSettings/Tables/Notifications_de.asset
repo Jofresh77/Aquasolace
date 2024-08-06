@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Notifications_de
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: c26fab16c609314439f806b82c67b983, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 294939942912
+    m_Localized: Der Grundwasserspiegel hat einen gesunden Zustand erreicht!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 404478386176
+    m_Localized: Der Grundwasserspiegel ist unter einen gesunden Wert gesunken!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 902929473536
+    m_Localized: Das Grundwasser sollte nun leichter ansteigen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 934437085184
+    m_Localized: Der Grundwasseranstieg ist schwieriger geworden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1209310797824
+    m_Localized: Ausreichend Laubwald gepflanzt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1254802219008
+    m_Localized: "Die Laubwaldfl\xE4che ist zu klein geworden!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1343402696704
+    m_Localized: Ausreichend Mischwald gepflanzt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1361668890624
+    m_Localized: "Die Mischwaldfl\xE4che ist zu klein geworden!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1442023366656
+    m_Localized: Ausreichend Wiese geerdet!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1457303216128
+    m_Localized: "Die Wiesenfl\xE4che ist zu klein geworden!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1524722458624
+    m_Localized: "Ausreichend Kiefernwaldfl\xE4che erreicht!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1538173591552
+    m_Localized: "Die Kiefernwaldfl\xE4che ist unter ein ausreichendes Niveau gesunken!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1604082884608
+    m_Localized: "Ausreichende Mischwaldfl\xE4che erreicht!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1618683256832
+    m_Localized: "Die Mischwaldfl\xE4che ist unter ein ausreichendes Niveau gesunken!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1707816411136
+    m_Localized: Die Art Bufobufo wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1723012374528
+    m_Localized: Die Art Bufobufo ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1795737411584
+    m_Localized: Die Art Castorfiber wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1839416893440
+    m_Localized: Die Art Castorfiber ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1916566921216
+    m_Localized: Die Art Ciconiaciconia wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1931263762432
+    m_Localized: Die Art Ciconiaciconia ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2025732071424
+    m_Localized: Die Art Dendrocoposmajor wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2039665549312
+    m_Localized: Die Art Dendrocoposmajor ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2105759391744
+    m_Localized: Die Art Haliaeetusalbicilla wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2138013589504
+    m_Localized: Die Art Haliaeetusalbicilla ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230334414848
+    m_Localized: Die Art Lepuseuropaeus wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2243617775616
+    m_Localized: Die Art Lepuseuropaeus ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2312609882112
+    m_Localized: Die Art Podicepscristatus wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2329194160128
+    m_Localized: Die Art Podicepscristatus ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2395397054464
+    m_Localized: Die Art Lutralutra wurde wiederbelebt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2417446510592
+    m_Localized: Die Art Lutralutra ist verschwunden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3446183452672
+    m_Localized: Der Lebensraum des Bufobufo wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3503498616832
+    m_Localized: Der Lebensraum des Castorfiber wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3547161321472
+    m_Localized: Der Lebensraum des Ciconiaciconia wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3603344023552
+    m_Localized: Der Lebensraum des Dendrocoposmajor wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3647308718080
+    m_Localized: Der Lebensraum des Haliaeetusalbicilla wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3697111883776
+    m_Localized: Der Lebensraum des Lepuseuropaeus wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3763478355968
+    m_Localized: Der Lebensraum des Podicepscristatus wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3804007915520
+    m_Localized: Der Lebensraum des Lutralutra wurde entfernt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4042449903616
+    m_Localized: "Die versiegelte Fl\xE4che ist gewachsen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4265180028928
+    m_Localized: "Keine weiteren Ressourcen verf\xFCgbar.."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4480289103872
+    m_Localized: "Du kannst keine Fl\xFCsse entfernen, die mit dem Rand der Karte
+      verbunden sind."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4638452113408
+    m_Localized: "Du kannst keine Fl\xFCsse an den Rand der Karte legen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4765740851200
+    m_Localized: Du musst erst eine zweite Abzweigung machen, bevor du den Fluss
+      abkoppelst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4872297144320
+    m_Localized: "Du kannst Fl\xFCsse nicht zu nah aneinander platzieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4966094364672
+    m_Localized: Der Fluss muss an einen bereits bestehenden Fluss angeschlossen
+      werden.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7ae5ec50bd4f72873a6b91edae003f, type: 3}
+  m_Name: ReviveSpecies_CastorFiber
+  m_EditorClassIdentifier: 
+  questName: species_castorfiber_name
+  description: species_castorfiber_description
+  isPersistAchievement: 0
+  isRemoveQuestAfterAchieved: 0
+  isEndRequired: 1
+  isSelected: 0
+  rewardBiome: 2
+  rewardAmount: 15
+  questIcon: {fileID: 2800000, guid: fe2ea87c0745de041800b3c16e2fd4d5, type: 3}
+  achievementMsg: positive
+  failureMsg: negative
+  speciesSo: {fileID: 11400000, guid: 47e1ed75318c744bc985d638d778e9df, type: 2}
+  biomeRequirements:
+  - biome: 2
+    minCount: 18
+  - biome: 5
+    minCount: 6
+  minTotalHabitatSize: 24
+  maxSpeciesPerHabitat: 5
+  speciesPerTile: 0.1
+  maxDistanceFromCentroid: 10
+  maxAmountTileInHabitat: 45
+  gizmoColor: {r: 0, g: 0.7813556, b: 1, a: 0.5}

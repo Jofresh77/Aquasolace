@@ -1,0 +1,152 @@
+* {
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+}
+
+.backgroundBlur {
+    background-color: rgba(0, 80, 140, 0.66);
+}
+
+.backgroundBlur.board {
+    background-color: rgba(0, 80, 140, 0.8);
+}
+
+.backgroundBlur.allCorners {
+    border-radius: 25px;
+}
+
+.backgroundBlur.rightCorners {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
+    transition-property: display;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+}
+
+.close {
+    left: -432px;
+    transition-property: left;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+
+.fastClose {
+    left: -432px;
+}
+
+.open {
+    left: 0;
+    transition-property: left;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+
+.btn:hover {
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}
+
+.textContainer {
+    flex-direction: row;
+    width: 50%;
+    padding: 10px;
+}
+
+.textContainer.rightAlign {
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.helpText {
+    font-size: 20px;
+    -unity-text-align: middle-left;
+    -unity-font-style: bold;
+}
+
+.infoContainer {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    align-self: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.infoWindow {
+    background-color: rgb(111, 158, 212);
+    border-color: rgba(36, 36, 35, 0.8);
+    border-width: 10px;
+    border-radius: 25px;
+    padding: 0;
+}
+
+.btnRow {
+    max-height: 15%;
+    align-items: center;
+}
+
+.closeBtn {
+    background-color: rgba(235, 130, 117, 0.8);
+    padding: 15px;
+    color: rgb(255, 255, 255);
+    border-radius: 25px;
+    border-color: rgb(36, 36, 35);
+    border-width: 6px;
+    font-size: 20px;
+    width: 30%;
+}
+
+.row {
+    width: 95%;
+    max-width: 95%;
+    min-width: 95%;
+}
+
+.imageRow {
+    max-height: 30%;
+}
+
+.image {
+    background-image: resource('nabu_mascot_2');
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.nameRow {
+    max-height: 10%;
+}
+
+.questNameLabel {
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.descriptionRow {
+    max-height: 43%;
+}
+
+.questDescriptionLabel {
+    height: 95%;
+    font-size: 18px;
+}
+
+.questRewardLabel {
+    height: 95%;
+    font-size: 18px;
+}
+
+.boardButton {
+    background-image: url('project://database/Assets/Art/Textures/quest-icon.png?fileID=2800000&guid=0137785e4c6914a428c38f63a4aa4753&type=3#quest-icon');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.boardButton:hover {
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}

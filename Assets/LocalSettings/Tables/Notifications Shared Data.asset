@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Notifications Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Notifications
+  m_TableCollectionNameGuidString: c26fab16c609314439f806b82c67b983
+  m_Entries:
+  - m_Id: 294939942912
+    m_Key: check_tmp_gwl_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 404478386176
+    m_Key: check_tmp_gwl_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 902929473536
+    m_Key: count_zigzag_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 934437085184
+    m_Key: count_zigzag_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1209310797824
+    m_Key: count_deciduous_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1254802219008
+    m_Key: count_deciduous_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1343402696704
+    m_Key: count_mixed_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1361668890624
+    m_Key: count_mixed_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1442023366656
+    m_Key: count_meadow_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1457303216128
+    m_Key: count_meadow_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1524722458624
+    m_Key: get_area_pine_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1538173591552
+    m_Key: get_area_pine_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1604082884608
+    m_Key: get_area_mixed_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1618683256832
+    m_Key: get_area_mixed_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1707816411136
+    m_Key: species_bufobufo_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1723012374528
+    m_Key: species_bufobufo_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1795737411584
+    m_Key: species_castorfiber_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1839416893440
+    m_Key: species_castorfiber_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1916566921216
+    m_Key: species_ciconiaciconia_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1931263762432
+    m_Key: species_ciconiaciconia_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2025732071424
+    m_Key: species_dendrocoposmajor_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2039665549312
+    m_Key: species_dendrocoposmajor_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2105759391744
+    m_Key: species_haliaeetusalbicilla_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2138013589504
+    m_Key: species_haliaeetusalbicilla_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230334414848
+    m_Key: species_lepuseuropaeus_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2243617775616
+    m_Key: species_lepuseuropaeus_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2312609882112
+    m_Key: species_podicepscristatus_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2329194160128
+    m_Key: species_podicepscristatus_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2395397054464
+    m_Key: species_lutralutra_name_positive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2417446510592
+    m_Key: species_lutralutra_name_negative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3446183452672
+    m_Key: species_bufobufo_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3503498616832
+    m_Key: species_castorfiber_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3547161321472
+    m_Key: species_ciconiaciconia_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3603344023552
+    m_Key: species_dendrocoposmajor_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3647308718080
+    m_Key: species_haliaeetusalbicilla_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3697111883776
+    m_Key: species_lepuseuropaeus_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3763478355968
+    m_Key: species_podicepscristatus_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3804007915520
+    m_Key: species_lutralutra_name_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4042449903616
+    m_Key: sealed_surface_grown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4265180028928
+    m_Key: restriction_resources
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4480289103872
+    m_Key: restriction_river_outer_world
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4638452113408
+    m_Key: restriction_river_world_border
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4765740851200
+    m_Key: restriction_river_branch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4872297144320
+    m_Key: restriction_river_close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4966094364672
+    m_Key: restriction_river_connection
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6667087387845984258
+  references:
+    version: 2
+    RefIds:
+    - rid: 6667087387845984258
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1722455017919

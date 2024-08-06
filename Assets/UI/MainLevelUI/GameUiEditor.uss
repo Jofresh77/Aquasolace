@@ -1,0 +1,182 @@
+* {
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+}
+
+.tileSelect {
+    flex-direction: column;
+    align-items: auto;
+    justify-content: center;
+    align-self: center;
+    width: 110px;
+    height: 110px;
+}
+
+.textContainer {
+    width: 100%;
+    max-height: 12%;
+    min-height: 12%;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.textContainer > Label {
+    width: 100%;
+    font-size: 14px;
+    color: white;
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+}
+
+.tileSelect--selected > .textContainer > Label {
+    font-size: 13px;
+}
+
+.biomeImage {
+    width: 100%;
+    height: auto;
+    max-height: 86%;
+    min-height: 86%;
+    margin-bottom: -12px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.biomeImage.meadow {
+    background-image: url('project://database/Assets/UI/GameUI/Resources/meadow_preview.png?fileID=2800000&guid=04f19e33faeabb845bf7550806bad474&type=3#meadow_preview');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.biomeImage.farmland {
+    background-image: url('project://database/Assets/UI/GameUI/Resources/farmland_preview.png?fileID=2800000&guid=9d52b71143f1e9c48b87158f4a15fe4a&type=3#farmland_preview');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.biomeImage.forestPine {
+    background-image: url('project://database/Assets/UI/GameUI/Resources/forest_pine_preview.png?fileID=2800000&guid=3f75086cef0807d48afc412860c6a9e9&type=3#forest_pine_preview');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.biomeImage.forestDeciduous {
+    background-image: url('project://database/Assets/UI/GameUI/Resources/forest_deciduous_preview.png?fileID=2800000&guid=7f156bbb050f6834b8bcb37bab627f62&type=3#forest_deciduous_preview');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.biomeImage.forestMixed {
+    background-image: url('project://database/Assets/UI/GameUI/Resources/forest_mixed_preview.png?fileID=2800000&guid=cfeb8cb5f76a89d4bba1a87d94e8d194&type=3#forest_mixed_preview');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.biomeImage.river {
+    background-image: url('project://database/Assets/UI/GameUI/Resources/river_straight_preview.png?fileID=2800000&guid=a47a1e57d9f456742bce11568b913fd0&type=3#river_straight_preview');
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.tileSelect.unavailable {
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.3);
+}
+
+.tileSelect--selected {
+    border-left-color: rgb(255, 204, 0);
+    border-right-color: rgb(255, 204, 0);
+    border-top-color: rgb(255, 204, 0);
+    border-bottom-color: rgb(255, 204, 0);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.temperature-bar {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    height: 150px;
+    width: 100px;
+}
+
+.temperature-bar .unity-progress-bar__progress {
+    background-color: red;
+}
+
+.temperature-bar .unity-progress-bar__progress--top {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+}
+
+.temperature-bar .unity-progress-bar__background {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-color: black;
+    background-color: black;
+}
+
+.water-level-bar {
+    height: 150px;
+    width: 100px;
+}
+
+.water-level-bar .unity-progress-bar__container {
+    top: -125px;
+}
+
+.water-level-bar .unity-progress-bar__progress {
+    background-color: dodgerblue;
+    min-height: auto;
+    min-width: auto;
+    border-top-left-radius: 22px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 22px;
+}
+
+.water-level-bar .unity-progress-bar__background {
+    background-color: rgba(106, 106, 106, 0.44);
+    min-height: 150px;
+    min-width: auto;
+    border-left-color: rgba(106, 106, 106, 0);
+    border-right-color: rgba(106, 106, 106, 0);
+    border-top-color: rgba(106, 106, 106, 0);
+    border-bottom-color: rgba(106, 106, 106, 0);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 25px;
+}
+
+.backgroundBlur {
+    background-color: rgba(0, 80, 140, 0.66);
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-left-color: rgba(106, 106, 106, 0);
+    border-right-color: rgba(106, 106, 106, 0);
+}
+
+.backgroundBlur.allCorners {
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.hide {
+    display: none;
+}

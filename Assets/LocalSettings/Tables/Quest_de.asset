@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Quest_de
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: 02c5b3cb74461914589f62c791716976, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5878386126793211906
+  m_TableData:
+  - m_Id: 26340909056
+    m_Localized: "Mit einem Klick auf das Pin-Icon kannst du bis zu zwei Aufgaben
+      f\xFCr die Aufgabenliste anpinnen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 343887470592
+    m_Localized: angepinnt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1420048863133696
+    m_Localized: "Schlie\xDFen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11272597329829888
+    m_Localized: 'Belohnung:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11277504787144704
+    m_Localized: Rette das Trinkwasser!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11277992773443584
+    m_Localized: "Kannst du unser Wasser retten?\nRette unser Wasser, indem du die
+      Landschaft umgestaltest. Dein Ziel ist es, den Grundwasserspiegel auf \xFCber
+      60% anzuheben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279238062301184
+    m_Localized: "Je langsamer das Wasser flie\xDFt, desto mehr davon kann ins Grundwasser
+      sickern. Baue M\xE4ander und Schlingen ein."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279187294445568
+    m_Localized: Wasser marsch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279616841506816
+    m_Localized: "Gr\xFCnes Wunder"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11279618825412608
+    m_Localized: "Laubw\xE4lder sind hervorragende Wasserspeicher und Lebensraum
+      f\xFCr viele verschiedene Arten wie zum Beispiel Erdkr\xF6te und Buntspecht.
+      Forste die Laubw\xE4lder mit 50 Feldern wieder auf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280161295720448
+    m_Localized: "Vielfalt in Gr\xFCn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280163761971200
+    m_Localized: "Mischw\xE4lder sind abwechslungsreich und damit wiederstandsf\xE4higer
+      als Monokulturen im Wald. Im Mischwald findest du Arten wie etwa den Buntspecht
+      oder auch den Seeadler. Forste die Mischw\xE4lder mit 50 Feldern wieder auf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280559679102976
+    m_Localized: "Bl\xFCtenpracht"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280580352827392
+    m_Localized: "Wiesen sind nicht nur sch\xF6n anzusehen, sie sind auch wertvolle
+      Lebensr\xE4ume f\xFCr viele Arten wie etwa Feldhasen. In Wassern\xE4he findest
+      du hier auch Fischotter und Haubentaucher. Platziere 50 Felder Wiesen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280750419271680
+    m_Localized: "Immergr\xFCne Mission"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11280815011553280
+    m_Localized: "Nirgendwo in Deutschland wachsen so viele Kiefern wie in Brandenburg.
+      Zwar sind sie nicht so gute Wasserspeichern wie Laub- und Mischw\xE4lder, doch
+      auch Nadelw\xE4lder speichern Wasser und CO2. In Wassern\xE4he findest du hier
+      Arten wie etwa den Biber. Platziere ein Areal aus Nadelwaldfeldern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281248559980544
+    m_Localized: Waldnetzwerk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281257363824640
+    m_Localized: "Von gr\xF6\xDFeren Waldarealen profitieren viele Arten, denn in
+      zusammenh\xE4ngen Waldgebieten k\xF6nnen sie st\xF6rungsfrei wandern. Platziere
+      20 zusammenh\xE4nge Mischwaldfelder."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281600306896896
+    m_Localized: "Kr\xF6tenretter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11281985725685760
+    m_Localized: "In Brandenburg sind Amphibien wegen der Trockenheit stark bedroht.
+      Lokal sind ihre Best\xE4nde um 60 \u2013 100% zur\xFCckgegangen. Kannst du
+      die Erdkr\xF6te retten? Um sich fortzupflanzen bevorzugen Erdkr\xF6ten mittlere
+      bis gro\xDFe Gew\xE4sser, gerne in Waldn\xE4he.\r\n\r\nFun Fact: Die M\xE4nnchen
+      lassen sich manchmal auf dem R\xFCken der Weibchen, Huckepack zum Laichgew\xE4sser
+      tragen.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282374227288064
+    m_Localized: Biberburg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282380007038976
+    m_Localized: "Biber bauen D\xE4mme und stauen Wasser. Sie sind eine Schl\xFCsselart,
+      die ihren Lebensraum stark beeinflusst. In deiner Mission, das Wasser zu retten,
+      sind sie deine Verb\xFCndete. Siedele Biber an und erhalte als Belohnung 15
+      Kiefern.\r\n\r\nFun Fact: Die Augen eines Bibers sind sehr schlecht. Er sieht
+      lediglich schwarz-wei\xDF. Daf\xFCr ist der Geruchssinn der wichtigste Sinn
+      und hilft beim Aufsp\xFCren von Feinden und Nahrung.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11282625000529920
+    m_Localized: Klappern die Erste!
+    m_Metadata:
+      m_Items:
+      - rid: 5878386126793211906
+  - m_Id: 11282627034767360
+    m_Localized: "Wei\xDFst\xF6rche bevorzugen abwechslungsreiche, offene Kulturlandschaft
+      mit Feuchtwiesen, Flie\xDFgew\xE4ssern und Weiden. Davon gibt es leider immer
+      weniger, daher z\xE4hlen Wei\xDFst\xF6rche heute zu den gef\xE4hrdeten Arten.
+      Kannst du sie wieder ansiedeln?\r\n\r\nFun Fact: Der Wei\xDFstorch wird auch
+      \u201EKlapperstorch\u201C genannt, was auf das laute, charakteristische Klappern
+      des Schnabels am Nest zur\xFCckzuf\xFChren ist.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283138555305984
+    m_Localized: "Jetzt wird\u2019s bunt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283140551794688
+    m_Localized: "Buntspechte sind in W\xE4lder, Parks und G\xE4rten zu finden. Kannst
+      du sie wiederansiedeln?\r\n\r\nFun Fact: Buntspechte legen sog. \u201ESpechtschmieden\u201C
+      an, wo sie Nahrung in Rindenspalten klemmen und sie anschlie\xDFend mit ihren
+      Schn\xE4beln aufmei\xDFeln k\xF6nnen.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283543989313536
+    m_Localized: "K\xF6nige der L\xFCfte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283545474097152
+    m_Localized: "Seeadler bauen ihre Horste am liebsten in W\xE4ldern mit alten,
+      stabilen B\xE4umen. An gro\xDFen Seen oder Fl\xFCssen gehen sie auf Nahrungssuche.
+      Siedle den Seeadler an, um als Belohnung 15 Wasserfelder zu erhalten.\r\n\r\nFun
+      Fact: Der Horst eines Seeadlers kann einen Durchmesser von bis zu zwei Metern
+      erreichen.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283842405654528
+    m_Localized: Hasen-Oase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11283843756220416
+    m_Localized: "Feldhasen sind auf \xC4ckern, Weiden und Wiesen zu finden. Ihre
+      Best\xE4nde sind mittlerweile deutschlandweit stabil.\r\n\r\nFun Fact: Im Sprint
+      erreichen Feldhasen ein Geschwindigkeit von bis zu 70 Stundenkilometern.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11284117950455808
+    m_Localized: "Tauchende T\xE4nzer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11284119137443840
+    m_Localized: "Haubentaucher findest du an Gew\xE4ssern mit ausreichend Ufervegetation.
+      Sie sind relativ h\xE4ufig anzutreffen und ihr Bestand nimmt zu.\r\n\r\nFun
+      Fact: Zur Balz f\xFChren Haubentaucher einen \"Pinguintanz\" auf dem Wasser
+      auf.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13478846368833536
+    m_Localized: Rettungsmission Otter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13478910168391680
+    m_Localized: "Otter ben\xF6tigen flache Fl\xFCsse mit zugewachsenen Ufern und
+      \xDCberschwemmungsebenen. Sie profitieren von klaren, fischreichen Gew\xE4ssern
+      mit ausreichend Versteckm\xF6glichkeiten. Trotz Schutzma\xDFnahmen sind die
+      Otterbest\xE4nde r\xFCckl\xE4ufig. Sie sind vom Aussterben bedroht.\r\n\r\nFun
+      Fact: Ihre Spuren erkennt man an 5 Zehen mit Schwimmh\xE4uten.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13912771696156672
+    m_Localized: "Keine aktive Aufgabe ausgew\xE4hlt.\n\xD6ffne zuerst das Aufgaben-Board."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5878386126793211906
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00604ad77c152800

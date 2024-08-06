@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6334e185db649ba80dc5acb79f2f588, type: 3}
+  m_Name: BufoBufo
+  m_EditorClassIdentifier: 
+  speciesName: BufoBufo
+  speciesVisualPrefab: {fileID: 1627158635173583039, guid: 721ffcedf04a6304ca4fd4a750ba7242, type: 3}
+  spawnSound: {fileID: 8300000, guid: 66ae96d58a25ef348b86b14a1e8f879f, type: 3}
+  despawnSound: {fileID: 8300000, guid: d4100a663ea63ec4a8d9fc64c5c5e80b, type: 3}
+  periodicSounds:
+  - {fileID: 8300000, guid: cb944bb66a81a134d87a39c461532984, type: 3}
+  - {fileID: 8300000, guid: 7ad20fede2873174ca19eab124cf60b9, type: 3}
+  spawnInterval: 10

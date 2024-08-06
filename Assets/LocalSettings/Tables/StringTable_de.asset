@@ -1,0 +1,173 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: StringTable_de
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: 9341091472fed2b469f5e6a72eae9e58, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42446286848
+    m_Localized: '%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20628023209984
+    m_Localized: "\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22012042866688
+    m_Localized: "W\xE4hlen Sie eine Kachel aus, indem Sie die Nummer der Kachel
+      auf Ihrer Tastatur dr\xFCcken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36366620487680
+    m_Localized: "L\xE4dt..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48807777595392
+    m_Localized: "HAUPTMEN\xDC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51390252511232
+    m_Localized: LEVELAUSWAHL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53904490295296
+    m_Localized: WEITER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53999768104960
+    m_Localized: "ZUR\xDCCK ZUM HAUPTMEN\xDC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4803807507374080
+    m_Localized: SPIEL VERLASSEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592413970767872
+    m_Localized: Spiel starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592442672390144
+    m_Localized: Einstellungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592468295393280
+    m_Localized: Spiel beenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5607501704339456
+    m_Localized: SPIEL BEENDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7624117468143616
+    m_Localized: Hallo Mitspieler*in!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7625093054865408
+    m_Localized: "Wasser ist nicht nur im Spiel knapp, sondern ganz real bei uns
+      in Brandenburg! M\xF6chtest du informiert bleiben? Wir updaten dich regelm\xE4\xDFig
+      \xFCber unsere Projekte, Aktionen und M\xF6glichkeiten mitzumachen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7625930384744448
+    m_Localized: Deine E-Mail-Adresse*
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626267598397440
+    m_Localized: "Ich m\xF6chte \xFCber die Arbeit und Spendenprojekte des NABU Brandenburg
+      informiert werden.*"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626855652401152
+    m_Localized: "\xDCberspringen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626949676113920
+    m_Localized: Absenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7629420666429440
+    m_Localized: "Ung\xFCltige E-Mail Adresse. Bitte gib eine g\xFCltige E-Mail-Adresse
+      ein."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7630434962382848
+    m_Localized: Bitte stimmen Sie den obigen Bedingungen zu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7634304832774144
+    m_Localized: Verloren!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7634511934922752
+    m_Localized: "Schade, du hast es leider nicht geschafft unser Trinkwasser zu
+      retten. Was jetzt passiert, erspare ich dir. Aber ich habe auch gute Nachrichten:
+      Du bist hier im Spiel und kannst es nochmal versuchen! Mein Tipp: Versuche
+      es doch mal mit schl\xE4ngelnden Fl\xFCssen oder mehr Laub- statt Nadelwald.
+      Wir brauchen Landschaften, in denen Wasser leichter versickern kann. Du brauchst
+      noch mehr Infos? Schau mal hier:\r\nNABU-bb.de/wasser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635555561644032
+    m_Localized: "Da bist du aber ordentlich ins Schwitzen geraten. Wie konnte es
+      blo\xDF passieren, dass die Temperatur so hoch ansteigt? Versuch es nochmal,
+      aber bitte ohne Klimakatastrophe! Das k\xF6nnte helfen: Wasser k\xFChlt die
+      Landschaft ab. Auch Begr\xFCnung durch W\xE4lder oder Wiesen wirkt k\xFChlend."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635807605760000
+    m_Localized: Gewonnen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635988938104832
+    m_Localized: "Gut gemacht! Unser Trinkwasser ist f\xFCrs Erste gerettet. Im Spiel
+      und im wirklichen Leben gibt es einige M\xF6glichkeiten, unser Trinkwasser
+      zu retten: Schl\xE4ngelnde Fl\xFCsse anstatt begradigte Kan\xE4le oder Laub-
+      und Mischw\xE4lder statt Nadelw\xE4lder. Wirst du auch den n\xE4chsten Level
+      schaffen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636164276789248
+    m_Localized: Neuer Versuch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636205422911488
+    m_Localized: "Zur\xFCck zum Hauptmen\xFC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636235819032576
+    m_Localized: "Spiel fortf\xFChren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8010434475597824
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8310811051941888
+    m_Localized: 'Verwendete Assets:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8311042845958144
+    m_Localized: "Alle Kenney-Assets wurden umgestaltet, um den \xE4sthetischen Anforderungen
+      des Spiels zu entsprechen,\\n alle anderen Assets im Spiel wurden intern erstellt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8311426100486144
+    m_Localized: Herausgeber
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

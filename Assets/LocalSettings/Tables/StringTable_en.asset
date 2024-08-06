@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: StringTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 9341091472fed2b469f5e6a72eae9e58, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42446286848
+    m_Localized: '%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20628023209984
+    m_Localized: "\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22012042866688
+    m_Localized: Select a tile by pressing the number of the tile on your keyboard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36366620487680
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48807777595392
+    m_Localized: MAIN MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51390252511232
+    m_Localized: LEVEL SELECTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53904490295296
+    m_Localized: RESUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53999768104960
+    m_Localized: BACK TO MAIN MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4803807507374080
+    m_Localized: QUIT GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592468295393280
+    m_Localized: Quit Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592442672390144
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5592413970767872
+    m_Localized: Start Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5607501704339456
+    m_Localized: QUIT GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7624117468143616
+    m_Localized: Hey there fellow player!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7625093054865408
+    m_Localized: Water is not only scarce in the game, but also here in real life
+      in Brandenburg! Do you want to stay informed? We regularly update about our
+      projects, campaigns and options to get involved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7625930384744448
+    m_Localized: Your e-mail address*
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626267598397440
+    m_Localized: I would like to be informed about the work and donation projects
+      of NABU Brandenburg.*
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626855652401152
+    m_Localized: Skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7626949676113920
+    m_Localized: Submit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7629420666429440
+    m_Localized: Invalid email address. Please enter a valid email.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7630434962382848
+    m_Localized: Please agree to the Terms and Condition above.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7634304832774144
+    m_Localized: Game Over!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7634511934922752
+    m_Localized: "I\u2019m afraid you didn't manage to save our drinking water. I'll
+      spare you what happens now. But there\u2019s also some good news: you're in
+      a game here and can try again! My tip: Try winding rivers or more deciduous
+      instead of coniferous forest. We need landscapes where water can seep away
+      more easily. Do you need more information? You can find them here:\r\nNABU-bb.de/wasser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635555561644032
+    m_Localized: 'You really broke a sweat here. How could the temperature rise so
+      high? Try again, but please without a climate catastrophe! This might help:
+      Water cools the landscape. Greenery in forests or meadows also has a cooling
+      effect.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635807605760000
+    m_Localized: Game won!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7635988938104832
+    m_Localized: 'Well done! Our drinking water is saved for now. In the game and
+      in real life, there are a few ways to save our drinking water: meandering rivers
+      instead of straightened canals or deciduous and mixed forests instead of coniferous
+      forests. Will you also make it to the next level?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636164276789248
+    m_Localized: Restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636205422911488
+    m_Localized: Back to main menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7636235819032576
+    m_Localized: Continue Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8010434475597824
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8310811051941888
+    m_Localized: 'Assets used:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8311042845958144
+    m_Localized: All Kenney's assets were remodeled to fit the game's aesthetic requirements,\n
+      all other asset found in the game were made internally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8311426100486144
+    m_Localized: Publisher
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

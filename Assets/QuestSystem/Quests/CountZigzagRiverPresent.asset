@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d50d029e3c04fd1a5110ea4b25dfde, type: 3}
+  m_Name: CountZigzagRiverPresent
+  m_EditorClassIdentifier: 
+  questName: count_zigzag_name
+  description: count_zigzag_description
+  isPersistAchievement: 1
+  isRemoveQuestAfterAchieved: 0
+  isEndRequired: 1
+  isSelected: 0
+  rewardBiome: 5
+  rewardAmount: 11
+  questIcon: {fileID: 2800000, guid: 6a12831f7159c8140a3cd4602d6778bc, type: 3}
+  achievementMsg: positive
+  failureMsg: negative
+  mustHave: 15
+  count: 0

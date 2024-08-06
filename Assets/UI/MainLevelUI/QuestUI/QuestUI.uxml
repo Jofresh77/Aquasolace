@@ -1,0 +1,78 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/QuestUI/QuestUI.uss?fileID=7433441132597879392&amp;guid=0a9ea40dd5e5c7141a2ae45b6aa16a15&amp;type=3#QuestUI" />
+    <Style src="project://database/Assets/UI/QuestUI/QuestLogEntry.uss?fileID=7433441132597879392&amp;guid=34ca92b24fcb0e0418272759862a21cc&amp;type=3#QuestLogEntry" />
+    <Style src="project://database/Assets/UI/QuestUI/QuestBoardEntry.uss?fileID=7433441132597879392&amp;guid=46a02709421416d42a0f10857c41f8bb&amp;type=3#QuestBoardEntry" />
+    <ui:VisualElement name="RootContainer" picking-mode="Ignore" style="align-self: auto; justify-content: center; align-items: flex-start; flex-grow: 1;">
+        <ui:VisualElement name="LogContainer" class="open" style="flex-grow: 1; min-height: 20%; min-width: 25%; flex-direction: row; align-self: auto; justify-content: center; align-items: stretch; max-width: 25%; max-height: 20%;">
+            <ui:VisualElement name="InnerContainer" class="backgroundBlur rightCorners" style="flex-grow: 1; flex-direction: row; max-width: 90%; min-width: 90%;">
+                <ui:VisualElement name="LogWindow" style="flex-grow: 1; max-width: none; max-height: none; min-width: auto; min-height: auto; flex-direction: row;">
+                    <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="warning-empty-log" style="justify-content: center; align-self: center; flex-grow: 1; -unity-text-align: middle-center; white-space: normal; text-overflow: ellipsis; display: none;" />
+                    <ui:VisualElement name="loglist-container" style="flex-grow: 1; flex-shrink: 0; width: auto; display: flex;">
+                        <ui:VisualElement name="LogList" style="flex-grow: 1; display: flex; justify-content: space-around;" />
+                        <ui:ListView focusable="false" name="ScrollLogList" show-bound-collection-size="false" style="flex-grow: 1; display: none;" />
+                    </ui:VisualElement>
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="board-btn" class="boardButton" style="background-color: rgba(188, 188, 188, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); flex-shrink: 1; width: 20%; -unity-background-scale-mode: scale-to-fit; align-self: center; justify-content: center; align-items: center; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 3%; margin-bottom: 0; margin-left: 0; height: 20%;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="CloseBtn" class="btn" style="background-image: resource(&apos;arrow-left-white&apos;); background-color: rgba(188, 188, 188, 0); align-self: center; height: 50%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; display: flex; width: 10%; -unity-background-scale-mode: stretch-to-fill; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="OuterContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row; max-width: 10%; min-width: 10%;">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="OpenBtn" class="hide btn" style="background-image: resource(&apos;arrow-right-white&apos;); background-color: rgba(188, 188, 188, 0); align-self: center; height: 50%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 100%; -unity-background-scale-mode: stretch-to-fill; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BoardContainer" class="allCorners backgroundBlur board hide" style="flex-grow: 1; position: absolute; width: 80%; height: 76%; align-self: center; justify-content: space-around; align-items: stretch; top: 8%;">
+            <ui:VisualElement name="textRow" style="flex-grow: 1; height: 8%; flex-direction: row;">
+                <ui:VisualElement name="tipContainer" class="textContainer">
+                    <ui:VisualElement name="tipIcon" style="flex-grow: 1; background-image: resource(&apos;pin_white&apos;); -unity-background-scale-mode: scale-to-fit; width: 10%; height: auto;" />
+                    <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="tipText" text="tipText" class="helpText" style="width: 90%;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="selectedContainer" class="rightAlign textContainer">
+                    <ui:Label tabindex="-1" text="countText" parse-escape-sequences="true" display-tooltip-when-elided="true" name="countText" class="helpText" />
+                </ui:VisualElement>
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="close-btn" style="background-image: url(&apos;project://database/Assets/Art/Textures/close.png?fileID=2800000&amp;guid=8c9f4da11366f2147af83816e3c20e25&amp;type=3#close&apos;); background-color: rgba(188, 188, 188, 0); width: auto; height: auto; flex-shrink: 1; -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); justify-content: center; align-items: center; align-self: center; margin-right: 2.5%;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; align-self: center; justify-content: center; align-items: center;">
+                <ui:VisualElement name="row0" class="row" style="flex-grow: 1; flex-direction: row;">
+                    <ui:VisualElement name="quest0" class="questSlot" style="flex-grow: 1; background-image: none; -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0);" />
+                    <ui:VisualElement name="quest1" class="questSlot" style="flex-grow: 1; background-image: none;" />
+                    <ui:VisualElement name="quest2" class="questSlot" style="flex-grow: 1; background-image: none;" />
+                    <ui:VisualElement name="quest3" class="questSlot" style="flex-grow: 1; background-image: none;" />
+                    <ui:VisualElement name="quest4" class="questSlot" style="flex-grow: 1; background-image: none;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="row1" class="row" style="flex-grow: 1; flex-direction: row;">
+                    <ui:VisualElement name="quest0" class="questSlot" style="flex-grow: 1; background-image: none;" />
+                    <ui:VisualElement name="quest1" class="questSlot" style="flex-grow: 1; background-image: none;" />
+                    <ui:VisualElement name="quest2" class="questSlot" style="flex-grow: 1;" />
+                    <ui:VisualElement name="quest3" class="questSlot" style="flex-grow: 1;" />
+                    <ui:VisualElement name="quest4" class="questSlot" style="flex-grow: 1;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="row2" class="row" style="flex-grow: 1; flex-direction: row;">
+                    <ui:VisualElement name="quest0" class="questSlot" style="flex-grow: 1;" />
+                    <ui:VisualElement name="quest1" class="questSlot" style="flex-grow: 1;" />
+                    <ui:VisualElement name="quest2" class="questSlot" style="flex-grow: 1;" />
+                    <ui:VisualElement name="quest3" class="questSlot" style="flex-grow: 1;" />
+                    <ui:VisualElement name="quest4" class="questSlot" style="flex-grow: 1;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="informationContainer" class="infoContainer hide" style="display: none; justify-content: center; align-self: auto; align-items: center; flex-grow: 1; flex-shrink: 0;">
+            <ui:VisualElement name="informationWindow" class="infoWindow" style="flex-grow: 0; justify-content: space-between; align-self: center; align-items: center; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px; max-width: 60%; max-height: 60%;">
+                <ui:VisualElement name="imageRow" class="imageRow row" style="flex-grow: 1;">
+                    <ui:VisualElement name="image" class="image" style="flex-grow: 1;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="nameRow" class="nameRow row" style="flex-grow: 1;">
+                    <ui:Label tabindex="-1" text="Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="questNameLabel" class="questNameLabel" />
+                </ui:VisualElement>
+                <ui:VisualElement name="rewardRow" class="nameRow row" style="flex-grow: 1; flex-direction: row; align-self: center; justify-content: center;">
+                    <ui:Label tabindex="-1" text="RewardPrefix:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="questRewardPrefixLabel" class="questRewardLabel" />
+                    <ui:Label tabindex="-1" text="RewardSuffix" parse-escape-sequences="true" display-tooltip-when-elided="true" name="questRewardSuffixLabel" class="questRewardLabel" />
+                </ui:VisualElement>
+                <ui:VisualElement name="descriptionRow" class="row descriptionRow" style="flex-grow: 1; max-height: 35%; flex-wrap: wrap;">
+                    <ui:Label tabindex="-1" text="Description" parse-escape-sequences="true" display-tooltip-when-elided="true" name="questDescriptionLabel" class="questDescriptionLabel" style="flex-wrap: wrap; white-space: normal;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="closeButtonRow" class="btnRow row" style="flex-grow: 0;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="closeBtn" text="closeBtn" class="closeBtn" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

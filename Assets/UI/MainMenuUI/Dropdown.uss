@@ -1,0 +1,14 @@
+﻿.unity-base-dropdown__container-outer {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(0, 104, 180);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-top-width: 2px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.unity-base-dropdown__container-inner {
+    padding: 0;
+}

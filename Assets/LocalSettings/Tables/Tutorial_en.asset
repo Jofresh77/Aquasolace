@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Tutorial_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8875502c9683e414186c6e43fe3ac5e3, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 28716759445504
+    m_Localized: Skip Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28839698690048
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28905805115392
+    m_Localized: Previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28986360918016
+    m_Localized: End Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32581298876416
+    m_Localized: "Hello and welcome to AquaSolace!\\nMy name is Mizu. Let\u2019s
+      save our drinking water together \u2013 I\u2019ll\\nexplain how."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32664530644992
+    m_Localized: Here you can see the groundwater level. This is the main source
+      of our drinking water. It's pretty low right now. We have to take action!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32715319472128
+    m_Localized: Here you can see the temperature. With your game actions you influence
+      the groundwater level and temperature.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32833854697472
+    m_Localized: Now you come into play! You can change the environment. These living
+      spaces are available to you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32913001213952
+    m_Localized: Select a habitat by clicking on it and place it on the playing field
+      with another click.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33078009327616
+    m_Localized: Be careful! Any changes in the environment affect the groundwater
+      level and temperature. Can you save our drinking water?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1694516273152
+    m_Localized: The Wasserrahmenrichtlinie (WRRL) aims to bring all bodies of water
+      to a good status by 2027. The timer shows the current month and year. Plan
+      and act to achieve the targets on time!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7064848588800
+    m_Localized: This is the quest log where you can track your selected quests.
+      The quest log can be collapsed or expanded at any time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75959634649088
+    m_Localized: Here you see the quest board, which you can open by pressing the
+      "L" key. Click on a quest for more information. Use the pin icon to select
+      up to two quests to be shown in the quest log. This way, you always keep track
+      of your important tasks!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3362133073616896
+    m_Localized: During gameplay, you can create habitats for various animals, as
+      shown in the image. Each new habitat you build helps these creatures thrive
+      in their environment. Get ready to make a difference!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3362811955273728
+    m_Localized: "Remember to read the quest descriptions carefully! Each species
+      has unique needs and requires different areas to live. By understanding their
+      requirements, you\u2019ll become a master habitat creator!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3362853113978880
+    m_Localized: "Oops! Be careful where you place\\nthat tile. Placing it incorrectly
+      can harm the animals living there. Your thoughtful planning can protect and
+      nurture these wonderful creatures.\r"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

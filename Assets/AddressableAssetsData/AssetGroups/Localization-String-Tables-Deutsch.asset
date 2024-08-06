@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-Deutsch
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-String-Tables-Deutsch
+  m_Data:
+    m_SerializedData: []
+  m_GUID: bc8313c8306cdde4bb0e2d429da177bf
+  m_SerializeEntries:
+  - m_GUID: 16aa5b18c8b380b46b7e19f5ff449534
+    m_Address: Biomes_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 964a91480bb68c84c8bf1b1b729b8132
+    m_Address: Quest_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be28eac1e2aba7743a69fd103b7dceb0
+    m_Address: Tutorial_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7be8fd3637c7bfa4eb90eb6fbd370e43
+    m_Address: Notifications_de
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-de
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 8de5b01c811ff5e4caf31f2fdd5efef7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 0d983bd95c8478446bc1f989b9e3f1b0, type: 2}
+    - {fileID: 11400000, guid: 1dbcc84130225f0449e2941e1b1597c3, type: 2}

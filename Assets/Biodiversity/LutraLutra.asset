@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6334e185db649ba80dc5acb79f2f588, type: 3}
+  m_Name: LutraLutra
+  m_EditorClassIdentifier: 
+  speciesName: LutraLutra
+  speciesVisualPrefab: {fileID: 3708403575081553309, guid: 9b19e05dba8c45c40954ab228d630049, type: 3}
+  spawnSound: {fileID: 8300000, guid: 2fd19ea938eab214abc2d5e1fe7e8d8f, type: 3}
+  despawnSound: {fileID: 8300000, guid: d4100a663ea63ec4a8d9fc64c5c5e80b, type: 3}
+  periodicSounds:
+  - {fileID: 8300000, guid: e290ec40c1ae15c4a97302ed5e1a7275, type: 3}
+  spawnInterval: 10

@@ -1,0 +1,29 @@
+.pause-menu-button {
+    width: 300px;
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Examples%20&%20Extras/Fonts/Electronic%20Highway%20Sign.TTF?fileID=12800000&guid=8a2b9e2a607dd2143b58c44bc32410b4&type=3#Electronic Highway Sign');
+    -unity-font-definition: initial;
+    -unity-font-style: bold;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.pause-menu-button:hover {
+    width: 300px;
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Examples%20&%20Extras/Fonts/Electronic%20Highway%20Sign.TTF?fileID=12800000&guid=8a2b9e2a607dd2143b58c44bc32410b4&type=3#Electronic Highway Sign');
+    -unity-font-definition: initial;
+    -unity-font-style: bold;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.78);
+}
+
+.pause-menu-button:active {
+    width: 300px;
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Examples%20&%20Extras/Fonts/Electronic%20Highway%20Sign.TTF?fileID=12800000&guid=8a2b9e2a607dd2143b58c44bc32410b4&type=3#Electronic Highway Sign');
+    -unity-font-definition: initial;
+    -unity-font-style: bold;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}
