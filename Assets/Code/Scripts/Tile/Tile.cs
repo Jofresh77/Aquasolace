@@ -17,6 +17,7 @@ namespace Code.Scripts.Tile
 
         public bool IsSelected { get; set; }
         public bool CanPlace { get; set; }
+        public bool IsVerified { get; set; }
 
         private Vector3 _startPosition;
         private Vector3 _targetPosition;
@@ -28,9 +29,9 @@ namespace Code.Scripts.Tile
 
         private void OnMouseEnter()
         {
-            if (InputCheck()
-                || GetBiome() == Biome.Sealed
-                || GameManager.Instance.IsMouseOverUi) return;
+            if (InvalidInteractable()) return;
+
+            IsVerified = false;
 
             TileHelper.Instance.selectedTile = transform;
             TileHelper.Instance.selectedTileComponent = this;
@@ -39,25 +40,19 @@ namespace Code.Scripts.Tile
 
         private void OnMouseExit()
         {
-            if (InputCheck()
-                || GetBiome() == Biome.Sealed
-                || GameManager.Instance.IsMouseOverUi) return;
-            
+            if (InvalidInteractable()) return;
+
+            IsVerified = false;
+
             TileHelper.Instance.HidePreview();
             TileHelper.Instance.selectedTile = null;
             TileHelper.Instance.selectedTileComponent = null;
-            GameManager.Instance.SetPlayerClick(true);
         }
 
         private void OnMouseDown()
         {
-            if (!GameManager.Instance.CanPlayerClick()
-                || InputCheck()
-                || GetBiome() == Biome.Sealed
-                || GameManager.Instance.IsMouseOverUi) return;
-            
-            GameManager.Instance.SetPlayerClick(false);
-            
+            if (InvalidInteractable()) return;
+
             if (!CanPlace)
             {
                 GameManager.Instance.AddNotification(Notification.Create(NotificationType.Restriction,
@@ -65,15 +60,11 @@ namespace Code.Scripts.Tile
                 return;
             }
 
-            TileHelper.Instance.PlaceTile();
+            if(!IsVerified) return;
             
-            GameManager.Instance.SetPlayerClick(true);
+            TileHelper.Instance.PlaceTile();
         }
 
-        
-        
-        private bool InputCheck() => !GameManager.Instance.IsGameStarted || GameManager.Instance.IsGamePaused;
-        
         public Biome GetBiome()
         {
             return Enum.Parse<Biome>(placedTile.tag);
@@ -128,6 +119,16 @@ namespace Code.Scripts.Tile
             }
 
             return RiverConfiguration.None;
+        }
+
+        private bool InvalidInteractable()
+        {
+            return !GameManager.Instance.IsGameStarted
+                   || GameManager.Instance.IsGamePaused
+                   || GameManager.Instance.IsMouseOverUi
+                   || GetBiome() == Biome.Sealed
+                   || GetBiome() == Biome.RiverSealed
+                   || GetBiome() == Biome.IgnoreTile;
         }
     }
 }

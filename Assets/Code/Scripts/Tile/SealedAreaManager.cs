@@ -28,6 +28,7 @@ namespace Code.Scripts.Tile
             List<(Transform, Transform[])> sealedBorders = GridHelper.Instance.GetSealedBorders();
             int expandedTiles = 0;
 
+            //TODO remove tuple and only return neighbors list
             foreach (var (borderTile, neighbors) in sealedBorders)
             {
                 foreach (var neighbor in neighbors)
@@ -36,16 +37,16 @@ namespace Code.Scripts.Tile
                     if (neighborTile == null) continue;
 
                     Biome currentBiome = neighborTile.GetBiome();
-                    if (currentBiome == Biome.IgnoreTile || currentBiome == Biome.Sealed ||
-                        currentBiome == Biome.RiverSealed) continue;
-
-                    if (currentBiome == Biome.River)
+                    switch (currentBiome)
                     {
-                        ReplaceWithRiverSealed(neighborTile);
-                    }
-                    else
-                    {
-                        ReplaceWithSealed(neighborTile);
+                        case Biome.IgnoreTile or Biome.Sealed or Biome.RiverSealed:
+                            continue;
+                        case Biome.River:
+                            ReplaceWithRiverSealed(neighborTile);
+                            break;
+                        default:
+                            ReplaceWithSealed(neighborTile);
+                            break;
                     }
 
                     expandedTiles++;
@@ -56,6 +57,9 @@ namespace Code.Scripts.Tile
             {
                 NotifyExpansion(expandedTiles);
             }
+            
+            TileHelper.Instance.HidePreview();
+            TileHelper.Instance.ShowPreview();
         }
 
         private void ReplaceWithRiverSealed(Tile tile)
@@ -71,9 +75,14 @@ namespace Code.Scripts.Tile
 
         private void ActivateMatchingRiverSealed(Transform riverSealed, string activeRiverConfig)
         {
+            if (riverSealed == null) return;
+
+            if (string.IsNullOrEmpty(activeRiverConfig)) return;
+
             foreach (Transform child in riverSealed)
             {
-                child.gameObject.SetActive(child.CompareTag(activeRiverConfig));
+                if (child != null)
+                    child.gameObject.SetActive(child.CompareTag(activeRiverConfig));
             }
         }
 

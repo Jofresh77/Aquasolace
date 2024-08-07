@@ -39,7 +39,6 @@ namespace Code.Scripts
         [SerializeField] private UIController uiController;
         [SerializeField] private NotificationsController notificationsController;
 
-        [SerializeField] private float playerClickDebounceTime = 0.6f;
         [SerializeField] private float coolDownDuration = 4f;
 
         #endregion
@@ -66,7 +65,6 @@ namespace Code.Scripts
         #region Private Fields
 
         private PlayerInputActions _playerInputActions;
-        private bool _playerClickEnabled = true;
         private float _nextUpdateTick;
         private float _corneredRiversInfluence = 1f;
         private readonly Dictionary<string, int> _amountSpawnedSpecies = new();
@@ -94,7 +92,6 @@ namespace Code.Scripts
 
         private void Start()
         {
-            TileHelper.Instance.Init();
             StartEnvConditionsCooldown();
         }
 
@@ -203,21 +200,6 @@ namespace Code.Scripts
         #endregion
 
         #region Input Handling
-
-        public void OnPlayerTileClick()
-        {
-            if (_playerClickEnabled)
-            {
-                StartCoroutine(DebouncedClick());
-            }
-        }
-
-        private IEnumerator DebouncedClick()
-        {
-            _playerClickEnabled = false;
-            yield return new WaitForSeconds(playerClickDebounceTime);
-            _playerClickEnabled = true;
-        }
 
         private void OnTileRotate(InputAction.CallbackContext obj)
         {
@@ -350,9 +332,6 @@ namespace Code.Scripts
 
         public void SetGwlInfluence(float influence) => gwlInfluence += influence;
         public float GetGwlInfluence() => gwlInfluence;
-
-        public bool CanPlayerClick() => _playerClickEnabled;
-        public void SetPlayerClick(bool value) => _playerClickEnabled = value;
 
         public bool IsScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;
 

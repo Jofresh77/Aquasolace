@@ -236,7 +236,7 @@ namespace Code.Scripts.QuestSystem
         private bool CheckCountZigZagRiver(CountZigzagRiverPresent countZigzagRiverPresent)
         {
             var isNeighborRiver = false;
-            var neighborList = TileHelper.Instance.FindCloseByNeighbors(_tile);
+            var neighborList = TileHelper.FindCloseByNeighbors(_tile);
 
             foreach (var neighbor in neighborList)
             {
