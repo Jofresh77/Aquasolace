@@ -8,6 +8,8 @@
         ForestDeciduous,
         ForestMixed,
         River,
-        Sealed
+        Sealed,
+        RiverSealed,
+        IgnoreTile
     }
 }

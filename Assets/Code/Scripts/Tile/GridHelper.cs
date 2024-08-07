@@ -22,10 +22,10 @@ namespace Code.Scripts.Tile
 
         private readonly SortedDictionary<Coordinate, Transform> _coordinateToTransformMap = new();
 
-        public List<Transform> listSealedArea = new();
         public int widthAndHeight;
 
         private List<Coordinate> _riverSources = new();
+        private List<Transform> _sealedBorders = new List<Transform>();
 
         private void Awake()
         {
@@ -51,11 +51,10 @@ namespace Code.Scripts.Tile
             _tileMap.Clear();
             _tempTileMap.Clear();
             _coordinateToTransformMap.Clear();
-            listSealedArea.Clear();
             _riverSources.Clear();
         }
 
-        public void Init()
+        private void Init()
         {
             Transform tileMap = GameObject.FindWithTag("TileMap").transform;
 
@@ -70,19 +69,80 @@ namespace Code.Scripts.Tile
                     new TileData(tileComponent.GetBiome(), tileComponent.GetDirection(),
                         tileComponent.GetRiverConfiguration()));
                 _coordinateToTransformMap.Add(coordinate, tile);
-
-                // list all sealed area for expansion
-                if (tile.GetComponent<Tile>().GetBiome() == Biome.Sealed 
-                    || TileHelper.Instance.FindActiveTile(tile.gameObject).CompareTag("RiverSealed"))
-                {
-                    listSealedArea.Add(tile);
-                }
             }
 
             widthAndHeight = (int)Mathf.Sqrt(_tileMap.Count) - 1; //WORKS ONLY WITH SQUARED GRID-MAPS
 
             // get the river tile that are located on the border
-            _riverSources = GetRiverSources();
+            _riverSources = FindBorderRiverSources(_tileMap);
+        }
+
+        public List<(Transform, Transform[])> GetSealedBorders()
+        {
+            List<(Transform, Transform[])> result = new List<(Transform, Transform[])>();
+            Coordinate[] neighborOffsets =
+            {
+                new(1, 0),
+                new(-1, 0),
+                new(0, 1),
+                new(0, -1),
+                new(1, 1),
+                new(-1, 1),
+                new(1, -1),
+                new(-1, -1)
+            };
+
+            foreach (var kvp in _tileMap)
+            {
+                if (kvp.Value.Biome is not (Biome.Sealed or Biome.RiverSealed)) continue;
+
+                Transform[] outsiders = new Transform[8];
+                int outsiderCount = 0;
+                bool isBorder = false;
+
+                for (int i = 0; i < 8; i++)
+                {
+                    Coordinate neighborCoord = new Coordinate(
+                        kvp.Key.X + neighborOffsets[i].X,
+                        kvp.Key.Z + neighborOffsets[i].Z
+                    );
+
+                    if (_tileMap.TryGetValue(neighborCoord, out TileData neighborData))
+                    {
+                        if (neighborData.Biome is Biome.Sealed or Biome.RiverSealed) continue;
+
+                        isBorder = true;
+                        outsiders[outsiderCount++] = GetTransformFromCoordinate(neighborCoord);
+                    }
+                    else
+                    {
+                        isBorder = true;
+                    }
+                }
+
+                if (!isBorder) continue;
+
+                Transform[] finalOutsiders = new Transform[outsiderCount];
+                Array.Copy(outsiders, finalOutsiders, outsiderCount);
+                result.Add((GetTransformFromCoordinate(kvp.Key), finalOutsiders));
+            }
+
+            _sealedBorders = result.ConvertAll(tuple => tuple.Item1);
+
+            return result;
+        }
+
+        public void DrawSealedBorderGizmos()
+        {
+            Gizmos.color = Color.red;
+
+            foreach (var border in _sealedBorders)
+            {
+                if (border != null)
+                {
+                    Gizmos.DrawSphere(border.position, 0.5f);
+                }
+            }
         }
 
         #region quest-conditionnals
@@ -101,7 +161,7 @@ namespace Code.Scripts.Tile
             {
                 Coordinate currentCoordinate = queue.Dequeue();
 
-                foreach (Coordinate nextRiver in FindNextRivers(currentCoordinate))
+                foreach (Coordinate nextRiver in FindNextRiversOld(currentCoordinate))
                 {
                     if (!visited.Contains(nextRiver))
                     {
@@ -129,7 +189,8 @@ namespace Code.Scripts.Tile
             //Check for resource availability
             if (!GameManager.Instance.IsResourceAvailable())
             {
-                RestrictionMsg = LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_resources");
+                RestrictionMsg =
+                    LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_resources");
                 return false;
             }
 
@@ -143,14 +204,18 @@ namespace Code.Scripts.Tile
                 //Check for river source removal
                 if (selectedBiome != Biome.River && !CheckRiverSources(coordinate))
                 {
-                    RestrictionMsg = LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_outer_world");
+                    RestrictionMsg =
+                        LocalizationSettings.StringDatabase.GetLocalizedString("Notifications",
+                            "restriction_river_outer_world");
                     return false;
                 }
 
                 //Check for map-border river placements
                 if (selectedBiome == Biome.River)
                 {
-                    RestrictionMsg = LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_world_border");
+                    RestrictionMsg =
+                        LocalizationSettings.StringDatabase.GetLocalizedString("Notifications",
+                            "restriction_river_world_border");
                     return false;
                 }
             }
@@ -165,11 +230,13 @@ namespace Code.Scripts.Tile
             }
 
             //Check for main river disconnection
-            if (selectedBiome != Biome.River
-                && coordinates.Exists(coordinate => IsBiomeEqual(coordinate.X, coordinate.Z, Biome.River))
-                && !CheckRiverDisconnection())
+            if (selectedBiome != Biome.River &&
+                coordinates.Exists(coordinate => BiomeEqual(coordinate.X, coordinate.Z, Biome.River)) &&
+                CheckRiverDisconnection())
             {
-                RestrictionMsg = LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_branch");
+                Debug.Log("River disconnection detected");
+                RestrictionMsg =
+                    LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_branch");
                 return false;
             }
 
@@ -179,7 +246,7 @@ namespace Code.Scripts.Tile
                 bool isConnected = false;
                 foreach (Coordinate at in coordinates)
                 {
-                    List<Coordinate> nextRivers = FindNextRivers(at);
+                    List<Coordinate> nextRivers = FindNextRiversOld(at);
                     HashSet<Coordinate> coordinatesHash = new HashSet<Coordinate>(coordinates); // "clone"
                     nextRivers.RemoveAll(coordinate => coordinatesHash.Contains(coordinate));
 
@@ -188,14 +255,18 @@ namespace Code.Scripts.Tile
 
                     if (!CheckRiverProximity(at))
                     {
-                        RestrictionMsg = LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_close");
+                        RestrictionMsg =
+                            LocalizationSettings.StringDatabase.GetLocalizedString("Notifications",
+                                "restriction_river_close");
                         return false;
                     }
                 }
 
                 if (!isConnected)
                 {
-                    RestrictionMsg = LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_connection");
+                    RestrictionMsg =
+                        LocalizationSettings.StringDatabase.GetLocalizedString("Notifications",
+                            "restriction_river_connection");
                     return false;
                 }
             }
@@ -203,8 +274,9 @@ namespace Code.Scripts.Tile
             return true;
         }
 
-        private static int CountRiverTiles(SortedDictionary<Coordinate, TileData> tileMap) =>
-            tileMap.Count(kvp => kvp.Value.Biome == Biome.River);
+        //TODO delete
+        /*private static int CountRiverTiles(SortedDictionary<Coordinate, TileData> tileMap) =>
+            tileMap.Count(kvp => kvp.Value.Biome == Biome.River);*/
 
         private static int CountCorneredRiverTiles(SortedDictionary<Coordinate, TileData> tileMap) =>
             tileMap.Count(kvp =>
@@ -215,40 +287,172 @@ namespace Code.Scripts.Tile
                     or RiverConfiguration.RiverEnd)
                 });
 
+        #region RiverDisconnection
+
         private bool CheckRiverDisconnection()
         {
-            Coordinate startRiver = _riverSources.First();
-            Queue<Coordinate> queue = new Queue<Coordinate>();
-            List<Coordinate> visited = new List<Coordinate> { startRiver };
+            var riverParts = FindRiverParts(_tileMap);
 
-            queue.Enqueue(startRiver);
-
-            bool foundSecondSource = false;
-
-            while (queue.Count != 0)
+            foreach (var part in riverParts)
             {
-                Coordinate currentCoordinate = queue.Dequeue();
+        
+                // Check if the river part is still connected in the !TEMP! tile map
+                if (!RiverPartConnected(part.Item1, part.Item2))
+                    return true;
+            }
 
-                foreach (Coordinate nextRiver in FindNextRivers(currentCoordinate, _tempTileMap))
+            return false;
+        }
+
+        private List<(Coordinate, Coordinate)> FindRiverParts(SortedDictionary<Coordinate, TileData> tileMap)
+        {
+            var borderSources = FindBorderRiverSources(tileMap);
+            var sealedSources = FindSealedRiverSources(tileMap);
+            var allSources = borderSources.Concat(sealedSources).ToList();
+
+            var riverParts = new List<(Coordinate, Coordinate)>();
+
+            for (int i = 0; i < allSources.Count; i++)
+            {
+                for (int j = i + 1; j < allSources.Count; j++)
                 {
-                    if (!visited.Contains(nextRiver))
-                    {
-                        if (nextRiver.X == 0 || nextRiver.X == widthAndHeight
-                                             || nextRiver.Z == 0 || nextRiver.Z == widthAndHeight)
-                            foundSecondSource = true;
-
-                        visited.Add(nextRiver);
-                        queue.Enqueue(nextRiver);
-                    }
+                    if (ConnectedRiverPart(allSources[i], allSources[j], tileMap))
+                        riverParts.Add((allSources[i], allSources[j]));
                 }
             }
 
-            return foundSecondSource && visited.Count == CountRiverTiles(_tempTileMap);
+            return riverParts;
         }
+
+        private List<Coordinate> FindBorderRiverSources(SortedDictionary<Coordinate, TileData> tileMap)
+        {
+            var sources = new List<Coordinate>();
+
+            for (int i = 0; i <= widthAndHeight; i++)
+            {
+                if (BiomeEqual(i, 0, Biome.River, tileMap))
+                    sources.Add(new Coordinate(i, 0));
+
+                if (BiomeEqual(i, widthAndHeight, Biome.River, tileMap))
+                    sources.Add(new Coordinate(i, widthAndHeight));
+
+                if (BiomeEqual(0, i, Biome.River, tileMap))
+                    sources.Add(new Coordinate(0, i));
+
+                if (BiomeEqual(widthAndHeight, i, Biome.River, tileMap))
+                    sources.Add(new Coordinate(widthAndHeight, i));
+            }
+
+            return sources;
+        }
+
+        private List<Coordinate> FindSealedRiverSources(SortedDictionary<Coordinate, TileData> tileMap)
+        {
+            var sources = new List<Coordinate>();
+
+            foreach (var kvp in tileMap)
+            {
+                if (kvp.Value.Biome != Biome.River) continue;
+
+                var neighbors = GetNeighbors(kvp.Key);
+                if (neighbors.Any(n =>
+                        tileMap.ContainsKey(n) &&
+                        (tileMap[n].Biome == Biome.RiverSealed || tileMap[n].Biome == Biome.IgnoreTile)))
+                    sources.Add(kvp.Key); 
+            }
+
+            return sources;
+        }
+
+        private bool ConnectedRiverPart(Coordinate start, Coordinate end,
+            SortedDictionary<Coordinate, TileData> tileMap)
+        {
+            var visited = new HashSet<Coordinate>();
+            var queue = new Queue<Coordinate>();
+            queue.Enqueue(start);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                if (current.Equals(end)) return true;
+
+                if (!visited.Add(current)) continue;
+
+                foreach (var next in FindNextRivers(current, tileMap))
+                {
+                    if (!visited.Contains(next))
+                        queue.Enqueue(next);
+                }
+            }
+
+            return false;
+        }
+
+        private bool RiverPartConnected(Coordinate start, Coordinate end)
+        {
+            var visited = new HashSet<Coordinate>();
+            var queue = new Queue<Coordinate>();
+            queue.Enqueue(start);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                if (current.X == end.X && current.Z == end.Z)
+                {
+                    return true;
+                }
+
+                if (!visited.Add(current)) continue;
+
+                foreach (var next in FindNextRivers(current, _tempTileMap))
+                {
+                    if (!visited.Any(v => v.X == next.X && v.Z == next.Z))
+                        queue.Enqueue(next);
+                }
+            }
+
+            return false;
+        }
+
+
+        private List<Coordinate> FindNextRivers(Coordinate at, SortedDictionary<Coordinate, TileData> tileMap)
+        {
+            List<Coordinate> nextRivers = new List<Coordinate>();
+
+            int[] dx = { 1, -1, 0, 0 };
+            int[] dz = { 0, 0, 1, -1 };
+
+            for (int i = 0; i < 4; i++)
+            {
+                int newX = at.X + dx[i];
+                int newZ = at.Z + dz[i];
+
+                if (newX < 0 || newX > widthAndHeight || newZ < 0 || newZ > widthAndHeight
+                    || !BiomeEqual(newX, newZ, Biome.River, tileMap)) continue;
+
+                Coordinate newCoord = new Coordinate(newX, newZ);
+                nextRivers.Add(newCoord);
+            }
+
+            return nextRivers;
+        }
+
+        private static List<Coordinate> GetNeighbors(Coordinate coord)
+        {
+            return new List<Coordinate>
+            {
+                new(coord.X + 1, coord.Z),
+                new(coord.X - 1, coord.Z),
+                new(coord.X, coord.Z + 1),
+                new(coord.X, coord.Z - 1)
+            };
+        }
+
+        #endregion
 
         private bool CheckRiverSources(Coordinate at)
         {
-            return !(IsBiomeEqual(at.X, at.Z, Biome.River)
+            return !(BiomeEqual(at.X, at.Z, Biome.River)
                      && _riverSources.Count < 3);
         }
 
@@ -257,38 +461,38 @@ namespace Code.Scripts.Tile
             int x = at.X;
             int z = at.Z;
 
-            if (x > 0 && IsBiomeEqual(x - 1, z, Biome.River, _tempTileMap))
+            if (x > 0 && BiomeEqual(x - 1, z, Biome.River, _tempTileMap))
             {
-                if (z > 0 && IsBiomeEqual(x - 1, z - 1, Biome.River, _tempTileMap))
+                if (z > 0 && BiomeEqual(x - 1, z - 1, Biome.River, _tempTileMap))
                 {
-                    if (IsBiomeEqual(x, z - 1, Biome.River, _tempTileMap))
+                    if (BiomeEqual(x, z - 1, Biome.River, _tempTileMap))
                     {
                         return false;
                     }
                 }
 
-                if (z < widthAndHeight && IsBiomeEqual(x - 1, z + 1, Biome.River, _tempTileMap))
+                if (z < widthAndHeight && BiomeEqual(x - 1, z + 1, Biome.River, _tempTileMap))
                 {
-                    if (IsBiomeEqual(x, z + 1, Biome.River, _tempTileMap))
+                    if (BiomeEqual(x, z + 1, Biome.River, _tempTileMap))
                     {
                         return false;
                     }
                 }
             }
 
-            if (x < widthAndHeight && IsBiomeEqual(x + 1, z, Biome.River, _tempTileMap))
+            if (x < widthAndHeight && BiomeEqual(x + 1, z, Biome.River, _tempTileMap))
             {
-                if (z > 0 && IsBiomeEqual(x + 1, z - 1, Biome.River, _tempTileMap))
+                if (z > 0 && BiomeEqual(x + 1, z - 1, Biome.River, _tempTileMap))
                 {
-                    if (IsBiomeEqual(x, z - 1, Biome.River, _tempTileMap))
+                    if (BiomeEqual(x, z - 1, Biome.River, _tempTileMap))
                     {
                         return false;
                     }
                 }
 
-                if (z < widthAndHeight && IsBiomeEqual(x + 1, z + 1, Biome.River, _tempTileMap))
+                if (z < widthAndHeight && BiomeEqual(x + 1, z + 1, Biome.River, _tempTileMap))
                 {
-                    if (IsBiomeEqual(x, z + 1, Biome.River, _tempTileMap))
+                    if (BiomeEqual(x, z + 1, Biome.River, _tempTileMap))
                     {
                         return false;
                     }
@@ -296,66 +500,6 @@ namespace Code.Scripts.Tile
             }
 
             return true;
-        }
-
-        #endregion
-
-        #region kernel-convolution
-
-        public List<Coordinate> FindMatchingPattern(int[,] kernel, double threshold = 0.8)
-        {
-            List<Coordinate> matches = new List<Coordinate>();
-
-            int kernelWidth = kernel.GetLength(0);
-            int kernelHeight = kernel.GetLength(1);
-            int kernelHalfWidth = Mathf.FloorToInt(kernelWidth / 2f);
-            int kernelHalfHeight = Mathf.FloorToInt(kernelHeight / 2f);
-
-            int nonWildcards = 0;
-
-            for (int i = 0; i < kernelWidth; i++)
-            {
-                for (int j = 0; j < kernelHeight; j++)
-                {
-                    if (kernel[i, j] != -1)
-                    {
-                        nonWildcards++;
-                    }
-                }
-            }
-
-            foreach (Coordinate coordinate in _tileMap.Keys)
-            {
-                if (coordinate.X < kernelHalfWidth
-                    || coordinate.X > widthAndHeight - kernelHalfWidth
-                    || coordinate.Z < kernelHalfHeight
-                    || coordinate.Z > widthAndHeight - kernelHalfHeight) continue;
-
-                double count = 0;
-
-                for (int i = 0; i < kernelWidth; i++)
-                {
-                    for (int j = 0; j < kernelHeight; j++)
-                    {
-                        if (kernel[i, j] == -1) continue;
-
-                        Coordinate neighborCoordinate = new Coordinate(coordinate.X - kernelHalfWidth + i,
-                            coordinate.Z - kernelHalfHeight + j);
-
-                        if (neighborCoordinate.X < 0 || neighborCoordinate.Z < 0
-                                                     || neighborCoordinate.X > widthAndHeight ||
-                                                     neighborCoordinate.Z > widthAndHeight) continue;
-
-                        if ((int)_tileMap[neighborCoordinate].Biome == kernel[i, j]) count++;
-                    }
-                }
-
-                double similarity = count > 0 ? count / nonWildcards : 0;
-
-                if (similarity >= threshold) matches.Add(coordinate);
-            }
-
-            return matches;
         }
 
         #endregion
@@ -428,7 +572,7 @@ namespace Code.Scripts.Tile
                 {
                     // Add center coordinate directly
                     tilesWithinBrush.Add(center);
-            
+
                     // Loop through offsets and check if coordinates are valid before adding
                     int[] offsets = { -1, 1 };
                     foreach (int offset in offsets)
@@ -439,7 +583,7 @@ namespace Code.Scripts.Tile
                             tilesWithinBrush.Add(coord);
                         }
                     }
-            
+
                     // Similar check for Z offsets
                     foreach (int offset in offsets)
                     {
@@ -526,7 +670,7 @@ namespace Code.Scripts.Tile
             Vector3 tilePos = tile.position;
             Coordinate coordinate = new Coordinate(tilePos.x, tilePos.z);
 
-            _tileMap.TryGetValue(coordinate, out TileData tileData);
+            _tileMap.TryGetValue(coordinate, out _);
 
             return coordinate;
         }
@@ -546,50 +690,50 @@ namespace Code.Scripts.Tile
             return Biome.Meadow;
         }
 
-        private List<Coordinate> GetRiverSources(SortedDictionary<Coordinate, TileData> tileMap = null)
+        /*private List<Coordinate> GetPermanentRiverSources(SortedDictionary<Coordinate, TileData> tileMap = null)
         {
             tileMap ??= _tileMap;
 
-            for (int i = 0; i < widthAndHeight; i++)
+            for (int i = 0; i <= widthAndHeight; i++) // This will go from 0 to 63
             {
-                if (IsBiomeEqual(i, 0, Biome.River, tileMap))
+                if (BiomeEqual(i, 0, Biome.River, tileMap))
                     _riverSources.Add(new Coordinate(i, 0));
 
-                if (IsBiomeEqual(i, widthAndHeight, Biome.River, tileMap))
+                if (BiomeEqual(i, widthAndHeight, Biome.River, tileMap))
                     _riverSources.Add(new Coordinate(i, widthAndHeight));
 
-                if (IsBiomeEqual(0, i, Biome.River, tileMap))
+                if (BiomeEqual(0, i, Biome.River, tileMap))
                     _riverSources.Add(new Coordinate(0, i));
 
-                if (IsBiomeEqual(widthAndHeight, i, Biome.River, tileMap))
+                if (BiomeEqual(widthAndHeight, i, Biome.River, tileMap))
                     _riverSources.Add(new Coordinate(widthAndHeight, i));
             }
 
             return _riverSources;
-        }
+        }*/
 
-        private List<Coordinate> FindNextRivers(Coordinate at,
+        private List<Coordinate> FindNextRiversOld(Coordinate at,
             SortedDictionary<Coordinate, TileData> tileMap = null)
         {
             tileMap ??= _tileMap;
             List<Coordinate> nextRivers = new List<Coordinate>();
 
-            if (at.X < widthAndHeight && IsBiomeEqual(at.X + 1, at.Z, Biome.River, tileMap))
+            if (at.X < widthAndHeight && BiomeEqual(at.X + 1, at.Z, Biome.River, tileMap))
                 nextRivers.Add(new Coordinate(at.X + 1, at.Z));
 
-            if (at.X > 0 && IsBiomeEqual(at.X - 1, at.Z, Biome.River, tileMap))
+            if (at.X > 0 && BiomeEqual(at.X - 1, at.Z, Biome.River, tileMap))
                 nextRivers.Add(new Coordinate(at.X - 1, at.Z));
 
-            if (at.Z < widthAndHeight && IsBiomeEqual(at.X, at.Z + 1, Biome.River, tileMap))
+            if (at.Z < widthAndHeight && BiomeEqual(at.X, at.Z + 1, Biome.River, tileMap))
                 nextRivers.Add(new Coordinate(at.X, at.Z + 1));
 
-            if (at.Z > 0 && IsBiomeEqual(at.X, at.Z - 1, Biome.River, tileMap))
+            if (at.Z > 0 && BiomeEqual(at.X, at.Z - 1, Biome.River, tileMap))
                 nextRivers.Add(new Coordinate(at.X, at.Z - 1));
 
             return nextRivers;
         }
 
-        private bool IsBiomeEqual(int x, int z, Biome biome,
+        private bool BiomeEqual(int x, int z, Biome biome,
             SortedDictionary<Coordinate, TileData> tileMap = null)
         {
             tileMap ??= _tileMap;
@@ -597,13 +741,14 @@ namespace Code.Scripts.Tile
             return tileMap[new Coordinate(x, z)].Biome == biome;
         }
 
-        private bool IsDirectionEqual(int x, int z, Direction direction,
+        //TODO remove
+        /*private bool IsDirectionEqual(int x, int z, Direction direction,
             SortedDictionary<Coordinate, TileData> tileMap = null)
         {
             tileMap ??= _tileMap;
 
             return tileMap[new Coordinate(x, z)].Direction == direction;
-        }
+        }*/
 
         public float GetCorneredRiversInfluence(float corneredRiverInfluenceCap,
             SortedDictionary<Coordinate, TileData> tileMap = null)

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Code.Scripts.Structs
 {
@@ -9,8 +10,8 @@ namespace Code.Scripts.Structs
 
         public Coordinate(float x, float z)
         {
-            X = (int)(x - 0.5f);
-            Z = (int)(z - 0.5f);
+            X = Mathf.FloorToInt(x);
+            Z = Mathf.FloorToInt(z);
         }
 
         public Coordinate(int x, int z)

@@ -34,9 +34,6 @@ namespace Code.Scripts.Tile
 
         private const float TemperatureFactor = 0.0001f;
         private const float GwlFactor = 0.1f;
-        //private float _riverCornerFactor = 1; // commented 
-
-        private QuestManager _qm;
 
         //Shader props
         private readonly int _enableHighlight = Shader.PropertyToID("_Enable_Highlight");
@@ -283,17 +280,6 @@ namespace Code.Scripts.Tile
             #endregion*/
 
             #endregion
-
-            Init();
-        }
-
-        public void Init()
-        {
-            GameObject questManager = GameObject.Find("QuestManager");
-            if (questManager != null)
-                _qm = questManager.GetComponent<QuestManager>();
-            else
-                Debug.LogWarning("QuestManager is not found");
         }
 
         #region InfluenceStructs
@@ -337,7 +323,7 @@ namespace Code.Scripts.Tile
             Transform activeTile = FindActiveTile(tile.gameObject);
             MeshRenderer activeRenderer = activeTile.GetComponentInChildren<MeshRenderer>();
 
-            if (activeRenderer == null) return;
+            if (activeRenderer is null) return;
 
             foreach (Material material in activeRenderer.materials)
             {
@@ -411,7 +397,11 @@ namespace Code.Scripts.Tile
             return _neighborTiles
                 .SelectMany(FindCloseByNeighbors)
                 .Where(neighbor =>
-                    FindActiveTile(neighbor.gameObject).CompareTag("River") && !_riverTiles.Contains(neighbor))
+                {
+                    var activeTile = FindActiveTile(neighbor.gameObject);
+                    return (activeTile.CompareTag("River") || activeTile.CompareTag("RiverSealed")) &&
+                           !_riverTiles.Contains(neighbor);
+                })
                 .ToList();
         }
 
@@ -432,8 +422,9 @@ namespace Code.Scripts.Tile
                 neighborTile.GetComponent<Tile>().SetPositionAnimated();
                 SetHighlight(neighborTile, 1, selectedTileComponent.CanPlace ? 0 : 1);
             }
-        }
 
+            selectedTileComponent.IsVerified = selectedTileComponent.CanPlace;
+        }
 
         public void HidePreview()
         {
@@ -478,19 +469,10 @@ namespace Code.Scripts.Tile
                 _originalRiverConfigurations.Remove(riverTile);
             }
 
-            /*foreach (Transform dynamicRiverTile in DynamicRiverTiles)
-            {
-                Tile tile = dynamicRiverTile.GetComponent<Tile>();
-
-                GridHelper.UpdateGridAt(new Coordinate(dynamicRiverTile.position.x, dynamicRiverTile.position.z),
-                    new TileData(tile.GetBiome(), tile.GetDirection(), tile.GetRiverConfiguration()));
-            }*/
-
             selectedTileComponent.CanPlace = true;
             _originalRotations.Clear();
             _originalRiverConfigurations.Clear();
             _riverTiles.Clear();
-            //_riverCornerFactor = 1;
         }
 
         #endregion
@@ -532,7 +514,7 @@ namespace Code.Scripts.Tile
                     Tile tile = riverTile.GetComponent<Tile>();
 
                     Coordinate coord = new Coordinate(riverTile.position.x, riverTile.position.z);
-                    
+
                     GridHelper.Instance.UpdateGridAt(coord,
                         new TileData(tile.GetBiome(), tile.GetDirection(), tile.GetRiverConfiguration()));
                     HabitatSuitabilityManager.Instance.UpdateTile(coord.X, coord.Z, Biome.River);
@@ -559,12 +541,13 @@ namespace Code.Scripts.Tile
                 if (GameManager.Instance.GetSelectedBiome() != Biome.River)
                 {
                     Coordinate coord = new Coordinate(neighborTile.position.x, neighborTile.position.z);
-                    
+
                     GridHelper.Instance.UpdateGridAt(coord,
                         new TileData(tile.GetBiome(), tile.GetDirection(), tile.GetRiverConfiguration()));
-                    HabitatSuitabilityManager.Instance.UpdateTile(coord.X, coord.Z, GameManager.Instance.GetSelectedBiome());
+                    HabitatSuitabilityManager.Instance.UpdateTile(coord.X, coord.Z,
+                        GameManager.Instance.GetSelectedBiome());
                 }
-                    
+
                 QuestManager.Instance.CheckQuestList();
             }
 
@@ -637,8 +620,6 @@ namespace Code.Scripts.Tile
                 gwl += neighborInfluence.GroundWater;
             }
 
-            //Nb of corner placed multiplication
-            //gwl *= _riverCornerFactor;
             return (temp, gwl);
         }
 
@@ -648,11 +629,17 @@ namespace Code.Scripts.Tile
 
         private void CheckRiverConfiguration(Transform riverTile)
         {
+            if (riverTile is null)
+                return;
+
+            string riverTag = FindActiveTile(riverTile.gameObject)?.CompareTag("RiverSealed") == true
+                ? "RiverSealed"
+                : "River";
             List<Transform> riverNeighbors = GetRiverNeighbors(riverTile);
             int neighborCount = riverNeighbors.Count;
 
             string configuration = GetRiverConfigurationByNeighborCount(neighborCount, riverNeighbors);
-            SetRiverConfiguration(riverTile, configuration);
+            SetRiverConfiguration(riverTile, riverTag, configuration);
 
             if (neighborCount >= 1 && neighborCount <= 3)
             {
@@ -663,7 +650,11 @@ namespace Code.Scripts.Tile
         private List<Transform> GetRiverNeighbors(Transform riverTile)
         {
             return FindCloseByNeighbors(riverTile)
-                .Where(neighbor => FindActiveTile(neighbor.gameObject).CompareTag("River"))
+                .Where(neighbor =>
+                {
+                    var activeTile = FindActiveTile(neighbor.gameObject);
+                    return activeTile.CompareTag("River") || activeTile.CompareTag("RiverSealed");
+                })
                 .ToList();
         }
 
@@ -673,7 +664,7 @@ namespace Code.Scripts.Tile
             {
                 0 => "RiverStraight",
                 1 => "RiverEnd",
-                2 => IsRiverStraight(neighbors) ? "RiverStraight" : "RiverCorner",
+                2 => RiverStraight(neighbors) ? "RiverStraight" : "RiverCorner",
                 3 => "RiverSplit",
                 4 => "RiverCross",
                 _ => "RiverStraight"
@@ -690,7 +681,7 @@ namespace Code.Scripts.Tile
                     RotateRiverEnd(riverTile, neighbors[0].position - riverPos);
                     break;
                 case 2:
-                    bool isStraight = IsRiverStraight(neighbors);
+                    bool isStraight = RiverStraight(neighbors);
                     if (isStraight)
                         RotateStraightRiver(riverTile, neighbors);
                     else
@@ -789,16 +780,23 @@ namespace Code.Scripts.Tile
             riverTile.rotation = rotation;
         }
 
-        private void SetRiverConfiguration(Transform tile, string riverTag)
+        private void SetRiverConfiguration(Transform tile, string riverTag, string configurationTag)
         {
-            Transform riverTile = FindTileWithTag(tile.gameObject, "River");
+            if (tile is null) return;
+
+            Transform riverTile = FindTileWithTag(tile.gameObject, riverTag);
+
+            if (riverTile is null) return;
+
+            if (string.IsNullOrEmpty(configurationTag)) return;
+
             foreach (Transform child in riverTile)
             {
-                child.gameObject.SetActive(child.CompareTag(riverTag));
+                child?.gameObject.SetActive(child.CompareTag(configurationTag));
             }
         }
 
-        private bool IsRiverStraight(List<Transform> riverNeighbors)
+        private static bool RiverStraight(List<Transform> riverNeighbors)
         {
             if (riverNeighbors.Count != 2) return false;
 
@@ -809,7 +807,8 @@ namespace Code.Scripts.Tile
 
         private void DeactivateAllRiverConfigurations(Transform tile)
         {
-            Transform riverTile = FindTileWithTag(tile.gameObject, "River");
+            Transform riverTile = FindTileWithTag(tile.gameObject, GetRiverTag(tile));
+
             foreach (Transform child in riverTile)
             {
                 child.gameObject.SetActive(false);
@@ -819,7 +818,8 @@ namespace Code.Scripts.Tile
         private void StoreOriginalRiverConfiguration(Transform tileTransform)
         {
             Tile tile = tileTransform.GetComponent<Tile>();
-            if (!tile.placedTile.CompareTag("River")) return;
+
+            if (!(tile.placedTile.CompareTag("River") || tile.placedTile.CompareTag("RiverSealed"))) return;
 
             string activeConfigTag = FindActiveRiverConfiguration(tile.placedTile);
             if (!string.IsNullOrEmpty(activeConfigTag))
@@ -828,15 +828,18 @@ namespace Code.Scripts.Tile
             }
         }
 
-        private string FindActiveRiverConfiguration(Transform riverTile)
+        public string FindActiveRiverConfiguration(Transform riverTile)
         {
-            return riverTile.Cast<Transform>()
-                .FirstOrDefault(child => child.gameObject.activeSelf)?.tag ?? string.Empty;
+            if (riverTile is not null)
+                return riverTile.Cast<Transform>()
+                    .FirstOrDefault(child => child is not null && child.gameObject.activeSelf)?.tag ?? string.Empty;
+
+            return string.Empty;
         }
 
         private void RevertRiverConfigurations(Transform tile)
         {
-            Transform riverTile = FindTileWithTag(tile.gameObject, "River");
+            Transform riverTile = FindTileWithTag(tile.gameObject, GetRiverTag(tile));
             Transform placedRiverTile = FindActiveTile(tile.gameObject);
 
             foreach (Transform child in riverTile)
@@ -847,6 +850,9 @@ namespace Code.Scripts.Tile
                 child.gameObject.SetActive(isOriginalConfig);
             }
         }
+
+        private string GetRiverTag(Transform tile) =>
+            FindActiveTile(tile.gameObject).CompareTag("RiverSealed") ? "RiverSealed" : "River";
 
         #endregion
 
@@ -877,12 +883,12 @@ namespace Code.Scripts.Tile
             return parent.transform.Cast<Transform>().FirstOrDefault(child => child.CompareTag(childTag));
         }
 
-        public Transform FindActiveTile(GameObject parent)
+        private Transform FindActiveTile(GameObject parent)
         {
             return parent.transform.Cast<Transform>().FirstOrDefault(child => child.gameObject.activeSelf);
         }
 
-        public List<Transform> FindCloseByNeighbors(Transform source)
+        public static List<Transform> FindCloseByNeighbors(Transform source)
         {
             Coordinate sourceCoord = GridHelper.Instance.GetTileCoordinate(source);
             List<Coordinate> neighborCoords = GridHelper.Instance.GetCloseByNeighbors(sourceCoord);
@@ -900,37 +906,14 @@ namespace Code.Scripts.Tile
 
             // Filter out sealed tiles using GridHelper's TileData
             List<Coordinate> filteredCoordinates = tilesWithinBrush.Where(coord =>
-                GridHelper.Instance.GetTileDataAt(coord).Biome != Biome.Sealed).ToList();
+            {
+                Biome biomeTile = GridHelper.Instance.GetTileDataAt(coord).Biome;
+                return biomeTile != Biome.Sealed && biomeTile != Biome.RiverSealed && biomeTile != Biome.IgnoreTile;
+            }).ToList();
 
             return GridHelper.Instance.GetTransformsFromCoordinates(filteredCoordinates);
         }
 
         #endregion
-
-        #region Get
-
-        public Biome GetBiomeFromTag(string sourceTag)
-        {
-            return sourceTag switch
-            {
-                "Meadow" => Biome.Meadow,
-                "Farmland" => Biome.Farmland,
-                "ForestPine" => Biome.ForestPine,
-                "ForestDeciduous" => Biome.ForestDeciduous,
-                "ForestMixed" => Biome.ForestMixed,
-                "River" => Biome.River,
-                _ => Biome.Sealed
-            };
-        }
-
-        #endregion
-
-        public void CleanUp()
-        {
-            _neighborTiles.Clear();
-            _riverTiles.Clear();
-            _originalRotations.Clear();
-            _originalRiverConfigurations.Clear();
-        }
     }
 }
