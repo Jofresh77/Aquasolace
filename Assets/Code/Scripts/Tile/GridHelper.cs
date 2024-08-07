@@ -54,7 +54,7 @@ namespace Code.Scripts.Tile
             _riverSources.Clear();
         }
 
-        public void Init()
+        private void Init()
         {
             Transform tileMap = GameObject.FindWithTag("TileMap").transform;
 
@@ -74,8 +74,6 @@ namespace Code.Scripts.Tile
             widthAndHeight = (int)Mathf.Sqrt(_tileMap.Count) - 1; //WORKS ONLY WITH SQUARED GRID-MAPS
 
             // get the river tile that are located on the border
-            //TODO rm
-            //_riverSources = GetPermanentRiverSources();
             _riverSources = FindBorderRiverSources(_tileMap);
         }
 
