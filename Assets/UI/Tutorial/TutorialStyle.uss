@@ -1,0 +1,21 @@
+VisualElement {}
+
+.video-idle-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTIdleDE.renderTexture");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.video-quest-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTQuestDE.renderTexture");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.video-interaction-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTInteractionDE.renderTexture");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.video-condition-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTConditionsDE.renderTexture");
+    -unity-background-scale-mode: scale-to-fit;
+}

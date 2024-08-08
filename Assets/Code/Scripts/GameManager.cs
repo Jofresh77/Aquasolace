@@ -132,7 +132,7 @@ namespace Code.Scripts
         {
             RemainingResources = new Dictionary<Biome, float>
             {
-                { Biome.Meadow, 60 },
+                { Biome.Meadow, 200 },
                 { Biome.ForestPine, 50 },
                 { Biome.ForestDeciduous, 60 },
                 { Biome.ForestMixed, 40 },
