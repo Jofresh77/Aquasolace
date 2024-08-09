@@ -100,6 +100,34 @@ MonoBehaviour:
       nurture these wonderful creatures.\r"
     m_Metadata:
       m_Items: []
+  - m_Id: 6527653159624704
+    m_Localized: welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527761779515392
+    m_Localized: interaction1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527778401542144
+    m_Localized: interaction2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527791131254784
+    m_Localized: quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527815739236352
+    m_Localized: condition1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527832801665024
+    m_Localized: condition2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527847695638528
+    m_Localized: conclusion
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

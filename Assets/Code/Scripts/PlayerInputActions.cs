@@ -73,6 +73,15 @@ namespace Code.Scripts
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIDebug"",
+                    ""type"": ""Button"",
+                    ""id"": ""169f51b6-5c63-489d-b936-08930638ea5c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -163,6 +172,17 @@ namespace Code.Scripts
                     ""action"": ""QuestMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80062063-1847-4d5c-9f3b-814400a3eb97"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIDebug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -176,6 +196,7 @@ namespace Code.Scripts
             m_PlayerActionMap_Pause = m_PlayerActionMap.FindAction("Pause", throwIfNotFound: true);
             m_PlayerActionMap_BrushSize = m_PlayerActionMap.FindAction("BrushSize", throwIfNotFound: true);
             m_PlayerActionMap_QuestMenu = m_PlayerActionMap.FindAction("QuestMenu", throwIfNotFound: true);
+            m_PlayerActionMap_UIDebug = m_PlayerActionMap.FindAction("UIDebug", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -242,6 +263,7 @@ namespace Code.Scripts
         private readonly InputAction m_PlayerActionMap_Pause;
         private readonly InputAction m_PlayerActionMap_BrushSize;
         private readonly InputAction m_PlayerActionMap_QuestMenu;
+        private readonly InputAction m_PlayerActionMap_UIDebug;
         public struct PlayerActionMapActions
         {
             private @PlayerInputActions m_Wrapper;
@@ -251,6 +273,7 @@ namespace Code.Scripts
             public InputAction @Pause => m_Wrapper.m_PlayerActionMap_Pause;
             public InputAction @BrushSize => m_Wrapper.m_PlayerActionMap_BrushSize;
             public InputAction @QuestMenu => m_Wrapper.m_PlayerActionMap_QuestMenu;
+            public InputAction @UIDebug => m_Wrapper.m_PlayerActionMap_UIDebug;
             public InputActionMap Get() { return m_Wrapper.m_PlayerActionMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -275,6 +298,9 @@ namespace Code.Scripts
                 @QuestMenu.started += instance.OnQuestMenu;
                 @QuestMenu.performed += instance.OnQuestMenu;
                 @QuestMenu.canceled += instance.OnQuestMenu;
+                @UIDebug.started += instance.OnUIDebug;
+                @UIDebug.performed += instance.OnUIDebug;
+                @UIDebug.canceled += instance.OnUIDebug;
             }
 
             private void UnregisterCallbacks(IPlayerActionMapActions instance)
@@ -294,6 +320,9 @@ namespace Code.Scripts
                 @QuestMenu.started -= instance.OnQuestMenu;
                 @QuestMenu.performed -= instance.OnQuestMenu;
                 @QuestMenu.canceled -= instance.OnQuestMenu;
+                @UIDebug.started -= instance.OnUIDebug;
+                @UIDebug.performed -= instance.OnUIDebug;
+                @UIDebug.canceled -= instance.OnUIDebug;
             }
 
             public void RemoveCallbacks(IPlayerActionMapActions instance)
@@ -318,6 +347,7 @@ namespace Code.Scripts
             void OnPause(InputAction.CallbackContext context);
             void OnBrushSize(InputAction.CallbackContext context);
             void OnQuestMenu(InputAction.CallbackContext context);
+            void OnUIDebug(InputAction.CallbackContext context);
         }
     }
 }

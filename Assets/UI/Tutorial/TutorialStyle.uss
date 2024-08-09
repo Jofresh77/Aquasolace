@@ -1,21 +1,65 @@
-VisualElement {}
+VisualElement {
+}
 
-.video-idle-de {
-    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTIdleDE.renderTexture");
+.video-idle {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTIdle.renderTexture?fileID=8400000&guid=2cd59bbeab11b654884cfdc754d7b91a&type=2#RTIdle");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .video-quest-de {
-    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTQuestDE.renderTexture");
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTQuestDE.renderTexture?fileID=8400000&guid=52cb09d1a4a1b744ca0d16ef98cbf385&type=2#RTQuestDE");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .video-interaction-de {
-    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTInteractionDE.renderTexture");
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTInteractionDE.renderTexture?fileID=8400000&guid=7a636844de08b2941a85d3a09fc30328&type=2#RTInteractionDE");
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .video-condition-de {
-    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTConditionsDE.renderTexture");
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTConditionsDE.renderTexture?fileID=8400000&guid=0c0c6df4eeef5644eb9035b336d67bb3&type=2#RTConditionsDE");
     -unity-background-scale-mode: scale-to-fit;
+}
+
+.container-text-and-btns {
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+}
+
+.position-center {
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+}
+
+.position-top-left {
+    left: 5%;
+    top: 5%;
+}
+
+.position-top-right {
+    right: 5%;
+    top: 5%;
+}
+
+.position-bottom-left {
+    left: 5%;
+    bottom: 5%;
+}
+
+.position-bottom-right {
+    right: 5%;
+    bottom: 5%;
+}
+
+.position-top-center {
+    left: 50%;
+    top: 5%;
+    translate: -50% 0;
+}
+
+.position-bottom-center {
+    left: 50%;
+    bottom: 5%;
+    translate: -50% 0;
 }

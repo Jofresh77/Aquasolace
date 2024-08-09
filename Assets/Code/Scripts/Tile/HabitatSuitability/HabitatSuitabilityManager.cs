@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,7 +115,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
                 if (!visited[i] && biomeRequirements.ContainsKey(_biomeMap[i]))
                 {
                     List<Coordinate> cluster = FloodFill(i, visited, biomeRequirements.Keys.ToHashSet(), maxDistanceFromCenter, maxAmountTile);
-                    if (IsSuitableHabitat(cluster, biomeRequirements) && cluster.Count >= minTotalSize)
+                    if (SuitableHabitat(cluster, biomeRequirements) && cluster.Count >= minTotalSize)
                     {
                         suitableHabitats.Add(cluster);
                     }
@@ -142,7 +143,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
                 int z = currentIndex / _mapSize;
                 Coordinate currentCoord = new Coordinate(x, z);
 
-                if (IsWithinCentroidDistance(currentCoord, centroid, cluster.Count, maxDistanceFromCenter))
+                if (WithinCentroidDistance(currentCoord, centroid, cluster.Count, maxDistanceFromCenter))
                 {
                     cluster.Add(currentCoord);
                     centroid = UpdateCentroid(centroid, currentCoord, cluster.Count);
@@ -158,7 +159,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
             return cluster;
         }
 
-        private bool IsWithinCentroidDistance(Coordinate coord, (float X, float Z) centroid, int clusterSize, float maxDistanceFromCenter)
+        private static bool WithinCentroidDistance(Coordinate coord, (float X, float Z) centroid, int clusterSize, float maxDistanceFromCenter)
         {
             if (clusterSize == 0) return true;
 
@@ -185,7 +186,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
             }
         }
 
-        private bool IsSuitableHabitat(List<Coordinate> cluster, Dictionary<Biome, int> biomeRequirements)
+        private bool SuitableHabitat(List<Coordinate> cluster, Dictionary<Biome, int> biomeRequirements)
         {
             Dictionary<Biome, int> biomeCounts = new Dictionary<Biome, int>();
 
