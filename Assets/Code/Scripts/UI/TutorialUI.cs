@@ -95,31 +95,31 @@ namespace Code.Scripts.UI
                 {
                     Stage = TutorialStage.Interaction, 
                     TextKey = "tutorial_interaction_1",
-                    PositionClass = "position-top-left"
+                    PositionClass = "position-top-center"
                 },
                 new()
                 {
                     Stage = TutorialStage.Interaction, 
                     TextKey = "tutorial_interaction_2",
-                    PositionClass = "position-bottom-right"
+                    PositionClass = "position-top-center"
                 },
                 new() 
                 { 
                     Stage = TutorialStage.Quest,
                     TextKey = "tutorial_quest",
-                    PositionClass = "position-top-right" 
+                    PositionClass = "position-top-left" 
                 },
                 new()
                 {
                     Stage = TutorialStage.Condition, 
                     TextKey = "tutorial_condition_1",
-                    PositionClass = "position-bottom-left"
+                    PositionClass = "position-top-left"
                 },
                 new()
                 {
                     Stage = TutorialStage.Condition, 
                     TextKey = "tutorial_condition_2",
-                    PositionClass = "position-top-center"
+                    PositionClass = "position-top-left"
                 },
                 new()
                 {
