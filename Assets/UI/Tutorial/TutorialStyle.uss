@@ -1,0 +1,44 @@
+* {
+    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+}
+
+.video-idle {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTIdle.renderTexture?fileID=8400000&guid=2cd59bbeab11b654884cfdc754d7b91a&type=2#RTIdle");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.video-quest-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTQuestDE.renderTexture?fileID=8400000&guid=52cb09d1a4a1b744ca0d16ef98cbf385&type=2#RTQuestDE");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.video-interaction-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTInteractionDE.renderTexture?fileID=8400000&guid=7a636844de08b2941a85d3a09fc30328&type=2#RTInteractionDE");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.video-condition-de {
+    background-image: url("project://database/Assets/UI/Tutorial/Resources/RTConditionsDE.renderTexture?fileID=8400000&guid=0c0c6df4eeef5644eb9035b336d67bb3&type=2#RTConditionsDE");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.container-text-and-btns {
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+}
+
+.position-center {
+    left: 0;
+    top: 0;
+}
+
+.position-top-left {
+    left: -25%;
+    top: -25%;
+}
+
+.position-top-center {
+    left: 0;
+    top: -25%;
+}

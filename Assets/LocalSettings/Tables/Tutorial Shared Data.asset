@@ -79,6 +79,34 @@ MonoBehaviour:
     m_Key: tutorial_msg_biodiversity_3
     m_Metadata:
       m_Items: []
+  - m_Id: 6527653159624704
+    m_Key: tutorial_welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527761779515392
+    m_Key: tutorial_interaction_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527778401542144
+    m_Key: tutorial_interaction_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527791131254784
+    m_Key: tutorial_quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527815739236352
+    m_Key: tutorial_condition_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527832801665024
+    m_Key: tutorial_condition_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527847695638528
+    m_Key: tutorial_conclusion
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

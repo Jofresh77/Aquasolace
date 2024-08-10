@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.QuestSystem;
@@ -21,7 +20,7 @@ namespace Code.Scripts
 
         #region SerializeFields
 
-        [SerializeField] private Biome selectedBiome = Biome.River;
+        [SerializeField] private Biome selectedBiome = Biome.Meadow;
         [SerializeField] private BrushSize brushSize = BrushSize.Lg;
         [SerializeField] private Direction direction = Direction.PosZ;
 
@@ -40,6 +39,8 @@ namespace Code.Scripts
         [SerializeField] private NotificationsController notificationsController;
 
         [SerializeField] private float coolDownDuration = 4f;
+
+        [SerializeField] private GameObject allUIs;
 
         #endregion
 
@@ -126,13 +127,14 @@ namespace Code.Scripts
             _playerInputActions.PlayerActionMap.TileRotate.performed += OnTileRotate;
             _playerInputActions.PlayerActionMap.Pause.performed += HandleGamePause;
             _playerInputActions.PlayerActionMap.BrushSize.performed += OnBrushSizeChange;
+            _playerInputActions.PlayerActionMap.UIDebug.performed += OnDebugUI;
         }
 
         private void InitializeResources()
         {
             RemainingResources = new Dictionary<Biome, float>
             {
-                { Biome.Meadow, 60 },
+                { Biome.Meadow, 200 },
                 { Biome.ForestPine, 50 },
                 { Biome.ForestDeciduous, 60 },
                 { Biome.ForestMixed, 40 },
@@ -201,6 +203,8 @@ namespace Code.Scripts
 
         #region Input Handling
 
+        private void OnDebugUI(InputAction.CallbackContext obj) => allUIs.SetActive(!allUIs.activeSelf);
+        
         private void OnTileRotate(InputAction.CallbackContext obj)
         {
             if (!IsGameStarted || IsGamePaused) return;
@@ -346,6 +350,7 @@ namespace Code.Scripts
             _playerInputActions.PlayerActionMap.TileRotate.performed -= OnTileRotate;
             _playerInputActions.PlayerActionMap.Pause.performed -= HandleGamePause;
             _playerInputActions.PlayerActionMap.BrushSize.performed -= OnBrushSizeChange;
+            _playerInputActions.PlayerActionMap.UIDebug.performed -= OnDebugUI;
             _playerInputActions.Disable();
             _playerInputActions = null;
         }

@@ -36,7 +36,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 32581298876416
     m_Localized: "Hello and welcome to AquaSolace!\\nMy name is Mizu. Let\u2019s
-      save our drinking water together \u2013 I\u2019ll\\nexplain how."
+      save our drinking water together \u2013 I\u2019ll\\nexplain you how."
     m_Metadata:
       m_Items: []
   - m_Id: 32664530644992
@@ -67,7 +67,7 @@ MonoBehaviour:
   - m_Id: 1694516273152
     m_Localized: The Wasserrahmenrichtlinie (WRRL) aims to bring all bodies of water
       to a good status by 2027. The timer shows the current month and year. Plan
-      and act to achieve the targets on time!
+      and act to achieve the required quests on time!
     m_Metadata:
       m_Items: []
   - m_Id: 7064848588800
@@ -98,6 +98,54 @@ MonoBehaviour:
     m_Localized: "Oops! Be careful where you place\\nthat tile. Placing it incorrectly
       can harm the animals living there. Your thoughtful planning can protect and
       nurture these wonderful creatures.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527653159624704
+    m_Localized: "Hello and welcome to AquaSolace!\nmy name is Mizu. Let\u2019s save
+      our drinking water together I\u2019ll\nexplain you how."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527761779515392
+    m_Localized: "You can interact with this world by selecting biomes in the pannel
+      below \neither by clicking it with your mouse or pressing \"1 to 6\" on your
+      keyboard."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527778401542144
+    m_Localized: 'You can also switch the size of your brush by pressing "TAB"
+
+      as
+      well as rotating it by pressing "R" keyboard keys.
+
+
+      NOTE: all of the
+      inputs can be seen in the pause menu when pressing "ESC".'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527791131254784
+    m_Localized: "Complete quests to win the game! \nYou can open the quest board
+      by either clicking on the quest log to the left\nof your screen or pressing
+      \"L\". Not all quests need to completed for you to win,\nbut you can try to
+      achieve them all before time ends."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527815739236352
+    m_Localized: "Your biggest objective is to bring and keep ground water level
+      at a sufficient state. \nIf the level goes under 5% the game is lost, \nplacing
+      new biome on the map will have an impact on the environments, \nso take decisions
+      wisely."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527832801665024
+    m_Localized: "The Wasserrahmenrichtlinie (WRRL) aims to bring all \nbodies of
+      water to a good status by 2027. \nThe timer shows the current month and year.
+      \nPlan and act to achieve the required quests on time!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527847695638528
+    m_Localized: "I think this wraps up the most important things you need to know\nbefore
+      playing. Now it's your turn to try and learn how feasible \nsuch a environmental
+      balance can be achieved."
     m_Metadata:
       m_Items: []
   references:

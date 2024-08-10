@@ -103,6 +103,50 @@ MonoBehaviour:
       wunderbaren Kreaturen sch\xFCtzen und f\xF6rdern."
     m_Metadata:
       m_Items: []
+  - m_Id: 6527653159624704
+    m_Localized: "Hallo und herzlich willkommen zu AquaSolace! Mein Name ist Mizu.\nLass
+      uns zusammen unser Trinkwasser retten ich erkl\xE4re dir wie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527761779515392
+    m_Localized: "Du kannst mit dieser Welt interagieren, \nindem du Biome in dem
+      Feld unten ausw\xE4hlst entweder durch \nAnklicken mit der Maus oder durch
+      Dr\xFCcken der Tasten \"1 bis 6\" \nauf deiner Tastatur."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527778401542144
+    m_Localized: "Du kannst auch die Gr\xF6\xDFe deines Pinsels \xE4ndern, \nindem
+      du die \"TAB\"-Taste dr\xFCckst, sowie ihn mit der \"R\"-Taste drehen.\r\n\r\nHINWEIS:
+      Alle Eingaben sind im Pausenmen\xFC zu sehen, wenn du \"ESC\" dr\xFCckst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527791131254784
+    m_Localized: "Erf\xFClle Quests, um das Spiel zu gewinnen! \r\nDu kannst die
+      Questtafel \xF6ffnen, indem du entweder auf das \nQuestlog auf der linken Seite
+      deines Bildschirms klickst oder \"L\" dr\xFCckst. \nDu musst nicht alle Quests
+      erf\xFCllen, um zu gewinnen, aber du kannst versuchen, \nsie alle vor Ablauf
+      der Zeit zu erf\xFCllen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527815739236352
+    m_Localized: "Dein gr\xF6\xDFtes Ziel ist es, den Grundwasserspiegel auf einen
+      \nausreichenden Stand zu bringen und zu halten. \r\nWenn der Pegel unter 5%
+      f\xE4llt, ist das Spiel verloren.\nWenn du neue Biome auf der Karte platzierst,
+      hat das Auswirkungen \nauf die Umgebung, Triff also weise Entscheidungen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527832801665024
+    m_Localized: "Die Wasserrahmenrichtlinie (WRRL) zielt darauf ab, \nalle Gew\xE4sser
+      bis 2027 in einen guten Zustand zu bringen. \nDer Timer zeigt den aktuellen
+      Monat und das Jahr an. \nPlane und handle, um die Ziele rechtzeitig zu erreichen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6527847695638528
+    m_Localized: "Ich denke, damit sind die wichtigsten Dinge, die du vor dem \nSpielen
+      wissen musst, zusammengefasst. Jetzt bist du an der Reihe \nzu versuchen, herauszufinden,
+      wie ein solches \xF6kologisches \nGleichgewicht erreicht werden kann."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
