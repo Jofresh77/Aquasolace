@@ -1,5 +1,4 @@
-﻿using System;
-using Code.Scripts.QuestSystem;
+﻿using Code.Scripts.QuestSystem;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
@@ -20,7 +19,8 @@ namespace Code.Scripts.UI.QuestUI
 
         private void Start()
         {
-            UpdateQuestLogList();
+            SubscribeToQuestsAchievementChange();
+            UpdateQuestLogList(false);
         }
 
         private void Update()
@@ -38,11 +38,10 @@ namespace Code.Scripts.UI.QuestUI
             }
         }
 
-        public void UpdateQuestLogList()
+        public void UpdateQuestLogList(bool isAchieved)
         {
             _questLogList.Clear(); // remove all elements in the list
             
-            var questInfoList = QuestBoard.Instance.GetQuestInfoList();
             if (QuestBoard.Instance.GetCountOfSelectedQuests() == 0)
             {
                 _questLogList.style.display = DisplayStyle.None;
@@ -50,16 +49,18 @@ namespace Code.Scripts.UI.QuestUI
             }
             else
             {
-                _warningEmptyLogLabel.style.display = DisplayStyle.None;
-                _questLogList.style.display = DisplayStyle.Flex;
+                var questInfoList = QuestBoard.Instance.GetQuestInfoList();
+                
                 foreach (var questInfo in questInfoList)
                 {
-                    if (questInfo.isSelected)
-                    {
-                        var questLogEntry = CreateQuestLogEntry(questInfo);
-                        _questLogList.Add(questLogEntry);
-                    }
-                }   
+                    if (!questInfo.isSelected) continue;
+                    
+                    var questLogEntry = CreateQuestLogEntry(questInfo);
+                    _questLogList.Add(questLogEntry);
+                }
+                
+                _warningEmptyLogLabel.style.display = DisplayStyle.None;
+                _questLogList.style.display = DisplayStyle.Flex;
             }
         }
         
@@ -69,15 +70,20 @@ namespace Code.Scripts.UI.QuestUI
             questLogEntry
                 .SetName(questInfo.questName)
                 .SetDescription(questInfo.description)
-                // .SetCountCurrent(0)
-                // .SetCountToReach(50)
                 .SetRewardLabel(questInfo.rewardAmount.ToString())
                 .SetRewardIcon(ImageProvider.GetImageFromBiome(questInfo.rewardBiome))
                 .SetTipLabel(questInfo.description)
+                .SetAchieved(questInfo.isAchieved)
                 .HideCountSection()
                 .Build();
 
             return questLogEntry;
+        }
+        
+        private void SubscribeToQuestsAchievementChange()
+        {
+            foreach (var quest in QuestManager.Instance.questList.quests)
+                quest.OnAchievementChanged += UpdateQuestLogList;
         }
     }
 }

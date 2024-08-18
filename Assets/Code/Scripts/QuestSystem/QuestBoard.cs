@@ -56,8 +56,8 @@ namespace Code.Scripts.QuestSystem
 
         private void Start()
         {
-            DisplayQuests();
             SubscribeToQuestsAchievementChange();
+            DisplayQuests();
         }
 
         private void SubscribeToQuestsAchievementChange()
@@ -101,7 +101,7 @@ namespace Code.Scripts.QuestSystem
 
             foreach (var quest in QuestManager.Instance.questList.quests)
             {
-                if (quest is ProperEnvironment || quest is ReviveSpecies || quest is GetAreaSize)
+                if (quest is ProperEnvironment or ReviveSpecies or GetAreaSize)
                     continue;
 
                 if (quest.IsAchieved && quest.isPersistAchievement)
