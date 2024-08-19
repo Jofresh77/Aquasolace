@@ -22,6 +22,7 @@ namespace Code.Scripts.UI.QuestUI
         private const string TextContainerClass = "textContainer";
 
         private const string NameLabelClass = "nameLabel";
+        private const string NameLabelAchievedClass = "nameLabelAchieved";
 
         private const string ImageContainerClass = "imageContainer";
         private const string ImageClass = "logImage";
@@ -96,8 +97,10 @@ namespace Code.Scripts.UI.QuestUI
 
             var nameLabel = new Label();
             nameLabel.text = _name;
-            nameLabel.style.color = new StyleColor(_achieved ? Color.green : Color.white);
             nameLabel.AddToClassList(NameLabelClass);
+            if (_achieved)
+                nameLabel.AddToClassList(NameLabelAchievedClass);
+            
             textContainer.Add(nameLabel);
             
             // quest icon section

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.QuestSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
@@ -19,6 +20,8 @@ namespace Code.Scripts.UI.QuestUI
         private Label _countText;
 
         private List<VisualElement> _rows;
+
+        private PlayerInputActions _playerInputActions;
 
         #region information popup window variables
 
@@ -74,6 +77,10 @@ namespace Code.Scripts.UI.QuestUI
 
         private void Start()
         {
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.PlayerActionMap.Pause.performed += OnEscPress;
+            
             var questInfoList = QuestBoard.Instance.GetQuestInfoList();
             var curIndex = 0;
             var rowIndex = 0;
@@ -199,6 +206,8 @@ namespace Code.Scripts.UI.QuestUI
             _closeBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", "closeBtnText");
         }
 
+        private void OnEscPress(InputAction.CallbackContext obj) => OnCloseBtnClicked();
+        
         private void OnCloseBtnClicked()
         {
             _informationContainer.style.display = DisplayStyle.None;
@@ -215,6 +224,12 @@ namespace Code.Scripts.UI.QuestUI
             {
                 entry.SetAchieved(isAchieved);
             }
+        }
+        
+        private void OnDisable()
+        {
+            _playerInputActions.PlayerActionMap.Pause.performed -= OnEscPress;
+            _playerInputActions.Disable();
         }
     }
 }

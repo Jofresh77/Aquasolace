@@ -45,6 +45,10 @@
     white-space: normal;
 }
 
+.nameLabelAchieved {
+    color: #b4d383;
+}
+
 .descriptionLabel {
     white-space: normal;
     padding: 0;
