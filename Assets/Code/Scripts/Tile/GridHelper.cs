@@ -234,7 +234,6 @@ namespace Code.Scripts.Tile
                 coordinates.Exists(coordinate => BiomeEqual(coordinate.X, coordinate.Z, Biome.River)) &&
                 CheckRiverDisconnection())
             {
-                Debug.Log("River disconnection detected");
                 RestrictionMsg =
                     LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_river_branch");
                 return false;

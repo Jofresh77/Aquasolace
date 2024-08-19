@@ -86,8 +86,6 @@ namespace Code.Scripts.UI.QuestUI
 
                     var questInfo = questInfoList[curIndex];
 
-                    //Debug.Log(questInfo.questName);
-
                     string iconPath = questInfo.questNameId switch
                     {
                         "check_tmp_gwl_name" => "nabu_mascot_2",

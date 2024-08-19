@@ -27,7 +27,9 @@ namespace Code.Scripts.QuestSystem
         public event Action<bool> OnAchievementChanged;
 
         private bool _isAchieved;
-        public virtual bool IsAchieved
+        private bool _isRewarded;
+        
+        public bool IsAchieved
         {
             get => _isAchieved;
             set
@@ -40,8 +42,11 @@ namespace Code.Scripts.QuestSystem
                 {
                     NotifyAchievementChange(value);
                 }
+
+                if (_isRewarded) return;
                 
                 GameManager.Instance.RemainingResources[rewardBiome] += rewardAmount;
+                _isRewarded = true;
             }
         }
 

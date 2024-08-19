@@ -189,26 +189,6 @@ namespace Code.Scripts.QuestSystem
             };
         }
 
-        #region CheckHabitatCondition
-
-        /*public void CheckHabitatCondition()
-        {
-            var reviveSpeciesQuests = QuestManager.Instance.questList.quests
-                .OfType<ReviveSpecies>();
-
-            foreach (var reviveSpeciesQuest in reviveSpeciesQuests)
-            {
-                reviveSpeciesQuest.UpdateClusters();
-
-                if (!reviveSpeciesQuest.IsAchieved)
-                {
-                    Debug.Log($"Habitat conditions for {reviveSpeciesQuest.questName} are no longer met.");
-                }
-            }
-        }*/
-
-        #endregion
-
         #region CheckProperEnvironment
 
         private bool CheckProperEnvironmentAchievement(ProperEnvironment properEnvironment) =>
@@ -254,15 +234,6 @@ namespace Code.Scripts.QuestSystem
 
             return countZigZag >= countZigzagRiverPresent.mustHave;
         }
-
-        #endregion
-
-        #region CheckGetAreaSize
-
-        //TODO refactor later for area biome
-        /*private bool CheckGetAreaSizeAchievement(GetAreaSize getAreaSize)
-        {
-        }*/
 
         #endregion
     }
