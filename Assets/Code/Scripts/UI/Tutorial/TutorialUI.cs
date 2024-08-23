@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Code.Scripts.Managers;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
-using UnityEngine.Localization.Settings;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.Tutorial
 {
     public class TutorialUI : MonoBehaviour
     {

@@ -1,9 +1,8 @@
 ﻿using System;
 using Code.Scripts.Enums;
-using Code.Scripts.UI;
 using UnityEngine;
 
-namespace Code.Scripts
+namespace Code.Scripts.UI.Notification
 {
     public static class Notification
     {

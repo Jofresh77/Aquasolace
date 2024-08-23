@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Code.Scripts.Managers;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.MainMenu
 {
     public class MainMenu : MonoBehaviour
     {

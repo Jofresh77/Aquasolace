@@ -6,6 +6,9 @@ using Code.Scripts.QuestSystem;
 using Code.Scripts.Tile;
 using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.UI;
+using Code.Scripts.UI.GameEnd;
+using Code.Scripts.UI.HUD;
+using Code.Scripts.UI.Notification;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

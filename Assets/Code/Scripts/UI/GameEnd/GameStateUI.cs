@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.GameEnd
 {
     public class GameStateUI : MonoBehaviour
     {

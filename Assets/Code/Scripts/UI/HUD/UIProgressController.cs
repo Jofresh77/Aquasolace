@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
-
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.HUD
 {
     public class UIProgressController : MonoBehaviour
     {

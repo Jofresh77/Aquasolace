@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.MainMenu
 {
     public class CreditScreenUI : MonoBehaviour
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Code.Scripts.Enums;
 using Code.Scripts.Managers;
+using Code.Scripts.UI.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 

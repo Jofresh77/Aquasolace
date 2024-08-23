@@ -6,7 +6,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.HUD
 {
     public class PauseMenu : MonoBehaviour
     {

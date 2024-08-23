@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.GameEnd
 {
     public class EmailCollector : MonoBehaviour
     {

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using Code.Scripts.Tile;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI
+namespace Code.Scripts.UI.HUD
 {
     public class UIController : MonoBehaviour
     {
