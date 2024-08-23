@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
@@ -28,6 +29,7 @@ namespace Code.Scripts.QuestSystem
             public string questName;
             public string description;
             public bool isAchieved;
+            public bool isRewarded;
             public bool isSelected;
             public Biome rewardBiome;
             public int rewardAmount;
@@ -36,6 +38,7 @@ namespace Code.Scripts.QuestSystem
         [SerializeField] private List<QuestInfo> questInfoList = new();
 
         [SerializeField] private QuestBoardController questBoardController;
+        [SerializeField] private QuestLogController questLogController;
 
         private ProperEnvironment _properEnvironmentQuest;
 
@@ -70,7 +73,7 @@ namespace Code.Scripts.QuestSystem
         {
             DisplayQuests();
         }
-
+        
         private void DisplayQuests()
         {
             questInfoList.Clear();
@@ -83,6 +86,7 @@ namespace Code.Scripts.QuestSystem
                     questName = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", quest.questName),
                     description = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", quest.description),
                     isAchieved = quest.IsAchieved,
+                    isRewarded = quest.IsRewarded,
                     isSelected = quest.isSelected
                 };
 
@@ -236,5 +240,21 @@ namespace Code.Scripts.QuestSystem
         }
 
         #endregion
+        
+        /*public void StartUnselectionUpdateRoutine() => StartCoroutine(DelayedUpdateQuestSelection(4));
+        
+        private IEnumerator DelayedUpdateQuestSelection(float delay)
+        {
+            Debug.Log("START");
+            yield return new WaitForSeconds(delay);
+            Debug.Log("END");
+
+            foreach (var q 
+                     in QuestManager.Instance.questList.quests
+                         .Where(q => q.IsAchieved))
+                q.isSelected = false;
+            
+            questBoardController.UpdatePinnedQuests();
+        }*/
     }
 }

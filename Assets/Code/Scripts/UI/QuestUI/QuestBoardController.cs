@@ -13,7 +13,7 @@ namespace Code.Scripts.UI.QuestUI
     {
         [SerializeField] private int countOfRows = 3;
         [SerializeField] private int itemsPerRow = 5;
-
+        
         private VisualElement _questBoardContainer;
 
         private Label _tipText;
@@ -80,7 +80,7 @@ namespace Code.Scripts.UI.QuestUI
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.PlayerActionMap.Pause.performed += OnEscPress;
-            
+
             var questInfoList = QuestBoard.Instance.GetQuestInfoList();
             var curIndex = 0;
             var rowIndex = 0;
@@ -115,6 +115,7 @@ namespace Code.Scripts.UI.QuestUI
 
                     var boardEntry = new QuestBoardEntry();
                     var index = curIndex;
+                    boardEntry.QuestIndex = index;
                     boardEntry
                         .SetNameId(questInfo.questNameId)
                         .SetName(questInfo.questName)
@@ -122,9 +123,11 @@ namespace Code.Scripts.UI.QuestUI
                         .SetIcon(Resources.Load<Texture2D>(iconPath))
                         .SetSelectButtonClickHandler(() =>
                         {
-                            var updatedQuestInfo = QuestBoard.Instance.ToggleQuestIsSelected(index);
+                            var updatedQuestInfo = QuestBoard.Instance.ToggleQuestIsSelected(boardEntry.QuestIndex);
 
                             if (updatedQuestInfo == null) return;
+
+                            if (updatedQuestInfo.isSelected) return;
 
                             boardEntry.SetSelected(updatedQuestInfo.isSelected);
                         })
@@ -142,7 +145,7 @@ namespace Code.Scripts.UI.QuestUI
                     //boardEntry.SetIcon(questContainer.style.backgroundImage.value.texture);
                     questContainer.Add(boardEntry);
                     curIndex++;
-                    
+
                     _questBoardEntries.Add(boardEntry);
                 }
 
@@ -207,7 +210,7 @@ namespace Code.Scripts.UI.QuestUI
         }
 
         private void OnEscPress(InputAction.CallbackContext obj) => OnCloseBtnClicked();
-        
+
         private void OnCloseBtnClicked()
         {
             _informationContainer.style.display = DisplayStyle.None;
@@ -226,6 +229,17 @@ namespace Code.Scripts.UI.QuestUI
             }
         }
         
+        public void UpdatePinnedQuests()
+        {
+            Debug.Log("UPDATE");
+            var questInfoList = QuestBoard.Instance.GetQuestInfoList();
+
+            foreach (QuestBoardEntry e in _questBoardEntries)
+            {
+                e.SetSelected(questInfoList[e.QuestIndex].isSelected);
+            }
+        }
+
         private void OnDisable()
         {
             _playerInputActions.PlayerActionMap.Pause.performed -= OnEscPress;

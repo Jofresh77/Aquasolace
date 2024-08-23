@@ -45,6 +45,8 @@ namespace Code.Scripts.UI.QuestUI
         
         private Biome _rewardBiome;
         private int _rewardAmount;
+
+        public int QuestIndex { get; set; }
         
         #endregion
         

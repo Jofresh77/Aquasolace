@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Code.Scripts.UI.QuestUI
@@ -6,10 +7,12 @@ namespace Code.Scripts.UI.QuestUI
     public class QuestLogEntry : VisualElement
     {
         [UnityEngine.Scripting.Preserve]
-        public new class UxmlFactory : UxmlFactory<QuestLogEntry> { }
+        public new class UxmlFactory : UxmlFactory<QuestLogEntry>
+        {
+        }
 
         private readonly VisualElement _entry;
-        
+
         #region uss classes
 
         private const string FullSize = "fullSize";
@@ -23,9 +26,11 @@ namespace Code.Scripts.UI.QuestUI
 
         private const string NameLabelClass = "nameLabel";
         private const string NameLabelAchievedClass = "nameLabelAchieved";
+        private const string NameLabelPostAchievedClass = "nameLabelPostAchieved";
 
         private const string ImageContainerClass = "imageContainer";
         private const string ImageClass = "logImage";
+        private const string ImageClassRewarded = "logImageRewarded";
         private const string RewardLabelClass = "imageLabel";
 
         private const string TipContainerClass = "tipContainer";
@@ -35,11 +40,11 @@ namespace Code.Scripts.UI.QuestUI
         private const string HideClass = "hide";
 
         #endregion
-        
+
         #region variables
 
         private bool _hideCountSection;
-        
+
         private int _countCurrent;
         private int _countToReach;
 
@@ -54,14 +59,33 @@ namespace Code.Scripts.UI.QuestUI
 
         private bool _achieved;
 
+        private bool _rewarded;
+
+        private MonoBehaviour _coroutineRunner;
+
         #endregion
-        
+
         #region building the quest log entry
+
+        private Label _rewardLabelComp;
+
+        public QuestLogEntry(MonoBehaviour coroutineRunner)
+        {
+            _coroutineRunner = coroutineRunner;
+
+            AddToClassList(FullSize);
+
+            _entry = new VisualElement();
+            _entry.AddToClassList(EntryContainerClass);
+            hierarchy.Add(_entry);
+
+            _rewardImage = new VisualElement();
+        }
 
         public QuestLogEntry()
         {
             AddToClassList(FullSize);
-            
+
             _entry = new VisualElement();
             _entry.AddToClassList(EntryContainerClass);
             hierarchy.Add(_entry);
@@ -77,13 +101,13 @@ namespace Code.Scripts.UI.QuestUI
                 var countContainer = new VisualElement();
                 countContainer.AddToClassList(CountContainerClass);
                 _entry.Add(countContainer);
-            
+
                 // add the labels
                 var countCurrentLabel = new Label();
                 countCurrentLabel.text = _countCurrent.ToString();
                 countCurrentLabel.AddToClassList(CountCurrentLabelClass);
                 countContainer.Add(countCurrentLabel);
-            
+
                 var countToReachLabel = new Label();
                 countToReachLabel.text = _countToReach.ToString();
                 countToReachLabel.AddToClassList(CountToReachLabelClass);
@@ -98,31 +122,39 @@ namespace Code.Scripts.UI.QuestUI
             var nameLabel = new Label();
             nameLabel.text = _name;
             nameLabel.AddToClassList(NameLabelClass);
-            if (_achieved)
-                nameLabel.AddToClassList(NameLabelAchievedClass);
-            
+            switch (_achieved)
+            {
+                case true when _rewarded:
+                    nameLabel.AddToClassList(NameLabelAchievedClass);
+                    break;
+                case false when _rewarded:
+                    nameLabel.AddToClassList(NameLabelPostAchievedClass);
+                    break;
+            }
+
+            _rewardLabelComp = nameLabel;
             textContainer.Add(nameLabel);
-            
+
             // quest icon section
             var rewardContainer = new VisualElement();
             rewardContainer.AddToClassList(ImageContainerClass);
             _entry.Add(rewardContainer);
-            
-            _rewardImage.AddToClassList(ImageClass);
+
+            _rewardImage.AddToClassList(_rewarded ? ImageClassRewarded : ImageClass);
             rewardContainer.Add(_rewardImage);
 
             var rewardLabel = new Label();
             rewardLabel.text = _rewardLabel;
             rewardLabel.AddToClassList(RewardLabelClass);
             rewardContainer.Add(rewardLabel);
-            
+
             // tip on hover section
             var tipContainer = new VisualElement();
             tipContainer.AddToClassList(TipContainerClass);
             tipContainer.RegisterCallback<MouseEnterEvent>(evt => HoverTipContainer());
             tipContainer.RegisterCallback<MouseLeaveEvent>(evt => UnHoverTipContainer());
             _entry.Add(tipContainer);
-            
+
             // tip hover window
             _tipHoverContainer = new VisualElement();
             _tipHoverContainer.AddToClassList(TipHoverContainerClass);
@@ -133,58 +165,64 @@ namespace Code.Scripts.UI.QuestUI
             tipLabel.AddToClassList(TipLabelClass);
             tipLabel.text = _tipLabel;
             _tipHoverContainer.Add(tipLabel);
-            
+
             return this;
         }
 
         #endregion
-        
+
         #region tip container hover and unhover
-        
+
         private void HoverTipContainer()
         {
             _tipHoverContainer.RemoveFromClassList(HideClass);
         }
-        
+
         private void UnHoverTipContainer()
         {
             _tipHoverContainer.AddToClassList(HideClass);
         }
-        
+
         #endregion
-        
+
         #region setter methods
-        
+
         public QuestLogEntry SetCountCurrent(int count)
         {
             _countCurrent = count;
             return this;
         }
-        
+
         public QuestLogEntry SetCountToReach(int count)
         {
             _countToReach = count;
             return this;
         }
-        
+
         public QuestLogEntry SetName(string questName)
         {
             _name = questName;
             return this;
         }
-        
+
         public QuestLogEntry SetDescription(string description)
         {
             _description = description;
             return this;
         }
-        
+
         public QuestLogEntry SetRewardLabel(string rewardText)
         {
             _rewardLabel = rewardText;
+
+            /*if (_achieved)
+                _rewardLabelComp.AddToClassList(NameLabelAchievedClass);
+            else
+                _rewardLabelComp.RemoveFromClassList(NameLabelClass);    */
+            
             return this;
         }
-        
+
         public QuestLogEntry SetTipLabel(string tipText)
         {
             _tipLabel = tipText;
@@ -208,7 +246,33 @@ namespace Code.Scripts.UI.QuestUI
             _achieved = achieved;
             return this;
         }
-        
+
+        public bool GetAchieved() => _achieved;
+
+        public QuestLogEntry SetRewarded(bool value)
+        {
+            _rewarded = value;
+            return this;
+        } 
         #endregion
+
+        public void StartSelfDestruct(float delay)
+        {
+            _coroutineRunner.StartCoroutine(SelfDestructCoroutine(delay));
+        }
+
+        private IEnumerator SelfDestructCoroutine(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            RemoveSelf();
+        }
+
+        private void RemoveSelf()
+        {
+            if (parent != null)
+            {
+                parent.Remove(this);
+            }
+        }
     }
 }

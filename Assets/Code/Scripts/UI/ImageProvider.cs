@@ -42,5 +42,7 @@ namespace Code.Scripts.UI
                     return Resources.Load<Texture2D>("nabu_mascot_2");
             }
         }
+
+        public static Texture2D GetAchievedIcon() => Resources.Load<Texture2D>("rewarded_quest");
     }
 }
