@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Code.Scripts.Enums;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -27,7 +28,9 @@ namespace Code.Scripts.QuestSystem
         public event Action<bool> OnAchievementChanged;
 
         private bool _isAchieved;
-        public virtual bool IsAchieved
+        public bool IsRewarded { get; private set; }
+        
+        public bool IsAchieved
         {
             get => _isAchieved;
             set
@@ -40,8 +43,11 @@ namespace Code.Scripts.QuestSystem
                 {
                     NotifyAchievementChange(value);
                 }
+
+                if (IsRewarded) return;
                 
                 GameManager.Instance.RemainingResources[rewardBiome] += rewardAmount;
+                IsRewarded = true;
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
@@ -28,6 +29,7 @@ namespace Code.Scripts.QuestSystem
             public string questName;
             public string description;
             public bool isAchieved;
+            public bool isRewarded;
             public bool isSelected;
             public Biome rewardBiome;
             public int rewardAmount;
@@ -36,6 +38,7 @@ namespace Code.Scripts.QuestSystem
         [SerializeField] private List<QuestInfo> questInfoList = new();
 
         [SerializeField] private QuestBoardController questBoardController;
+        [SerializeField] private QuestLogController questLogController;
 
         private ProperEnvironment _properEnvironmentQuest;
 
@@ -56,8 +59,8 @@ namespace Code.Scripts.QuestSystem
 
         private void Start()
         {
-            DisplayQuests();
             SubscribeToQuestsAchievementChange();
+            DisplayQuests();
         }
 
         private void SubscribeToQuestsAchievementChange()
@@ -70,7 +73,7 @@ namespace Code.Scripts.QuestSystem
         {
             DisplayQuests();
         }
-
+        
         private void DisplayQuests()
         {
             questInfoList.Clear();
@@ -83,6 +86,7 @@ namespace Code.Scripts.QuestSystem
                     questName = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", quest.questName),
                     description = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", quest.description),
                     isAchieved = quest.IsAchieved,
+                    isRewarded = quest.IsRewarded,
                     isSelected = quest.isSelected
                 };
 
@@ -101,7 +105,7 @@ namespace Code.Scripts.QuestSystem
 
             foreach (var quest in QuestManager.Instance.questList.quests)
             {
-                if (quest is ProperEnvironment || quest is ReviveSpecies || quest is GetAreaSize)
+                if (quest is ProperEnvironment or ReviveSpecies or GetAreaSize)
                     continue;
 
                 if (quest.IsAchieved && quest.isPersistAchievement)
@@ -127,9 +131,10 @@ namespace Code.Scripts.QuestSystem
                 UpdateQuestBoardStatus(_properEnvironmentQuest.questName, _properEnvironmentQuest.IsAchieved);
         }
 
-        public void UpdateQuestBoardStatus(string questName, bool isAchieved)
+        public void UpdateQuestBoardStatus(string questName, bool isAchieved, bool isSelected = false)
         {
             questBoardController.MarkQuestAsAchieved(questName, isAchieved);
+            questBoardController.SetQuestSelectState(questName, isSelected);
         }
 
         private void RemoveQuestFromList(string questName)
@@ -189,26 +194,6 @@ namespace Code.Scripts.QuestSystem
             };
         }
 
-        #region CheckHabitatCondition
-
-        /*public void CheckHabitatCondition()
-        {
-            var reviveSpeciesQuests = QuestManager.Instance.questList.quests
-                .OfType<ReviveSpecies>();
-
-            foreach (var reviveSpeciesQuest in reviveSpeciesQuests)
-            {
-                reviveSpeciesQuest.UpdateClusters();
-
-                if (!reviveSpeciesQuest.IsAchieved)
-                {
-                    Debug.Log($"Habitat conditions for {reviveSpeciesQuest.questName} are no longer met.");
-                }
-            }
-        }*/
-
-        #endregion
-
         #region CheckProperEnvironment
 
         private bool CheckProperEnvironmentAchievement(ProperEnvironment properEnvironment) =>
@@ -256,14 +241,21 @@ namespace Code.Scripts.QuestSystem
         }
 
         #endregion
-
-        #region CheckGetAreaSize
-
-        //TODO refactor later for area biome
-        /*private bool CheckGetAreaSizeAchievement(GetAreaSize getAreaSize)
+        
+        /*public void StartUnselectionUpdateRoutine() => StartCoroutine(DelayedUpdateQuestSelection(4));
+        
+        private IEnumerator DelayedUpdateQuestSelection(float delay)
         {
-        }*/
+            Debug.Log("START");
+            yield return new WaitForSeconds(delay);
+            Debug.Log("END");
 
-        #endregion
+            foreach (var q 
+                     in QuestManager.Instance.questList.quests
+                         .Where(q => q.IsAchieved))
+                q.isSelected = false;
+            
+            questBoardController.UpdatePinnedQuests();
+        }*/
     }
 }

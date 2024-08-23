@@ -64,7 +64,7 @@ namespace Code.Scripts.UI
         {
             Destroy(GameObject.FindWithTag("MenuMusic"));
 
-            PlayerPrefs.SetString("Scene to go to", "newLevel");
+            PlayerPrefs.SetString("Scene to go to", "MainLevel");
             SceneManager.LoadScene("Loading Scene");
         }
         

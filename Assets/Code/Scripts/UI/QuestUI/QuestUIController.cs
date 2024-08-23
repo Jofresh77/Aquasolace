@@ -143,7 +143,7 @@ namespace Code.Scripts.UI.QuestUI
             {
                 _questBoardIsShown = false;
 
-                _questLogController.UpdateQuestLogList();
+                _questLogController.UpdateQuestLogList(false);
 
                 _boardContainer.style.display = DisplayStyle.None;
 
@@ -178,7 +178,7 @@ namespace Code.Scripts.UI.QuestUI
 
             _questBoardIsShown = false;
 
-            _questLogController.UpdateQuestLogList();
+            _questLogController.UpdateQuestLogList(false);
 
             _boardContainer.style.display = DisplayStyle.None;
 

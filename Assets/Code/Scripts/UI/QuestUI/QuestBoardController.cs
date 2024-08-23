@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.QuestSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
@@ -12,13 +13,15 @@ namespace Code.Scripts.UI.QuestUI
     {
         [SerializeField] private int countOfRows = 3;
         [SerializeField] private int itemsPerRow = 5;
-
+        
         private VisualElement _questBoardContainer;
 
         private Label _tipText;
         private Label _countText;
 
         private List<VisualElement> _rows;
+
+        private PlayerInputActions _playerInputActions;
 
         #region information popup window variables
 
@@ -74,6 +77,10 @@ namespace Code.Scripts.UI.QuestUI
 
         private void Start()
         {
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.PlayerActionMap.Pause.performed += OnEscPress;
+
             var questInfoList = QuestBoard.Instance.GetQuestInfoList();
             var curIndex = 0;
             var rowIndex = 0;
@@ -85,8 +92,6 @@ namespace Code.Scripts.UI.QuestUI
                     if (curIndex >= questInfoList.Count) break;
 
                     var questInfo = questInfoList[curIndex];
-
-                    //Debug.Log(questInfo.questName);
 
                     string iconPath = questInfo.questNameId switch
                     {
@@ -110,6 +115,7 @@ namespace Code.Scripts.UI.QuestUI
 
                     var boardEntry = new QuestBoardEntry();
                     var index = curIndex;
+                    boardEntry.QuestIndex = index;
                     boardEntry
                         .SetNameId(questInfo.questNameId)
                         .SetName(questInfo.questName)
@@ -117,7 +123,7 @@ namespace Code.Scripts.UI.QuestUI
                         .SetIcon(Resources.Load<Texture2D>(iconPath))
                         .SetSelectButtonClickHandler(() =>
                         {
-                            var updatedQuestInfo = QuestBoard.Instance.ToggleQuestIsSelected(index);
+                            var updatedQuestInfo = QuestBoard.Instance.ToggleQuestIsSelected(boardEntry.QuestIndex);
 
                             if (updatedQuestInfo == null) return;
 
@@ -137,7 +143,7 @@ namespace Code.Scripts.UI.QuestUI
                     //boardEntry.SetIcon(questContainer.style.backgroundImage.value.texture);
                     questContainer.Add(boardEntry);
                     curIndex++;
-                    
+
                     _questBoardEntries.Add(boardEntry);
                 }
 
@@ -201,6 +207,8 @@ namespace Code.Scripts.UI.QuestUI
             _closeBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", "closeBtnText");
         }
 
+        private void OnEscPress(InputAction.CallbackContext obj) => OnCloseBtnClicked();
+
         private void OnCloseBtnClicked()
         {
             _informationContainer.style.display = DisplayStyle.None;
@@ -217,6 +225,20 @@ namespace Code.Scripts.UI.QuestUI
             {
                 entry.SetAchieved(isAchieved);
             }
+        }
+
+        public void SetQuestSelectState(string questName, bool isSelected)
+        {
+            foreach (var entry in _questBoardEntries.Where(entry => entry.GetNameId().Equals(questName)))
+            {
+                entry.SetSelected(isSelected);
+            }
+        }
+
+        private void OnDisable()
+        {
+            _playerInputActions.PlayerActionMap.Pause.performed -= OnEscPress;
+            _playerInputActions.Disable();
         }
     }
 }
