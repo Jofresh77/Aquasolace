@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Scripts.PlayerControllers;
 using Code.Scripts.QuestSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using Code.Scripts.UI;
 using Code.Scripts.UI.QuestUI;
 using UnityEngine;
