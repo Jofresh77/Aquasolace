@@ -127,8 +127,6 @@ namespace Code.Scripts.UI.QuestUI
 
                             if (updatedQuestInfo == null) return;
 
-                            if (updatedQuestInfo.isSelected) return;
-
                             boardEntry.SetSelected(updatedQuestInfo.isSelected);
                         })
                         .SetRewardBiome(questInfo.rewardBiome) // Updated to use rewardBiome
@@ -228,15 +226,12 @@ namespace Code.Scripts.UI.QuestUI
                 entry.SetAchieved(isAchieved);
             }
         }
-        
-        public void UpdatePinnedQuests()
-        {
-            Debug.Log("UPDATE");
-            var questInfoList = QuestBoard.Instance.GetQuestInfoList();
 
-            foreach (QuestBoardEntry e in _questBoardEntries)
+        public void SetQuestSelectState(string questName, bool isSelected)
+        {
+            foreach (var entry in _questBoardEntries.Where(entry => entry.GetNameId().Equals(questName)))
             {
-                e.SetSelected(questInfoList[e.QuestIndex].isSelected);
+                entry.SetSelected(isSelected);
             }
         }
 

@@ -24,7 +24,7 @@ namespace Code.Scripts.UI.QuestUI
 
         private string _selectButtonClass = "boardSelectButton";
 
-        private string _selectedClass = "selected";
+        private string _selectedClassButtonClass = "boardSelectedButton";
 
         private string _achievedClass = "achieved";
         private string _notAchievedClass = "not-achieved";
@@ -131,13 +131,17 @@ namespace Code.Scripts.UI.QuestUI
         {
             if (isSelected)
             {
-                _selectButton.AddToClassList(_selectedClass); 
+                Debug.Log("1");
+                _selectButton.RemoveFromClassList(_selectButtonClass);
+                _selectButton.AddToClassList(_selectedClassButtonClass);
             }
             else
             {
-                _selectButton.RemoveFromClassList(_selectedClass);
+                Debug.Log("2");
+                _selectButton.RemoveFromClassList(_selectedClassButtonClass);
+                _selectButton.AddToClassList(_selectButtonClass);
             }
-            
+    
             return this;
         }
 

@@ -131,9 +131,10 @@ namespace Code.Scripts.QuestSystem
                 UpdateQuestBoardStatus(_properEnvironmentQuest.questName, _properEnvironmentQuest.IsAchieved);
         }
 
-        public void UpdateQuestBoardStatus(string questName, bool isAchieved)
+        public void UpdateQuestBoardStatus(string questName, bool isAchieved, bool isSelected = false)
         {
             questBoardController.MarkQuestAsAchieved(questName, isAchieved);
+            questBoardController.SetQuestSelectState(questName, isSelected);
         }
 
         private void RemoveQuestFromList(string questName)
