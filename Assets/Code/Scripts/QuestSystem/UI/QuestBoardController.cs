@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.PlayerControllers;
-using Code.Scripts.QuestSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.QuestUI
+namespace Code.Scripts.QuestSystem.UI
 {
     public class QuestBoardController : MonoBehaviour
     {
@@ -33,8 +32,6 @@ namespace Code.Scripts.UI.QuestUI
         private Label _rewardSuffixLabel;
         private Label _description;
         private Button _closeBtn;
-
-        private const string HideClass = "hide";
 
         private readonly List<QuestBoardEntry> _questBoardEntries = new();
 
@@ -182,7 +179,7 @@ namespace Code.Scripts.UI.QuestUI
 
         private void OnBoardEntryClick(ClickEvent evt, int rowIndex, int rowEntryIndex)
         {
-            if (evt.target is Button btn && btn.name == "selectBtn")
+            if (evt.target is Button { name: "selectBtn" })
             {
                 return;
             }

@@ -2,7 +2,7 @@
 using Code.Scripts.Enums;
 using UnityEngine;
 
-namespace Code.Scripts.UI.Notification
+namespace Code.Scripts.UI.HUD.Notification
 {
     public static class Notification
     {
@@ -26,17 +26,17 @@ namespace Code.Scripts.UI.Notification
                     notificationWindow.SetImage(image);
                     break;
                 case NotificationType.Restriction:
-                    notificationWindow.IsRestriction();
+                    notificationWindow.Restriction();
                     notificationWindow.ShowImage(false);
                     break;
                 case NotificationType.QuestAchievement:
                     notificationWindow.ShowImage(true);
-                    notificationWindow.IsAchievement();
+                    notificationWindow.Achievement();
                     notificationWindow.SetImage(image);
                     break;
                 case NotificationType.QuestFailure:
                     notificationWindow.ShowImage(true);
-                    notificationWindow.IsRestriction();
+                    notificationWindow.Restriction();
                     notificationWindow.SetImage(image);
                     break;
                 default:

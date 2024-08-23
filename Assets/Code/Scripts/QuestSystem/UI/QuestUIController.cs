@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.QuestUI
+namespace Code.Scripts.QuestSystem.UI
 {
     public class QuestUIController : MonoBehaviour
     {
@@ -21,13 +21,13 @@ namespace Code.Scripts.UI.QuestUI
         private Button _boardOpenBtn;
         private Button _boardCloseBtn;
 
-        private readonly string _openClass = "open";
-        private readonly string _closeClass = "close";
-        private readonly string _fastCloseClass = "fastClose";
-        private readonly string _showClass = "show";
-        private readonly string _hideClass = "hide";
+        private const string OpenClass = "open";
+        private const string CloseClass = "close";
+        private const string FastCloseClass = "fastClose";
+        private const string ShowClass = "show";
+        private const string HideClass = "hide";
 
-        private bool _questBoardIsShown = false;
+        private bool _questBoardIsShown;
         private bool _questLogIsShown = true;
 
         private QuestLogController _questLogController;
@@ -99,10 +99,10 @@ namespace Code.Scripts.UI.QuestUI
             if (_questBoardIsShown)
                 return; // the player should not be able to open the quest log when the quest board is shown
 
-            _logOpenBtn.RemoveFromClassList(_showClass);
-            _logOpenBtn.AddToClassList(_hideClass);
-            _logContainer.RemoveFromClassList(_closeClass);
-            _logContainer.AddToClassList(_openClass);
+            _logOpenBtn.RemoveFromClassList(ShowClass);
+            _logOpenBtn.AddToClassList(HideClass);
+            _logContainer.RemoveFromClassList(CloseClass);
+            _logContainer.AddToClassList(OpenClass);
 
             _questLogIsShown = true;
         }
@@ -112,19 +112,19 @@ namespace Code.Scripts.UI.QuestUI
             TileHelper.Instance.HidePreview();
             GameManager.Instance.IsMouseOverUi = false;
 
-            _logOpenBtn.RemoveFromClassList(_hideClass);
-            _logOpenBtn.AddToClassList(_showClass);
-            _logContainer.RemoveFromClassList(_openClass);
-            _logContainer.AddToClassList(_closeClass);
+            _logOpenBtn.RemoveFromClassList(HideClass);
+            _logOpenBtn.AddToClassList(ShowClass);
+            _logContainer.RemoveFromClassList(OpenClass);
+            _logContainer.AddToClassList(CloseClass);
 
             _questLogIsShown = false;
         }
 
         private void FastCloseLog()
         {
-            _logOpenBtn.RemoveFromClassList(_hideClass);
-            _logContainer.RemoveFromClassList(_openClass);
-            _logContainer.AddToClassList(_fastCloseClass);
+            _logOpenBtn.RemoveFromClassList(HideClass);
+            _logContainer.RemoveFromClassList(OpenClass);
+            _logContainer.AddToClassList(FastCloseClass);
 
             // no change of _questLogIsShown since we need it to reopen the log if it was opened before (only in this case)
         }
@@ -139,7 +139,7 @@ namespace Code.Scripts.UI.QuestUI
         {
             if (GameManager.Instance.IsGameInTutorial) return;
 
-            _boardContainer.ToggleInClassList(_hideClass);
+            _boardContainer.ToggleInClassList(HideClass);
 
             if (_boardContainer.style.display == DisplayStyle.Flex)
             {
@@ -176,7 +176,7 @@ namespace Code.Scripts.UI.QuestUI
             if (_boardContainer.style.display == DisplayStyle.None
                 || GameManager.Instance.IsPauseMenuOpened) return;
 
-            _boardContainer.ToggleInClassList(_hideClass);
+            _boardContainer.ToggleInClassList(HideClass);
 
             _questBoardIsShown = false;
 

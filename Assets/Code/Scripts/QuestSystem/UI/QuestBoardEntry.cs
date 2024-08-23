@@ -2,44 +2,44 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.QuestUI
+namespace Code.Scripts.QuestSystem.UI
 {
     public class QuestBoardEntry : VisualElement
     {
         [UnityEngine.Scripting.Preserve]
         public new class UxmlFactory : UxmlFactory<QuestBoardEntry> { }
 
-        private VisualElement _entry;
+        private readonly VisualElement _entry;
         
         #region uss classes
 
-        private string _fullSizeClass = "boardFullSize";
-        
-        private string _entryContainerClass = "boardEntryContainer";
+        private const string FullSizeClass = "boardFullSize";
 
-        private string _iconContainerClass = "boardIconContainer";
+        private const string EntryContainerClass = "boardEntryContainer";
 
-        private string _nameContainerClass = "boardNameContainer";
-        private string _nameLabelClass = "boardNameLabel";
+        private const string IconContainerClass = "boardIconContainer";
 
-        private string _selectButtonClass = "boardSelectButton";
+        private const string NameContainerClass = "boardNameContainer";
+        private const string NameLabelClass = "boardNameLabel";
 
-        private string _selectedClassButtonClass = "boardSelectedButton";
+        private const string SelectButtonClass = "boardSelectButton";
 
-        private string _achievedClass = "achieved";
-        private string _notAchievedClass = "not-achieved";
-        
+        private const string SelectedClassButtonClass = "boardSelectedButton";
+
+        private const string AchievedClass = "achieved";
+        private const string NotAchievedClass = "not-achieved";
+
         #endregion
         
         #region variables
 
-        private VisualElement _iconContainer;
+        private readonly VisualElement _iconContainer;
         private Texture2D _icon;
         private string _nameId;
         private string _name;
         private string _description;
 
-        private Button _selectButton;
+        private readonly Button _selectButton;
         
         private VisualElement _pinHoverContainer;
         
@@ -54,45 +54,41 @@ namespace Code.Scripts.UI.QuestUI
 
         public QuestBoardEntry()
         {
-            AddToClassList(_fullSizeClass);
+            AddToClassList(FullSizeClass);
 
             _entry = new VisualElement();
-            _entry.AddToClassList(_entryContainerClass);
+            _entry.AddToClassList(EntryContainerClass);
             hierarchy.Add(_entry);
             
             // create icon element so we can use it anywhere
             _iconContainer = new VisualElement();
-            _selectButton = new Button();
-            _selectButton.name = "selectBtn";
-            
-            // debug
-            // _name = "Have 5 Pair Deciduous & Mixed in one Area";
-            //
-            // SetIcon(Resources.Load<Texture2D>("nabu_mascot_2"));
-            // SetRewardBiome(Biome.Meadow);
-            // SetRewardCount(100);
-            // Build();
+            _selectButton = new Button
+            {
+                name = "selectBtn"
+            };
         }
 
         public QuestBoardEntry Build()
         {
             // add icon
-            _iconContainer.AddToClassList(_iconContainerClass);
+            _iconContainer.AddToClassList(IconContainerClass);
             _entry.Add(_iconContainer);
             
             // add name container
             var nameContainer = new VisualElement();
-            nameContainer.AddToClassList(_nameContainerClass);
+            nameContainer.AddToClassList(NameContainerClass);
             _entry.Add(nameContainer);
             
             // add label
-            var nameLabel = new Label();
-            nameLabel.text = _name;
-            nameLabel.AddToClassList(_nameLabelClass);
+            var nameLabel = new Label
+            {
+                text = _name
+            };
+            nameLabel.AddToClassList(NameLabelClass);
             nameContainer.Add(nameLabel);
             
             // add select icon
-            _selectButton.AddToClassList(_selectButtonClass);
+            _selectButton.AddToClassList(SelectButtonClass);
             _entry.Add(_selectButton);
             
             return this;
@@ -132,14 +128,14 @@ namespace Code.Scripts.UI.QuestUI
             if (isSelected)
             {
                 Debug.Log("1");
-                _selectButton.RemoveFromClassList(_selectButtonClass);
-                _selectButton.AddToClassList(_selectedClassButtonClass);
+                _selectButton.RemoveFromClassList(SelectButtonClass);
+                _selectButton.AddToClassList(SelectedClassButtonClass);
             }
             else
             {
                 Debug.Log("2");
-                _selectButton.RemoveFromClassList(_selectedClassButtonClass);
-                _selectButton.AddToClassList(_selectButtonClass);
+                _selectButton.RemoveFromClassList(SelectedClassButtonClass);
+                _selectButton.AddToClassList(SelectButtonClass);
             }
     
             return this;
@@ -149,13 +145,13 @@ namespace Code.Scripts.UI.QuestUI
         {
             if (isAchieved)
             {
-                _entry.RemoveFromClassList(_notAchievedClass);
-                _entry.AddToClassList(_achievedClass);
+                _entry.RemoveFromClassList(NotAchievedClass);
+                _entry.AddToClassList(AchievedClass);
             }
             else
             {
-                _entry.RemoveFromClassList(_achievedClass);
-                _entry.AddToClassList(_notAchievedClass);
+                _entry.RemoveFromClassList(AchievedClass);
+                _entry.AddToClassList(NotAchievedClass);
             }
 
             return this;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using Code.Scripts.Tile;
@@ -13,24 +14,28 @@ namespace Code.Scripts.UI.HUD
     {
         [SerializeField] private bool useTileLabelAsResourceCount = true;
         [SerializeField] private string resourceCountUnit = "x";
-        [SerializeField] private bool showResourceAvailabilityDependingOnBrush = false;
-        [SerializeField] private bool showInputPossibilityLabel = false;
+        [SerializeField] private bool showResourceAvailabilityDependingOnBrush;
+        [SerializeField] private bool showInputPossibilityLabel;
 
-        public IPanel panel;
+        public IPanel Panel;
         private int _numOfTiles;
-        private int _currSelectedTile = 0;
+        private int _currSelectedTile;
         private GroupBox _tileSelectGroup;
         private List<VisualElement> _tiles;
 
-        private string _selectedClass = "tileSelect--selected";
-        private string _unavailableClass = "unavailable";
-        private string _hideClass = "hide";
+        #region USS Classes
+
+        private const string SelectedClass = "tileSelect--selected";
+        private const string UnavailableClass = "unavailable";
+        private const string HideClass = "hide";
+
+        #endregion
 
         private Label _inputPossibilitiesLabel;
 
         //TESTING AND DEBUG
-        private Label gwlinf;
-        private Label tempinf;
+        private Label _gwlInf;
+        private Label _tempInf;
 
         private GroupBox _hotBarContainer;
 
@@ -50,11 +55,11 @@ namespace Code.Scripts.UI.HUD
         void Start()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
-            panel = root.panel;
+            Panel = root.panel;
             
             //TESTING AND DEBUG
-            gwlinf = root.Q<Label>("gwlinf");
-            tempinf = root.Q<Label>("tempinf");
+            _gwlInf = root.Q<Label>("gwlInf");
+            _tempInf = root.Q<Label>("tempInf");
 
             _hotBarContainer = root.Q<GroupBox>("BlurContainer");
             _hotBarContainer.RegisterCallback<MouseEnterEvent>(OnMouseEnterLog);
@@ -70,7 +75,7 @@ namespace Code.Scripts.UI.HUD
             else
             {
                 var inputPossibilityGroup = root.Q<VisualElement>("InputPossibilitiesGroup");
-                inputPossibilityGroup.AddToClassList(_hideClass);
+                inputPossibilityGroup.AddToClassList(HideClass);
             }
             
             // Check the children of the group box and count tiles
@@ -121,8 +126,8 @@ namespace Code.Scripts.UI.HUD
                         var oldTile = _tiles[oldSelected];
                         var newTile = _tiles[_currSelectedTile];
             
-                        oldTile.ToggleInClassList(_selectedClass);
-                        newTile.ToggleInClassList(_selectedClass);
+                        oldTile.ToggleInClassList(SelectedClass);
+                        newTile.ToggleInClassList(SelectedClass);
                         
                         SetSelectedTileType();
                     }));
@@ -130,7 +135,7 @@ namespace Code.Scripts.UI.HUD
             }
         
             // add selected class to first tile
-            _tiles[_currSelectedTile].AddToClassList(_selectedClass);
+            _tiles[_currSelectedTile].AddToClassList(SelectedClass);
             SetSelectedTileType();
         }
         
@@ -148,8 +153,8 @@ namespace Code.Scripts.UI.HUD
             UpdateBiomeNameLabels();
             
             //TESTING AND DEBUG
-            gwlinf.text = GameManager.Instance.GetGwlInfluence().ToString();
-            tempinf.text = GameManager.Instance.GetTempInfluence().ToString();
+            _gwlInf.text = GameManager.Instance.GetGwlInfluence().ToString(CultureInfo.CurrentCulture);
+            _tempInf.text = GameManager.Instance.GetTempInfluence().ToString(CultureInfo.CurrentCulture);
             
             // update label text after language has changed
             if(showInputPossibilityLabel && _inputPossibilitiesLabel.text != LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "input_possibilities"))
@@ -157,7 +162,7 @@ namespace Code.Scripts.UI.HUD
                 _inputPossibilitiesLabel.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "input_possibilities");
             }
             
-            // check if any key was pressed, afterwards check if it was one of our numbers for the tiles
+            // check if any key was pressed, afterward check if it was one of our numbers for the tiles
             if (Input.anyKeyDown && int.TryParse(Input.inputString, out int pressedNumber) && pressedNumber >= 1 && pressedNumber <= _numOfTiles && pressedNumber != _currSelectedTile + 1)
             {
                 var oldSelected = _currSelectedTile;
@@ -167,8 +172,8 @@ namespace Code.Scripts.UI.HUD
                 var oldTile = _tiles[oldSelected];
                 var newTile = _tiles[_currSelectedTile];
             
-                oldTile.ToggleInClassList(_selectedClass);
-                newTile.ToggleInClassList(_selectedClass);
+                oldTile.ToggleInClassList(SelectedClass);
+                newTile.ToggleInClassList(SelectedClass);
                 SetSelectedTileType();
             }
         }
@@ -216,11 +221,11 @@ namespace Code.Scripts.UI.HUD
                 {
                     if (!GameManager.Instance.IsResourceAvailable(biome))
                     {
-                        tile.AddToClassList(_unavailableClass);
+                        tile.AddToClassList(UnavailableClass);
                     }
                     else
                     {
-                        tile.RemoveFromClassList(_unavailableClass);
+                        tile.RemoveFromClassList(UnavailableClass);
                     }
                 }
                 else
@@ -228,11 +233,11 @@ namespace Code.Scripts.UI.HUD
                     // version 2: check if the resources for the biome are greater than 0
                     if (GameManager.Instance.RemainingResources[biome] <= 0)
                     {
-                        tile.AddToClassList(_unavailableClass);
+                        tile.AddToClassList(UnavailableClass);
                     }
                     else
                     {
-                        tile.RemoveFromClassList(_unavailableClass);
+                        tile.RemoveFromClassList(UnavailableClass);
                     }
                 }
             }

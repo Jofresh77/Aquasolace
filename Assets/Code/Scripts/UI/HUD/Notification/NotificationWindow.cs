@@ -1,31 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.Notification
+namespace Code.Scripts.UI.HUD.Notification
 {
     public class NotificationWindow : VisualElement
     {
         [UnityEngine.Scripting.Preserve]
         public new class UxmlFactory : UxmlFactory<NotificationWindow> { }
 
-        private VisualElement _window;
+        private readonly VisualElement _window;
 
         #region uss classes
 
-        private const string _notificationContainerClass = "notificationContainer";
-        private const string _isRestriction = "restriction";
-        private const string _isAchievement = "achievement";
-        private const string _windowClass = "window";
-        private const string _textContainerClass = "text-container";
-        private const string _msgLabelClass = "msg";
-        private const string _imageContainerClass = "image-container";
+        private const string NotificationContainerClass = "notificationContainer";
+        private const string RestrictionClass = "restriction";
+        private const string AchievementClass = "achievement";
+        private const string WindowClass = "window";
+        private const string TextContainerClass = "text-container";
+        private const string MsgLabelClass = "msg";
+        private const string ImageContainerClass = "image-container";
         #endregion
 
         #region msg + showImage bool
 
         private string _msgText;
         private bool _showImage = true;
-        private VisualElement _image;
+        private readonly VisualElement _image;
         private float _lifetime = 3f;
 
         #endregion
@@ -34,10 +34,10 @@ namespace Code.Scripts.UI.Notification
 
         public NotificationWindow()
         {
-            AddToClassList(_notificationContainerClass);
+            AddToClassList(NotificationContainerClass);
             
             _window = new VisualElement();
-            _window.AddToClassList(_windowClass);
+            _window.AddToClassList(WindowClass);
             hierarchy.Add(_window);
 
             // create image element so we can use it anywhere
@@ -59,7 +59,7 @@ namespace Code.Scripts.UI.Notification
             {
                 // picture section
                 VisualElement imageContainer = new VisualElement();
-                imageContainer.AddToClassList(_imageContainerClass);
+                imageContainer.AddToClassList(ImageContainerClass);
                 _window.Add(imageContainer);
                 
                 _image.AddToClassList("image");
@@ -68,12 +68,12 @@ namespace Code.Scripts.UI.Notification
             
             // text section
             VisualElement horizontalContainerText = new VisualElement();
-            horizontalContainerText.AddToClassList(_textContainerClass);
+            horizontalContainerText.AddToClassList(TextContainerClass);
             _window.Add(horizontalContainerText);
 
             Label msgLabel = new Label();
             msgLabel.text = _msgText;
-            msgLabel.AddToClassList(_msgLabelClass);
+            msgLabel.AddToClassList(MsgLabelClass);
 
             if (!_showImage)
             {
@@ -116,15 +116,15 @@ namespace Code.Scripts.UI.Notification
             return this;
         }
 
-        public NotificationWindow IsRestriction()
+        public NotificationWindow Restriction()
         {
-            _window.AddToClassList(_isRestriction);
+            _window.AddToClassList(RestrictionClass);
             return this;
         }
 
-        public NotificationWindow IsAchievement()
+        public NotificationWindow Achievement()
         {
-            _window.AddToClassList(_isAchievement);
+            _window.AddToClassList(AchievementClass);
             return this;
         }
             

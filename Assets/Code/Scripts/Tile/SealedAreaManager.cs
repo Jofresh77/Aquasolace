@@ -3,7 +3,7 @@ using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using Code.Scripts.UI;
 using Code.Scripts.Structs;
-using Code.Scripts.UI.Notification;
+using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 

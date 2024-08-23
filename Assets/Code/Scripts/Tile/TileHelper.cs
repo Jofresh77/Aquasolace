@@ -8,7 +8,7 @@ using Code.Scripts.UI;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using Code.Scripts.Tile.HabitatSuitability;
-using Code.Scripts.UI.Notification;
+using Code.Scripts.UI.HUD.Notification;
 
 namespace Code.Scripts.Tile
 {

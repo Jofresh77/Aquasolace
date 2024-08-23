@@ -1,19 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Code.Scripts.QuestSystem;
+﻿using Code.Scripts.UI;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.QuestUI
+namespace Code.Scripts.QuestSystem.UI
 {
     public class QuestLogController : MonoBehaviour
     {
         private VisualElement _questLogList;
         private Label _warningEmptyLogLabel;
-        
-        private Dictionary<string, QuestLogEntry> _questEntries = new ();
-        
+
         private void Awake()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;

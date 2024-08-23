@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.Notification
+namespace Code.Scripts.UI.HUD.Notification
 {
     public class NotificationsController : MonoBehaviour
     {
-        public bool useQueueSystem = false;
+        public bool useQueueSystem;
         public int maxNumbersOfShownNotifications = 4;
         private VisualElement _notificationsList;
         private Queue<NotificationWindow> _notificationsQueue;

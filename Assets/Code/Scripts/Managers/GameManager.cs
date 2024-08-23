@@ -8,7 +8,7 @@ using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.UI;
 using Code.Scripts.UI.GameEnd;
 using Code.Scripts.UI.HUD;
-using Code.Scripts.UI.Notification;
+using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,6 +45,12 @@ namespace Code.Scripts.Managers
         [SerializeField] private float coolDownDuration = 4f;
 
         [SerializeField] private GameObject allUIs;
+        
+        
+        [SerializeField] private GameObject blurredCirclePrefab;
+        [SerializeField] private float circleSize = 100f;
+        private GameObject _currentBlurredCircle;
+        private Camera _mainCamera;
 
         #endregion
 
@@ -91,6 +97,8 @@ namespace Code.Scripts.Managers
                 return;
             }
 
+            _mainCamera = Camera.main;
+            
             InitializeInputActions();
             InitializeResources();
         }
@@ -104,13 +112,18 @@ namespace Code.Scripts.Managers
         {
             if (IsGameContinue) return;
 
+            if (IsGamePaused) return;
+            
             if (!IsEnvConditionsCoolDown())
             {
                 UpdateEnvironmentalConditions();
             }
 
-            if (IsGamePaused) return;
-
+            if (_currentBlurredCircle is not null)
+            {
+                UpdateCirclePosition();
+            }
+            
             CheckTemperatureThresholds();
             CheckGroundWaterThreshold();
         }
@@ -230,6 +243,68 @@ namespace Code.Scripts.Managers
         {
             if (!IsGameStarted || IsGamePaused) return;
 
+            string keyPressed = ctx.action.GetBindingForControl(ctx.control).ToString().Split("/")[1];
+
+            switch (keyPressed)
+            {
+                case "q":
+                    brushSize = BrushSize.Sm;
+                    break;
+                case "w":
+                    brushSize = BrushSize.Md;
+                    break;
+                case "e":
+                    brushSize = BrushSize.Lg;
+                    break;
+                case "tab":
+                    if (ctx.performed)
+                    {
+                        ShowBlurredCircle();
+                    }
+                    else if (ctx.canceled)
+                    {
+                        HideBlurredCircle();
+                    }
+                    return; // Exit the method early as we don't want to change brush size for TAB
+                default:
+                    brushSize = CycleBrushSize();
+                    break;
+            }
+
+            TileHelper.Instance.HidePreview();
+            TileHelper.Instance.ShowPreview();
+        }
+
+        private void ShowBlurredCircle()
+        {
+            if (_currentBlurredCircle == null)
+            {
+                _currentBlurredCircle = Instantiate(blurredCirclePrefab, transform, false);
+                _currentBlurredCircle.GetComponent<RectTransform>().sizeDelta = new Vector2(circleSize, circleSize);
+            }
+            UpdateCirclePosition();
+        }
+
+        private void HideBlurredCircle()
+        {
+            if (_currentBlurredCircle != null)
+            {
+                Destroy(_currentBlurredCircle);
+                _currentBlurredCircle = null;
+            }
+        }
+        
+        private void UpdateCirclePosition()
+        {
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+            Vector2 worldPosition = _mainCamera.ScreenToWorldPoint(mousePosition);
+            _currentBlurredCircle.transform.position = worldPosition;
+        }
+        
+        /*private void OnBrushSizeChange(InputAction.CallbackContext ctx)
+        {
+            if (!IsGameStarted || IsGamePaused) return;
+
             brushSize = ctx.action.GetBindingForControl(ctx.control).ToString().Split("/")[1] switch
             {
                 "q" => BrushSize.Sm,
@@ -241,7 +316,7 @@ namespace Code.Scripts.Managers
 
             TileHelper.Instance.HidePreview();
             TileHelper.Instance.ShowPreview();
-        }
+        }*/
 
         private BrushSize CycleBrushSize()
         {

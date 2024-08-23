@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.QuestUI
+namespace Code.Scripts.QuestSystem.UI
 {
     public class QuestLogEntry : VisualElement
     {
@@ -61,13 +61,11 @@ namespace Code.Scripts.UI.QuestUI
 
         private bool _rewarded;
 
-        private MonoBehaviour _coroutineRunner;
+        private readonly MonoBehaviour _coroutineRunner;
 
         #endregion
 
         #region building the quest log entry
-
-        private Label _rewardLabelComp;
 
         public QuestLogEntry(MonoBehaviour coroutineRunner)
         {
@@ -103,13 +101,17 @@ namespace Code.Scripts.UI.QuestUI
                 _entry.Add(countContainer);
 
                 // add the labels
-                var countCurrentLabel = new Label();
-                countCurrentLabel.text = _countCurrent.ToString();
+                var countCurrentLabel = new Label
+                {
+                    text = _countCurrent.ToString()
+                };
                 countCurrentLabel.AddToClassList(CountCurrentLabelClass);
                 countContainer.Add(countCurrentLabel);
 
-                var countToReachLabel = new Label();
-                countToReachLabel.text = _countToReach.ToString();
+                var countToReachLabel = new Label
+                {
+                    text = _countToReach.ToString()
+                };
                 countToReachLabel.AddToClassList(CountToReachLabelClass);
                 countContainer.Add(countToReachLabel);
             }
@@ -119,8 +121,10 @@ namespace Code.Scripts.UI.QuestUI
             textContainer.AddToClassList(TextContainerClass);
             _entry.Add(textContainer);
 
-            var nameLabel = new Label();
-            nameLabel.text = _name;
+            var nameLabel = new Label
+            {
+                text = _name
+            };
             nameLabel.AddToClassList(NameLabelClass);
             switch (_achieved)
             {
@@ -132,7 +136,6 @@ namespace Code.Scripts.UI.QuestUI
                     break;
             }
 
-            _rewardLabelComp = nameLabel;
             textContainer.Add(nameLabel);
 
             // quest icon section
@@ -143,16 +146,18 @@ namespace Code.Scripts.UI.QuestUI
             _rewardImage.AddToClassList(_rewarded ? ImageClassRewarded : ImageClass);
             rewardContainer.Add(_rewardImage);
 
-            var rewardLabel = new Label();
-            rewardLabel.text = _rewardLabel;
+            var rewardLabel = new Label
+            {
+                text = _rewardLabel
+            };
             rewardLabel.AddToClassList(RewardLabelClass);
             rewardContainer.Add(rewardLabel);
 
             // tip on hover section
             var tipContainer = new VisualElement();
             tipContainer.AddToClassList(TipContainerClass);
-            tipContainer.RegisterCallback<MouseEnterEvent>(evt => HoverTipContainer());
-            tipContainer.RegisterCallback<MouseLeaveEvent>(evt => UnHoverTipContainer());
+            tipContainer.RegisterCallback<MouseEnterEvent>(_ => HoverTipContainer());
+            tipContainer.RegisterCallback<MouseLeaveEvent>(_ => UnHoverTipContainer());
             _entry.Add(tipContainer);
 
             // tip hover window
