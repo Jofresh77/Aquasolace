@@ -26,11 +26,7 @@ namespace Code.Scripts.PlayerControllers.UI
 
         public void SetIcon(Texture pIcon) => icon.texture = pIcon;
 
-        public RawImage GetIcon() => icon;
-
         public void SetBacker(Texture pIcon) => backer.texture = pIcon;
-
-        public RawImage GetBacker() => backer;
 
         public void SetCallback(RadialMenuEntryDelegate pCallback) => _callback = pCallback;
         
@@ -41,7 +37,7 @@ namespace Code.Scripts.PlayerControllers.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            //GetComponentInParent<RadialMenu>().SetSelectedEntry(this);
+            GetComponentInParent<RadialMenu>().SetHoverSelectedEntry(this);
             
             _rect.DOComplete();
             _rect.DOScale(Vector3.one * 1.5f, .3f).SetEase(Ease.OutQuad);

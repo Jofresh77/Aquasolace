@@ -16,7 +16,6 @@ namespace Code.Scripts.PlayerControllers.UI
         [SerializeField] private Texture cancelIcon;
         [SerializeField] private Texture backer;
 
-        private bool _isOpen;
         private List<RadialMenuEntry> _entries;
         private RadialMenuEntry _hoverSelectedEntry;
         private RectTransform _rectTransform;
@@ -27,7 +26,8 @@ namespace Code.Scripts.PlayerControllers.UI
         {
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.PlayerActionMap.BrushSize.performed += ToggleOpenState;
+            _playerInputActions.PlayerActionMap.BrushSize.performed += OnPress;
+            _playerInputActions.PlayerActionMap.BrushSize.canceled += OnRelease;
 
             _entries = new List<RadialMenuEntry>();
             _rectTransform = GetComponent<RectTransform>();
@@ -36,6 +36,59 @@ namespace Code.Scripts.PlayerControllers.UI
         private void OnDisable()
         {
             DisableInputActions();
+        }
+
+        #region Inputs-Callbacks
+
+        private void OnPress(InputAction.CallbackContext ctx)
+        {
+            TileHelper.Instance.HidePreview();
+            GameManager.Instance.IsMouseOverUi = true;
+
+            // Set the position of the radial menu to the mouse position
+            SetMenuPosition();
+
+            for (int i = 0; i < (GameManager.Instance.GetSelectedBiome() == Biome.River ? 3 : 5); i++)
+            {
+                AddEntry(GetEntryBrushShape(i), icons[i], OnEntrySelected);
+            }
+
+            Rearrange();
+
+            AddEntry(cancelIcon, OnCancelSelected);
+        }
+
+        private void OnRelease(InputAction.CallbackContext ctx)
+        {
+            CloseMenu(_hoverSelectedEntry?.BrushShape ?? GameManager.Instance.BrushShape);
+        }
+
+        private void OnEntrySelected(RadialMenuEntry entry)
+        {
+            _hoverSelectedEntry = entry;
+            CloseMenu(_hoverSelectedEntry.BrushShape);
+        }
+
+        private void OnCancelSelected(RadialMenuEntry entry) => CloseMenu(GameManager.Instance.BrushShape);
+
+        #endregion
+
+        #region UI
+
+        private void SetMenuPosition()
+        {
+            // Get the mouse position in screen space
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+            // Convert screen position to local position within the canvas
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                (RectTransform)transform.parent,
+                mousePosition,
+                null,
+                out Vector2 localPoint);
+
+            // Set the position of the radial menu
+            _rectTransform.anchoredPosition = localPoint;
         }
 
         private void AddEntry(BrushShape shape, Texture pIcon, RadialMenuEntry.RadialMenuEntryDelegate pCallback)
@@ -76,87 +129,6 @@ namespace Code.Scripts.PlayerControllers.UI
             };
         }
 
-        private void ToggleOpenState(InputAction.CallbackContext ctx)
-        {
-            _isOpen = !_isOpen;
-
-            if (_isOpen)
-            {
-                TileHelper.Instance.HidePreview();
-                GameManager.Instance.IsMouseOverUi = true;
-
-                // Set the position of the radial menu to the mouse position
-                SetMenuPosition();
-
-                for (int i = 0; i < (GameManager.Instance.GetSelectedBiome() == Biome.River ? 3 : 5); i++)
-                {
-                    AddEntry(GetEntryBrushShape(i), icons[i], OnEntrySelected);
-                }
-
-                Rearrange();
-
-                AddEntry(cancelIcon, OnCancelSelected);
-            }
-            else
-            {
-                CloseMenu(_hoverSelectedEntry?.BrushShape ?? GameManager.Instance.BrushShape);
-            }
-        }
-
-        private void SetMenuPosition()
-        {
-            // Get the mouse position in screen space
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-
-            // Convert screen position to local position within the canvas
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                (RectTransform)transform.parent,
-                mousePosition,
-                null,
-                out Vector2 localPoint);
-
-            // Set the position of the radial menu
-            _rectTransform.anchoredPosition = localPoint;
-        }
-
-        private void OnEntrySelected(RadialMenuEntry entry)
-        {
-            _hoverSelectedEntry = null; //we don't want the one selected with hover
-            CloseMenu(entry.BrushShape); //but the one with the click event
-        }
-
-        private void OnCancelSelected(RadialMenuEntry entry) => CloseMenu(GameManager.Instance.BrushShape);
-
-        private void CloseMenu(BrushShape shape)
-        {
-            GameManager.Instance.BrushShape = shape;
-
-            foreach (RadialMenuEntry entry in _entries)
-            {
-                RectTransform rect = entry.GetComponent<RectTransform>();
-
-                rect.DOComplete();
-                rect.DOScale(Vector3.one * .3f, .3f)
-                    .SetEase(Ease.OutQuad)
-                    .SetDelay(.05f);
-                rect.DOAnchorPos(Vector2.zero, .3f)
-                    .SetEase(Ease.OutQuad)
-                    .SetDelay(.05f)
-                    .OnComplete(() =>
-                    {
-                        rect.DOComplete();
-                        Destroy(entry.gameObject);
-                    });
-            }
-
-            _entries.Clear();
-            _isOpen = false;
-
-            TileHelper.Instance.HidePreview();
-            TileHelper.Instance.ShowPreview();
-            GameManager.Instance.IsMouseOverUi = false;
-        }
-
         private void Rearrange()
         {
             float separationRadian = (Mathf.PI * 2) / _entries.Count;
@@ -176,21 +148,48 @@ namespace Code.Scripts.PlayerControllers.UI
             }
         }
 
-        public void SetHoverSelectedEntry(RadialMenuEntry entry)
+        private void CloseMenu(BrushShape shape)
         {
-            _hoverSelectedEntry = entry;
-            foreach (RadialMenuEntry menuEntry in _entries)
+            Vector2 targetPosition = _hoverSelectedEntry is not null
+                ? _hoverSelectedEntry.GetComponent<RectTransform>().anchoredPosition
+                : Vector2.zero;
+
+            GameManager.Instance.BrushShape = shape;
+
+            foreach (RadialMenuEntry entry in _entries)
             {
-                if (menuEntry.BrushShape == _hoverSelectedEntry.BrushShape) return;
+                RectTransform rect = entry.GetComponent<RectTransform>();
+
+                rect.DOComplete();
+                rect.DOScale(Vector3.one * .3f, .3f)
+                    .SetEase(Ease.OutQuad)
+                    .SetDelay(.05f);
+                rect.DOAnchorPos(targetPosition, .3f)
+                    .SetEase(Ease.OutQuad)
+                    .SetDelay(.05f)
+                    .OnComplete(() =>
+                    {
+                        rect.DOComplete();
+                        Destroy(entry.gameObject);
+                    });
             }
+
+            _entries.Clear();
+
+            TileHelper.Instance.HidePreview();
+            TileHelper.Instance.ShowPreview();
+            GameManager.Instance.IsMouseOverUi = false;
         }
 
-        public RadialMenuEntry GetHoverSelectedEntry() => _hoverSelectedEntry;
+        #endregion
+
+        public void SetHoverSelectedEntry(RadialMenuEntry entry) => _hoverSelectedEntry = entry;
 
         private void DisableInputActions()
         {
             if (_playerInputActions == null) return;
-            _playerInputActions.PlayerActionMap.BrushSize.performed -= ToggleOpenState;
+            _playerInputActions.PlayerActionMap.BrushSize.performed -= OnPress;
+            _playerInputActions.PlayerActionMap.BrushSize.canceled -= OnRelease;
             _playerInputActions.Disable();
             _playerInputActions = null;
         }
