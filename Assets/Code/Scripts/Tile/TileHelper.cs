@@ -342,7 +342,8 @@ namespace Code.Scripts.Tile
         {
             if (!selectedTile) return;
 
-            _neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.GetBrushSize());
+            //_neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.GetBrushSize());
+            _neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.BrushShape);
             List<Coordinate> neighborTileCoordinates = GetNeighborTileCoordinates();
 
             UpdateNeighborTiles();
@@ -905,6 +906,24 @@ namespace Code.Scripts.Tile
 
             List<Coordinate> tilesWithinBrush =
                 GridHelper.Instance.GetTilesWithinBrush(sourceCoord, brushSize, direction, isRiver);
+
+            // Filter out sealed tiles using GridHelper's TileData
+            List<Coordinate> filteredCoordinates = tilesWithinBrush.Where(coord =>
+            {
+                Biome biomeTile = GridHelper.Instance.GetTileDataAt(coord).Biome;
+                return biomeTile != Biome.Sealed && biomeTile != Biome.RiverSealed && biomeTile != Biome.IgnoreTile;
+            }).ToList();
+
+            return GridHelper.Instance.GetTransformsFromCoordinates(filteredCoordinates);
+        }
+        
+        private List<Transform> FindNeighborTilesWithBrush(Transform source, BrushShape brushShape)
+        {
+            Coordinate sourceCoord = GridHelper.Instance.GetTileCoordinate(source);
+            Direction direction = GameManager.Instance.GetDirection();
+
+            List<Coordinate> tilesWithinBrush =
+                GridHelper.Instance.GetTilesWithinBrush(sourceCoord, brushShape, direction);
 
             // Filter out sealed tiles using GridHelper's TileData
             List<Coordinate> filteredCoordinates = tilesWithinBrush.Where(coord =>

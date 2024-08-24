@@ -1,4 +1,5 @@
 using System;
+using Code.Scripts.Enums;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,10 +9,15 @@ namespace Code.Scripts.PlayerControllers.UI
 {
     public class RadialMenuEntry : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        public delegate void RadialMenuEntryDelegate(RadialMenuEntry pEntry);
+        
         [SerializeField] private RawImage icon;
         [SerializeField] private RawImage backer;
 
+        public BrushShape BrushShape { get; set; }
+        
         private RectTransform _rect;
+        private RadialMenuEntryDelegate _callback;
 
         private void Start()
         {
@@ -25,14 +31,18 @@ namespace Code.Scripts.PlayerControllers.UI
         public void SetBacker(Texture pIcon) => backer.texture = pIcon;
 
         public RawImage GetBacker() => backer;
+
+        public void SetCallback(RadialMenuEntryDelegate pCallback) => _callback = pCallback;
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            throw new System.NotImplementedException();
+            _callback?.Invoke(this);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            //GetComponentInParent<RadialMenu>().SetSelectedEntry(this);
+            
             _rect.DOComplete();
             _rect.DOScale(Vector3.one * 1.5f, .3f).SetEase(Ease.OutQuad);
         }

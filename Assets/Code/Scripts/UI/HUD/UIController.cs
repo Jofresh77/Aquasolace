@@ -246,7 +246,12 @@ namespace Code.Scripts.UI.HUD
         {
             var selectedTileElement = _tiles[_currSelectedTile];
             Enum.TryParse<Biome>(selectedTileElement.name, out var selectedTile);
+            
             GameManager.Instance.SetSelectedBiome(selectedTile);
+            
+            if (GameManager.Instance.GetSelectedBiome() == Biome.River)
+                GameManager.Instance.BrushShape = BrushShape.Rv0;
+
             TileHelper.Instance.HidePreview();
             TileHelper.Instance.ShowPreview();
         }

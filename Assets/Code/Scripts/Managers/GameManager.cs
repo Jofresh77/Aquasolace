@@ -26,6 +26,7 @@ namespace Code.Scripts.Managers
 
         [SerializeField] private Biome selectedBiome = Biome.Meadow;
         [SerializeField] private BrushSize brushSize = BrushSize.Lg;
+        [SerializeField] private BrushShape brushShape = BrushShape.Nm0;
         [SerializeField] private Direction direction = Direction.PosZ;
 
         [SerializeField] private float tempNegThreshold = 18f;
@@ -47,7 +48,7 @@ namespace Code.Scripts.Managers
         [SerializeField] private GameObject allUIs;
         
         
-        [FormerlySerializedAs("blurredCirclePrefab")] [SerializeField] private GameObject bluredCirclePrefab;
+        [SerializeField] private GameObject bluredCirclePrefab;
         [SerializeField] private float circleSize = 100f;
         private GameObject _currentBlurredCircle;
 
@@ -358,13 +359,23 @@ namespace Code.Scripts.Managers
         public bool ResourceBiomeAvailable(Biome biome)
         {
             float amount = RemainingResources[biome];
-            return brushSize switch
+            return brushShape switch
+            {
+                BrushShape.Nm0 => amount >= 1,
+                BrushShape.Rv0 => amount >= 3,
+                BrushShape.Rv1 => amount >= 5,
+                BrushShape.Nm1 => amount >= 5,
+                BrushShape.Nm2 => amount >= 9,
+
+                _ => amount >= 1
+            };
+            /*return brushSize switch
             {
                 BrushSize.Sm => amount >= 1,
                 BrushSize.Md => biome == Biome.River ? amount >= 3 : amount >= 5,
                 BrushSize.Lg => biome == Biome.River ? amount >= 5 : amount >= 9,
                 _ => true
-            };
+            };*/
         }
 
         #endregion
@@ -404,6 +415,12 @@ namespace Code.Scripts.Managers
         #endregion
 
         #region Getters and Setters
+
+        public BrushShape BrushShape
+        {
+            get => brushShape;
+            set => brushShape = value;
+        }
 
         public Biome GetSelectedBiome() => selectedBiome;
         public void SetSelectedBiome(Biome newBiome) => selectedBiome = newBiome;
