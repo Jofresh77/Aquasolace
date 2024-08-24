@@ -573,7 +573,8 @@ namespace Code.Scripts.Tile
             _originalRiverConfigurations.Clear();
             _riverTiles.Clear();
 
-            //_riverCornerFactor = 1;
+            HabitatSuitabilityManager.Instance.UpdateAllHabitats();
+            HabitatSuitabilityManager.Instance.UpdateAllAreas();
         }
 
         private (float, float) PlacedTileEnvironmentInfluence(Transform tile)
