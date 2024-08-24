@@ -472,6 +472,7 @@ namespace Code.Scripts.Tile
                 _originalRiverConfigurations.Remove(riverTile);
             }
 
+            selectedTile = null;
             selectedTileComponent.CanPlace = true;
             _originalRotations.Clear();
             _originalRiverConfigurations.Clear();

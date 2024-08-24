@@ -1,4 +1,3 @@
-using System;
 using Code.Scripts.Enums;
 using DG.Tweening;
 using UnityEngine;
@@ -15,21 +14,28 @@ namespace Code.Scripts.PlayerControllers.UI
         [SerializeField] private RawImage backer;
 
         public BrushShape BrushShape { get; set; }
-        public bool CanInteract { get; set; }
 
         private RectTransform _rect;
         private RadialMenuEntryDelegate _callback;
+        private bool _isAnimating;
+        private bool _isZoomed;
+        private bool _isMouseOver;
 
         private void Awake()
         {
             _rect = GetComponent<RectTransform>();
+        }
 
-            CanInteract = true;
+        private void Update()
+        {
+            if (!_isAnimating && _isMouseOver && !_isZoomed)
+            {
+                EnlargeEntry();
+            }
         }
 
         private void OnDestroy()
         {
-            CanInteract = false;
             DOTween.Kill(_rect);
         }
 
@@ -52,24 +58,59 @@ namespace Code.Scripts.PlayerControllers.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!CanInteract || _rect == null) return;
+            _isMouseOver = true;
+            if (!_isAnimating)
+            {
+                EnlargeEntry();
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _isMouseOver = false;
+            if (_isZoomed)
+            {
+                ShrinkEntry();
+            }
+        }
+
+        private void EnlargeEntry()
+        {
+            if (!_rect) return;
 
             var radialMenu = GetComponentInParent<RadialMenu>();
-            if (radialMenu != null)
+            if (radialMenu)
             {
                 radialMenu.SetHoverSelectedEntry(this);
             }
 
             DOTween.Kill(_rect);
-            _rect.DOScale(Vector3.one * 1.5f, .3f).SetEase(Ease.OutQuad).SetTarget(_rect);
+            _rect.DOScale(Vector3.one * 1.5f, .17f)
+                .SetEase(Ease.OutExpo)
+                .SetTarget(_rect)
+                .SetDelay(0.03f);
+            _isZoomed = true;
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        private void ShrinkEntry()
         {
-            if (!CanInteract || _rect == null) return;
+            if (_rect == null) return;
 
             DOTween.Kill(_rect);
-            _rect.DOScale(Vector3.one, .3f).SetEase(Ease.OutQuad).SetTarget(_rect);
+            _rect.DOScale(Vector3.one, .17f)
+                .SetEase(Ease.OutExpo)
+                .SetTarget(_rect)
+                .SetDelay(0.03f);
+            _isZoomed = false;
+        }
+
+        public void SetAnimating(bool animating)
+        {
+            _isAnimating = animating;
+            if (_isAnimating)
+            {
+                ShrinkEntry();
+            }
         }
     }
 }

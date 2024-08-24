@@ -60,23 +60,23 @@ namespace Code.Scripts.PlayerControllers.UI
                 AddEntry(GetEntryBrushShape(i), icons[i], OnEntrySelected);
             }
 
-            Rearrange();
-
             AddEntry(cancelIcon, OnCancelSelected);
+
+            TransitionIn();
         }
 
         private void OnRelease(InputAction.CallbackContext ctx)
         {
-            CloseMenu(_selectedEntry?.BrushShape ?? GameManager.Instance.BrushShape);
+            TransitionOutClose(_selectedEntry?.BrushShape ?? GameManager.Instance.BrushShape);
         }
 
         private void OnEntrySelected(RadialMenuEntry entry)
         {
             _selectedEntry = entry;
-            CloseMenu(_selectedEntry.BrushShape);
+            TransitionOutClose(_selectedEntry.BrushShape);
         }
 
-        private void OnCancelSelected(RadialMenuEntry entry) => CloseMenu(GameManager.Instance.BrushShape);
+        private void OnCancelSelected(RadialMenuEntry entry) => TransitionOutClose(GameManager.Instance.BrushShape);
 
         #endregion
 
@@ -133,38 +133,70 @@ namespace Code.Scripts.PlayerControllers.UI
             };
         }
 
-        private void Rearrange()
+        private void TransitionIn()
         {
             Sequence mainSeq = DOTween.Sequence();
 
-            float separationRadian = (Mathf.PI * 2) / _entries.Count;
-            for (int i = 0; i < _entries.Count; i++)
+            #region Outer-Entries
+
+            int limit = GameManager.Instance.GetSelectedBiome() == Biome.River ? 3 : 5; //hardcoded here
+            float separationRadian = (Mathf.PI * 2) / limit;
+            for (int i = 0; i < limit; i++)
             {
+                RadialMenuEntry entry = _entries[i];
+                RectTransform rect = entry.GetComponent<RectTransform>();
+
+                entry.SetAnimating(true);
+
                 float x = Mathf.Sin(separationRadian * i) * radius;
                 float y = Mathf.Cos(separationRadian * i) * radius;
 
-                RectTransform rect = _entries[i].GetComponent<RectTransform>();
-
-                rect.localScale = Vector3.zero;
+                rect.localScale = Vector3.one * 0.1f;
                 rect.DOComplete();
 
                 mainSeq.Join(
                     DOTween.Sequence()
                         .Join(
                             rect.DOScale(Vector3.one, .3f)
-                                .SetEase(Ease.OutQuad)
+                                .SetEase(Ease.InOutExpo)
+                                .SetDelay(0.03f)
                         )
                         .Join(
                             rect.DOAnchorPos(new Vector2(x, y), .3f)
-                                .SetEase(Ease.OutQuad)
-                        )
+                                .SetEase(Ease.OutExpo)
+                                .SetDelay(0.03f))
+                        .OnComplete(() => entry.SetAnimating(false))
                 );
             }
+
+            #endregion
+
+            #region Cancel-Entry
+
+            RadialMenuEntry entryCancel = _entries[^1];
+            RectTransform rectCancel = entryCancel.GetComponent<RectTransform>();
+
+            entryCancel.SetAnimating(true);
+
+            rectCancel.localScale = Vector3.one * 0.1f;
+            rectCancel.DOComplete();
+
+            mainSeq.Join(
+                DOTween.Sequence()
+                    .Join(
+                        rectCancel.DOScale(Vector3.one, .3f)
+                            .SetEase(Ease.InOutExpo)
+                            .SetDelay(0.03f)
+                    )
+                    .OnComplete(() => entryCancel.SetAnimating(false))
+            );
+
+            #endregion
 
             mainSeq.OnComplete(() => _canClose = true);
         }
 
-        private void CloseMenu(BrushShape shape)
+        private void TransitionOutClose(BrushShape shape)
         {
             if (!_canClose) return;
 
@@ -188,7 +220,7 @@ namespace Code.Scripts.PlayerControllers.UI
             int entriesCount = _entries.Count;
             for (int i = entriesCount - 1; i >= 0; i--)
             {
-                _entries[i].CanInteract = false;
+                _entries[i].SetAnimating(true);
                 
                 RectTransform rect = _entries[i].GetComponent<RectTransform>();
 
@@ -198,17 +230,19 @@ namespace Code.Scripts.PlayerControllers.UI
 
                 mainSeq.Join(
                     DOTween.Sequence()
-                        .Append(rect.DOAnchorPos(targetPosition, 0.2f)
-                                .SetEase(Ease.OutQuad)
-                                .SetDelay(.05f))
-                        .Insert(0, rect.DOScale(Vector3.zero, mainSeq.Duration())
-                            .SetEase(Ease.OutQuad)
+                        .Append(rect.DOAnchorPos(targetPosition, 0.5f)
+                            .SetEase(Ease.InBack)
+                            .SetDelay(.05f))
+                        .Insert(0, rect.DOScale(Vector3.one * 0.1f, mainSeq.Duration())
+                            .SetEase(Ease.InBack)
                             .SetDelay(.05f))
                 );
             }
 
             mainSeq.OnComplete(() =>
             {
+                _canOpen = true;
+
                 foreach (var entry in _entries)
                 {
                     Destroy(entry.gameObject);
@@ -216,8 +250,6 @@ namespace Code.Scripts.PlayerControllers.UI
 
                 _entries.Clear();
                 _selectedEntry = null;
-
-                _canOpen = true;
             });
 
             TileHelper.Instance.HidePreview();
