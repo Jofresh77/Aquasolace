@@ -127,13 +127,11 @@ namespace Code.Scripts.QuestSystem.UI
         {
             if (isSelected)
             {
-                Debug.Log("1");
                 _selectButton.RemoveFromClassList(SelectButtonClass);
                 _selectButton.AddToClassList(SelectedClassButtonClass);
             }
             else
             {
-                Debug.Log("2");
                 _selectButton.RemoveFromClassList(SelectedClassButtonClass);
                 _selectButton.AddToClassList(SelectButtonClass);
             }

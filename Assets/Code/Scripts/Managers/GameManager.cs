@@ -5,12 +5,12 @@ using Code.Scripts.PlayerControllers;
 using Code.Scripts.QuestSystem;
 using Code.Scripts.Tile;
 using Code.Scripts.Tile.HabitatSuitability;
-using Code.Scripts.UI;
 using Code.Scripts.UI.GameEnd;
 using Code.Scripts.UI.HUD;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Code.Scripts.Managers
 {
@@ -47,10 +47,9 @@ namespace Code.Scripts.Managers
         [SerializeField] private GameObject allUIs;
         
         
-        [SerializeField] private GameObject blurredCirclePrefab;
+        [FormerlySerializedAs("blurredCirclePrefab")] [SerializeField] private GameObject bluredCirclePrefab;
         [SerializeField] private float circleSize = 100f;
         private GameObject _currentBlurredCircle;
-        private Camera _mainCamera;
 
         #endregion
 
@@ -97,8 +96,6 @@ namespace Code.Scripts.Managers
                 return;
             }
 
-            _mainCamera = Camera.main;
-            
             InitializeInputActions();
             InitializeResources();
         }
@@ -114,15 +111,11 @@ namespace Code.Scripts.Managers
 
             if (IsGamePaused) return;
             
-            if (!IsEnvConditionsCoolDown())
-            {
+            if (!EnvConditionsCoolDown())
                 UpdateEnvironmentalConditions();
-            }
 
             if (_currentBlurredCircle is not null)
-            {
                 UpdateCirclePosition();
-            }
             
             CheckTemperatureThresholds();
             CheckGroundWaterThreshold();
@@ -170,11 +163,6 @@ namespace Code.Scripts.Managers
 
         #region Game State Management
 
-        /*public void StartGame()
-        {
-            IsGameStarted = true;
-        }*/
-
         public void OnGameTimeEnd()
         {
             SetIsGamePaused(true);
@@ -212,7 +200,7 @@ namespace Code.Scripts.Managers
             }
         }
 
-        private bool IsEnvConditionsCoolDown() => Time.time < _nextUpdateTick;
+        private bool EnvConditionsCoolDown() => Time.time < _nextUpdateTick;
 
         private void StartEnvConditionsCooldown() => _nextUpdateTick = Time.time + coolDownDuration;
 
@@ -243,7 +231,7 @@ namespace Code.Scripts.Managers
         {
             if (!IsGameStarted || IsGamePaused) return;
 
-            string keyPressed = ctx.action.GetBindingForControl(ctx.control).ToString().Split("/")[1];
+            /*string keyPressed = ctx.action.GetBindingForControl(ctx.control).ToString().Split("/")[1];
 
             switch (keyPressed)
             {
@@ -257,7 +245,7 @@ namespace Code.Scripts.Managers
                     brushSize = BrushSize.Lg;
                     break;
                 case "tab":
-                    if (ctx.performed)
+                    if (ctx.started)
                     {
                         ShowBlurredCircle();
                     }
@@ -265,40 +253,70 @@ namespace Code.Scripts.Managers
                     {
                         HideBlurredCircle();
                     }
-                    return; // Exit the method early as we don't want to change brush size for TAB
+                    return;
                 default:
                     brushSize = CycleBrushSize();
                     break;
             }
 
             TileHelper.Instance.HidePreview();
-            TileHelper.Instance.ShowPreview();
+            TileHelper.Instance.ShowPreview();*/
         }
+
 
         private void ShowBlurredCircle()
         {
             if (_currentBlurredCircle == null)
             {
-                _currentBlurredCircle = Instantiate(blurredCirclePrefab, transform, false);
-                _currentBlurredCircle.GetComponent<RectTransform>().sizeDelta = new Vector2(circleSize, circleSize);
+                _currentBlurredCircle = Instantiate(bluredCirclePrefab);
+        
+                // Ensure Canvas component exists
+                Canvas canvas = _currentBlurredCircle.GetComponent<Canvas>();
+                if (canvas == null)
+                {
+                    canvas = _currentBlurredCircle.AddComponent<Canvas>();
+                }
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        
+                // Ensure RectTransform component exists
+                RectTransform rectTransform = _currentBlurredCircle.GetComponent<RectTransform>();
+                if (rectTransform == null)
+                {
+                    rectTransform = _currentBlurredCircle.AddComponent<RectTransform>();
+                }
+                rectTransform.sizeDelta = new Vector2(circleSize, circleSize);
             }
+    
             UpdateCirclePosition();
+        }
+
+        private void UpdateCirclePosition()
+        {
+            if (_currentBlurredCircle == null) return;
+    
+            RectTransform rectTransform = _currentBlurredCircle.GetComponent<RectTransform>();
+            if (rectTransform == null)
+            {
+                Debug.LogError("RectTransform not found on BlurredCircle");
+                return;
+            }
+    
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+            rectTransform.position = mousePosition;
+
+            // Ensure the circle stays within screen bounds
+            Vector3 pos = rectTransform.position;
+            pos.x = Mathf.Clamp(pos.x, 0, Screen.width);
+            pos.y = Mathf.Clamp(pos.y, 0, Screen.height);
+            rectTransform.position = pos;
         }
 
         private void HideBlurredCircle()
         {
-            if (_currentBlurredCircle != null)
-            {
-                Destroy(_currentBlurredCircle);
-                _currentBlurredCircle = null;
-            }
-        }
-        
-        private void UpdateCirclePosition()
-        {
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            Vector2 worldPosition = _mainCamera.ScreenToWorldPoint(mousePosition);
-            _currentBlurredCircle.transform.position = worldPosition;
+            if (_currentBlurredCircle == null) return;
+            
+            Destroy(_currentBlurredCircle);
+            _currentBlurredCircle = null;
         }
         
         /*private void OnBrushSizeChange(InputAction.CallbackContext ctx)
@@ -335,9 +353,9 @@ namespace Code.Scripts.Managers
 
         #region Resource Management
 
-        public bool IsResourceAvailable() => IsResourceAvailable(selectedBiome);
+        public bool ResourceAvailable() => ResourceBiomeAvailable(selectedBiome);
 
-        public bool IsResourceAvailable(Biome biome)
+        public bool ResourceBiomeAvailable(Biome biome)
         {
             float amount = RemainingResources[biome];
             return brushSize switch
@@ -416,7 +434,7 @@ namespace Code.Scripts.Managers
         public void SetGwlInfluence(float influence) => gwlInfluence += influence;
         public float GetGwlInfluence() => gwlInfluence;
 
-        public bool IsScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;
+        public bool ScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;
 
         #endregion
 

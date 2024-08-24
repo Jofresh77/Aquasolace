@@ -84,7 +84,7 @@ namespace Code.Scripts.PlayerControllers
 
         private void Zoom(InputAction.CallbackContext ctx)
         {
-            if (GameManager.Instance.IsScreenOpen()) return;
+            if (GameManager.Instance.ScreenOpen()) return;
             
             Camera cam = _camTransform.GetComponent<Camera>();
             

@@ -188,7 +188,7 @@ namespace Code.Scripts.Tile
             RestrictionMsg = "";
 
             //Check for resource availability
-            if (!GameManager.Instance.IsResourceAvailable())
+            if (!GameManager.Instance.ResourceAvailable())
             {
                 RestrictionMsg =
                     LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_resources");

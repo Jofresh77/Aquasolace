@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using Code.Scripts.Tile;
@@ -58,8 +57,8 @@ namespace Code.Scripts.UI.HUD
             Panel = root.panel;
             
             //TESTING AND DEBUG
-            _gwlInf = root.Q<Label>("gwlInf");
-            _tempInf = root.Q<Label>("tempInf");
+            _gwlInf = root.Q<Label>("gwlinf");
+            _tempInf = root.Q<Label>("tempinf");
 
             _hotBarContainer = root.Q<GroupBox>("BlurContainer");
             _hotBarContainer.RegisterCallback<MouseEnterEvent>(OnMouseEnterLog);
@@ -153,8 +152,8 @@ namespace Code.Scripts.UI.HUD
             UpdateBiomeNameLabels();
             
             //TESTING AND DEBUG
-            _gwlInf.text = GameManager.Instance.GetGwlInfluence().ToString(CultureInfo.CurrentCulture);
-            _tempInf.text = GameManager.Instance.GetTempInfluence().ToString(CultureInfo.CurrentCulture);
+            _gwlInf.text = GameManager.Instance.GetGwlInfluence().ToString();
+            _tempInf.text = GameManager.Instance.GetTempInfluence().ToString();
             
             // update label text after language has changed
             if(showInputPossibilityLabel && _inputPossibilitiesLabel.text != LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "input_possibilities"))
@@ -219,7 +218,7 @@ namespace Code.Scripts.UI.HUD
                 // version 1: check if the resources for the biome are enough for the current brush
                 if (showResourceAvailabilityDependingOnBrush)
                 {
-                    if (!GameManager.Instance.IsResourceAvailable(biome))
+                    if (!GameManager.Instance.ResourceBiomeAvailable(biome))
                     {
                         tile.AddToClassList(UnavailableClass);
                     }
