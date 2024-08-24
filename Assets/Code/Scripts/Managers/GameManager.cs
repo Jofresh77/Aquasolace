@@ -157,7 +157,7 @@ namespace Code.Scripts.Managers
         public void InitializeHabitatSuitabilityProcess()
         {
             HabitatSuitabilityManager.Instance.InitializeMap(GridHelper.Instance.widthAndHeight);
-            HabitatSuitabilityManager.Instance.StartPeriodicUpdates();
+            //HabitatSuitabilityManager.Instance.StartPeriodicUpdates();
         }
 
         #endregion
