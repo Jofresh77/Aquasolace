@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using Code.Scripts.Structs;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -187,7 +188,7 @@ namespace Code.Scripts.Tile
             RestrictionMsg = "";
 
             //Check for resource availability
-            if (!GameManager.Instance.IsResourceAvailable())
+            if (!GameManager.Instance.ResourceAvailable())
             {
                 RestrictionMsg =
                     LocalizationSettings.StringDatabase.GetLocalizedString("Notifications", "restriction_resources");
@@ -294,7 +295,6 @@ namespace Code.Scripts.Tile
 
             foreach (var part in riverParts)
             {
-        
                 // Check if the river part is still connected in the !TEMP! tile map
                 if (!RiverPartConnected(part.Item1, part.Item2))
                     return true;
@@ -357,7 +357,7 @@ namespace Code.Scripts.Tile
                 if (neighbors.Any(n =>
                         tileMap.ContainsKey(n) &&
                         (tileMap[n].Biome == Biome.RiverSealed || tileMap[n].Biome == Biome.IgnoreTile)))
-                    sources.Add(kvp.Key); 
+                    sources.Add(kvp.Key);
             }
 
             return sources;
@@ -516,6 +516,96 @@ namespace Code.Scripts.Tile
             };
 
             return neighbors.Where(coord => _tileMap.ContainsKey(coord)).ToList();
+        }
+
+        public List<Coordinate> GetTilesWithinBrush(Coordinate center, BrushShape brushShape, Direction direction)
+        {
+            List<Coordinate> tilesWithinBrush = new List<Coordinate>();
+
+            switch (brushShape)
+            {
+                case BrushShape.Nm0:
+                    tilesWithinBrush.Add(center);
+                    break;
+                case BrushShape.Rv0:
+                case BrushShape.Rv1:
+                    tilesWithinBrush = GetRiverTiles(center, direction, brushShape == BrushShape.Rv0 ? 3 : 5);
+                    break;
+                case BrushShape.Nm1:
+                    tilesWithinBrush = GetNormalTiles(center, 1);
+                    break;
+                case BrushShape.Nm2:
+                    tilesWithinBrush = GetNormalTiles(center, 2);
+                    break;
+            }
+
+            return tilesWithinBrush;
+        }
+
+        private List<Coordinate> GetRiverTiles(Coordinate center, Direction direction, int size)
+        {
+            List<Coordinate> allTiles = new List<Coordinate>();
+            bool isHorizontal = direction == Direction.PosX || direction == Direction.NegX;
+            int halfSize = size / 2;
+
+            for (int i = -halfSize; i <= halfSize; i++)
+            {
+                Coordinate coord = isHorizontal
+                    ? new Coordinate(center.X + i, center.Z)
+                    : new Coordinate(center.X, center.Z + i);
+
+                if (_tileMap.ContainsKey(coord))
+                {
+                    allTiles.Add(coord);
+                }
+            }
+
+            return allTiles;
+        }
+
+        private List<Coordinate> GetNormalTiles(Coordinate center, int brushType)
+        {
+            List<Coordinate> tiles = new List<Coordinate>();
+
+            switch (brushType)
+            {
+                // Nm1
+                case 1:
+                {
+                    int[] offsets = { -1, 0, 1 };
+                    foreach (int x in offsets)
+                    {
+                        foreach (int z in offsets)
+                        {
+                            if (x != 0 && z != 0) continue; // Skip diagonal tiles
+
+                            Coordinate coord = new Coordinate(center.X + x, center.Z + z);
+                            if (_tileMap.ContainsKey(coord))
+                                tiles.Add(coord);
+                        }
+                    }
+
+                    break;
+                }
+                // Nm2
+                case 2:
+                {
+                    for (int x = -1; x <= 1; x++)
+                    {
+                        for (int z = -1; z <= 1; z++)
+                        {
+                            Coordinate coord = new Coordinate(center.X + x, center.Z + z);
+                            
+                            if (_tileMap.ContainsKey(coord))
+                                tiles.Add(coord);
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            return tiles;
         }
 
         public List<Coordinate> GetTilesWithinBrush(Coordinate center, BrushSize brushSize, Direction direction,

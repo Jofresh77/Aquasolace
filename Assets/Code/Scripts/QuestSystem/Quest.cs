@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
+using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
@@ -18,7 +19,7 @@ namespace Code.Scripts.QuestSystem
         
         [Header("Rewards")] 
         [SerializeField] public Biome rewardBiome = Biome.Meadow;
-        [SerializeField] public int rewardAmount = 0;
+        [SerializeField] public int rewardAmount;
         
         [Header("Quest Icon and texts")]
         public Texture2D questIcon;

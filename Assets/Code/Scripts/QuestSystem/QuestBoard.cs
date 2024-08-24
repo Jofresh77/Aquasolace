@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
+using Code.Scripts.QuestSystem.UI;
 using Code.Scripts.Structs;
 using Code.Scripts.Tile;
-using Code.Scripts.UI.QuestUI;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 

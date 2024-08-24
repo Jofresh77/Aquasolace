@@ -96,39 +96,6 @@
                 },
                 {
                     "name": "",
-                    "id": "06c39d64-85b8-4d8e-94b5-cad51916c8b0",
-                    "path": "<Keyboard>/q",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BrushSize",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "667c1261-7e75-4ee3-9a4e-d5ccd7335e82",
-                    "path": "<Keyboard>/w",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BrushSize",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4ae2c8f7-78b8-41f3-90b9-68c62e9119f1",
-                    "path": "<Keyboard>/e",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BrushSize",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "396956c6-3984-4b75-8cbb-461f272f493d",
                     "path": "<Keyboard>/tab",
                     "interactions": "Press",
