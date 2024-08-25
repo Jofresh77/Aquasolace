@@ -63,6 +63,7 @@ namespace Code.Scripts.PlayerControllers.UI
             _isMouseOver = true;
             if (!_isAnimating)
             {
+                SoundManager.Instance.PlaySound(SoundType.BtnHover);
                 EnlargeEntry();
             }
         }
