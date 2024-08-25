@@ -1,3 +1,5 @@
+using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using Code.Scripts.PlayerControllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -54,6 +56,8 @@ namespace Code.Scripts.UI.MainMenu
 
         private void CloseScreen(InputAction.CallbackContext obj)
         {
+            SoundManager.Instance.PlaySound(SoundType.CreditClose);
+            
             if (_root.style.display == DisplayStyle.Flex)
             {
                 _root.style.display = DisplayStyle.None;

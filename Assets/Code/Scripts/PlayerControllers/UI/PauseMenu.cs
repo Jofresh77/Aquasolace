@@ -1,3 +1,4 @@
+using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using Code.Scripts.PlayerControllers;
 using UnityEngine;
@@ -56,7 +57,7 @@ namespace Code.Scripts.UI.HUD
         {
             Time.timeScale = 1;
             PlayerPrefs.SetString("Scene to go to", "MainMenu");
-            SceneManager.LoadScene("Loading Scene");
+            SceneManager.LoadScene("LoadingScene");
         }
 
         private void Resume()
@@ -76,6 +77,10 @@ namespace Code.Scripts.UI.HUD
 
             GameManager.Instance.IsPauseMenuOpened = !GameManager.Instance.IsPauseMenuOpened;
             GameManager.Instance.SetIsGamePaused(!GameManager.Instance.IsGamePaused);
+            
+            SoundManager.Instance.PlaySound(GameManager.Instance.IsPauseMenuOpened
+                ? SoundType.Pause
+                : SoundType.Resume);
             
             _imageContainer.style.backgroundImage = new StyleBackground(
                 LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);

@@ -135,6 +135,8 @@ namespace Code.Scripts.PlayerControllers.UI
 
         private void TransitionIn()
         {
+            SoundManager.Instance.PlaySound(SoundType.TilePaletteOpen);
+            
             Sequence mainSeq = DOTween.Sequence();
 
             #region Outer-Entries
@@ -199,6 +201,8 @@ namespace Code.Scripts.PlayerControllers.UI
         private void TransitionOutClose(BrushShape shape)
         {
             if (!_canClose) return;
+            
+            SoundManager.Instance.PlaySound(SoundType.TilePaletteSelect);
 
             _canClose = false;
 

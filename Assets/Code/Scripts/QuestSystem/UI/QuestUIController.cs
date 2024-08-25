@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using Code.Scripts.PlayerControllers;
 using Code.Scripts.Tile;
@@ -145,6 +146,8 @@ namespace Code.Scripts.QuestSystem.UI
             {
                 _questBoardIsShown = false;
 
+                SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
+                
                 _questLogController.UpdateQuestLogList(false);
 
                 _boardContainer.style.display = DisplayStyle.None;
@@ -161,6 +164,8 @@ namespace Code.Scripts.QuestSystem.UI
             {
                 _questBoardIsShown = true;
                 FastCloseLog();
+                
+                SoundManager.Instance.PlaySound(SoundType.QuestBoardOpen);
 
                 _boardContainer.style.display = DisplayStyle.Flex;
 
@@ -179,7 +184,9 @@ namespace Code.Scripts.QuestSystem.UI
             _boardContainer.ToggleInClassList(HideClass);
 
             _questBoardIsShown = false;
-
+            
+            SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
+            
             _questLogController.UpdateQuestLogList(false);
 
             _boardContainer.style.display = DisplayStyle.None;

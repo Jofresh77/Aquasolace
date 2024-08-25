@@ -1,5 +1,6 @@
 ﻿using System;
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using UnityEngine;
 
 namespace Code.Scripts.UI.HUD.Notification
@@ -22,19 +23,27 @@ namespace Code.Scripts.UI.HUD.Notification
             switch (notificationType)
             {
                 case NotificationType.Event:
+                    SoundManager.Instance.PlaySound(SoundType.NotificationEvent);
+                    
                     notificationWindow.ShowImage(true);
                     notificationWindow.SetImage(image);
                     break;
                 case NotificationType.Restriction:
+                    SoundManager.Instance.PlaySound(SoundType.NotificationRestriction);
+                    
                     notificationWindow.Restriction();
                     notificationWindow.ShowImage(false);
                     break;
                 case NotificationType.QuestAchievement:
+                    SoundManager.Instance.PlaySound(SoundType.NotificationAchievement);
+                    
                     notificationWindow.ShowImage(true);
                     notificationWindow.Achievement();
                     notificationWindow.SetImage(image);
                     break;
                 case NotificationType.QuestFailure:
+                    SoundManager.Instance.PlaySound(SoundType.NotificationFailure);
+                    
                     notificationWindow.ShowImage(true);
                     notificationWindow.Restriction();
                     notificationWindow.SetImage(image);

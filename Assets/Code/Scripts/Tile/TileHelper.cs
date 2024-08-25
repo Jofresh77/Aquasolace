@@ -318,7 +318,7 @@ namespace Code.Scripts.Tile
 
         #endregion
 
-        #region Shaders
+        #region Shaders & Sounds
 
         private void SetHighlight(Transform tile, float highlightValue, float restrictValue)
         {
@@ -331,6 +331,27 @@ namespace Code.Scripts.Tile
             {
                 material.SetFloat(_enableHighlight, highlightValue);
                 material.SetFloat(_restrictedVisual, restrictValue);
+            }
+        }
+
+        private void PlayPlaceBiomeSound()
+        {
+            switch (GameManager.Instance.GetSelectedBiome())
+            {
+                case Biome.Meadow:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeMeadowPlace);
+                    break;
+                case Biome.Farmland:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeFarmlandPlace);
+                    break;
+                case Biome.ForestPine:
+                case Biome.ForestDeciduous:
+                case Biome.ForestMixed:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeForestPlace);
+                    break;
+                case Biome.River:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeRiverPlace);
+                    break;
             }
         }
 
@@ -485,6 +506,8 @@ namespace Code.Scripts.Tile
 
         public void PlaceTile()
         {
+            PlayPlaceBiomeSound();
+            
             //Tile placement handling
             foreach (Transform neighborTile in _neighborTiles)
             {

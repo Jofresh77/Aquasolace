@@ -249,6 +249,8 @@ namespace Code.Scripts.UI.HUD
             
             GameManager.Instance.SetSelectedBiome(selectedTile);
             
+            SoundManager.Instance.PlaySound(SoundType.TileSelect);
+            
             if (GameManager.Instance.GetSelectedBiome() == Biome.River)
                 GameManager.Instance.BrushShape = BrushShape.Rv0;
 
