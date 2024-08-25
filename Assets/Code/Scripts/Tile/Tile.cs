@@ -34,7 +34,7 @@ namespace Code.Scripts.Tile
 
             IsVerified = false;
 
-            TileHelper.Instance.selectedTile = transform;
+            TileHelper.Instance.SelectedTile = transform;
             TileHelper.Instance.selectedTileComponent = this;
             TileHelper.Instance.ShowPreview();
         }
@@ -46,7 +46,7 @@ namespace Code.Scripts.Tile
             IsVerified = false;
 
             TileHelper.Instance.HidePreview();
-            TileHelper.Instance.selectedTile = null;
+            TileHelper.Instance.SelectedTile = null;
             TileHelper.Instance.selectedTileComponent = null;
         }
 

@@ -257,6 +257,7 @@ namespace Code.Scripts.PlayerControllers.UI
             });
 
             TileHelper.Instance.HidePreview();
+            TileHelper.Instance.SelectedTile = null;
             TileHelper.Instance.ShowPreview();
             GameManager.Instance.IsMouseOverUi = false;
         }

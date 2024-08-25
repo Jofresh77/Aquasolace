@@ -347,7 +347,7 @@ namespace Code.Scripts.Managers
         private void HandleGamePause(InputAction.CallbackContext obj)
         {
             TileHelper.Instance.HidePreview();
-            TileHelper.Instance.selectedTile = null;
+            TileHelper.Instance.SelectedTile = null;
         }
 
         #endregion

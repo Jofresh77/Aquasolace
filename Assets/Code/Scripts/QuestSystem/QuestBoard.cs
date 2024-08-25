@@ -100,7 +100,7 @@ namespace Code.Scripts.QuestSystem
 
         public void CheckAchievement()
         {
-            _tile = TileHelper.Instance.selectedTile;
+            _tile = TileHelper.Instance.SelectedTile;
             _checkedTileBiome = _tile.GetComponent<Tile.Tile>().GetBiome();
             _checkedTileCoordinate = GridHelper.Instance.GetTileCoordinate(_tile);
 

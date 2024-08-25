@@ -18,7 +18,7 @@ namespace Code.Scripts.Tile
 
         public static TileHelper Instance { get; private set; }
 
-        public Transform selectedTile;
+        public Transform SelectedTile { get; set; }
         public Tile selectedTileComponent;
 
         private List<Transform> _neighborTiles = new();
@@ -361,10 +361,10 @@ namespace Code.Scripts.Tile
 
         public void ShowPreview()
         {
-            if (!selectedTile) return;
+            if (!SelectedTile) return;
 
             //_neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.GetBrushSize());
-            _neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.BrushShape);
+            _neighborTiles = FindNeighborTilesWithBrush(SelectedTile, GameManager.Instance.BrushShape);
             List<Coordinate> neighborTileCoordinates = GetNeighborTileCoordinates();
 
             UpdateNeighborTiles();
@@ -452,7 +452,7 @@ namespace Code.Scripts.Tile
 
         public void HidePreview()
         {
-            if (!selectedTile) return;
+            if (!SelectedTile) return;
 
             //"normal" but also river un-preview
             foreach (Transform neighborTile in _neighborTiles)
@@ -493,7 +493,7 @@ namespace Code.Scripts.Tile
                 _originalRiverConfigurations.Remove(riverTile);
             }
 
-            selectedTile = null;
+            //selectedTile = null;
             selectedTileComponent.CanPlace = true;
             _originalRotations.Clear();
             _originalRiverConfigurations.Clear();
