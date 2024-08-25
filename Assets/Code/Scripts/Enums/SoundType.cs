@@ -1,0 +1,29 @@
+namespace Code.Scripts.Enums
+{
+    public enum SoundType
+    {
+        BtnHover,
+        BtnClick,
+        PlayBtnClick,
+        LocalesCreditEndBtnClick,
+        CreditClose,
+        QuestBoardOpen,
+        QuestBoardPin,
+        QuestBoardEntryHover,
+        QuestBoardEntryClick,
+        QuestBoardAndEntryClose,
+        TileSelect,
+        TilePaletteOpen,
+        TilePaletteSelect,
+        BiomeMeadowPlace,
+        BiomeFarmlandPlace,
+        BiomeForestPlace,
+        BiomeRiverPlace,
+        Pause,
+        Resume,
+        NotificationEvent,
+        NotificationRestriction,
+        NotificationAchievement,
+        NotificationFailure
+    }
+}

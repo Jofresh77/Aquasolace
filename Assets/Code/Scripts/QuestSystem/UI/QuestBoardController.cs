@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using Code.Scripts.PlayerControllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -136,6 +138,7 @@ namespace Code.Scripts.QuestSystem.UI
                     var rowEntryIndex = i;
                     var rowIdx = rowIndex;
                     boardEntry.RegisterCallback<ClickEvent>(evt => OnBoardEntryClick(evt, rowIdx, rowEntryIndex));
+                    boardEntry.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryHover));
 
                     var questContainer = row.Q<VisualElement>("quest" + i);
                     //boardEntry.SetIcon(questContainer.style.backgroundImage.value.texture);
@@ -179,6 +182,8 @@ namespace Code.Scripts.QuestSystem.UI
 
         private void OnBoardEntryClick(ClickEvent evt, int rowIndex, int rowEntryIndex)
         {
+            SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryClick);
+            
             if (evt.target is Button { name: "selectBtn" })
             {
                 return;

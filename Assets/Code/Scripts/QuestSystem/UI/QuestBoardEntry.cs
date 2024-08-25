@@ -1,4 +1,5 @@
 ﻿using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -125,6 +126,8 @@ namespace Code.Scripts.QuestSystem.UI
         
         public QuestBoardEntry SetSelected(bool isSelected)
         {
+            SoundManager.Instance.PlaySound(SoundType.QuestBoardPin);
+            
             if (isSelected)
             {
                 _selectButton.RemoveFromClassList(SelectButtonClass);

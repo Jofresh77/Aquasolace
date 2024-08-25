@@ -68,6 +68,7 @@ namespace Code.Scripts.Managers
         public bool IsGameEndStateOpened { get; set; }
         public bool IsGameInTutorial { get; set; }
         public bool IsMouseOverUi { get; set; }
+        public bool IsPaletteOpen { get; set; }
 
         public Dictionary<Biome, float> RemainingResources { get; private set; }
 
@@ -347,7 +348,7 @@ namespace Code.Scripts.Managers
         private void HandleGamePause(InputAction.CallbackContext obj)
         {
             TileHelper.Instance.HidePreview();
-            TileHelper.Instance.selectedTile = null;
+            TileHelper.Instance.SelectedTile = null;
         }
 
         #endregion

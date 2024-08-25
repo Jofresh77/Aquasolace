@@ -135,6 +135,9 @@ namespace Code.Scripts.PlayerControllers.UI
 
         private void TransitionIn()
         {
+            GameManager.Instance.IsPaletteOpen = true;
+            SoundManager.Instance.PlaySound(SoundType.TilePaletteOpen);
+            
             Sequence mainSeq = DOTween.Sequence();
 
             #region Outer-Entries
@@ -200,6 +203,9 @@ namespace Code.Scripts.PlayerControllers.UI
         {
             if (!_canClose) return;
 
+            GameManager.Instance.IsPaletteOpen = false;
+            SoundManager.Instance.PlaySound(SoundType.TilePaletteSelect);
+
             _canClose = false;
 
             Vector2 targetPosition = Vector2.zero;
@@ -230,7 +236,7 @@ namespace Code.Scripts.PlayerControllers.UI
 
                 mainSeq.Join(
                     DOTween.Sequence()
-                        .Append(rect.DOAnchorPos(targetPosition, 0.5f)
+                        .Append(rect.DOAnchorPos(targetPosition, 0.25f)
                             .SetEase(Ease.InBack)
                             .SetDelay(.05f))
                         .Insert(0, rect.DOScale(Vector3.one * 0.1f, mainSeq.Duration())
@@ -253,6 +259,7 @@ namespace Code.Scripts.PlayerControllers.UI
             });
 
             TileHelper.Instance.HidePreview();
+            TileHelper.Instance.SelectedTile = null;
             TileHelper.Instance.ShowPreview();
             GameManager.Instance.IsMouseOverUi = false;
         }

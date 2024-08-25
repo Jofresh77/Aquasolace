@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Code.Scripts.Enums;
 using Code.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -27,20 +28,20 @@ namespace Code.Scripts.UI.MainMenu
 
             _playBtn = root.Q<Button>("play_button");
             _playBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
-            _playBtn.clicked += GoToLevelSelection;
+            _playBtn.clicked += GoToMainLevel;
 
             _settingsBtn = root.Q<Button>("settings_button");
             _settingsBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn");
             _settingsBtn.clicked += GoToSettingsMenu;
-            
+
             _creditsBtn = root.Q<Button>("credits_button");
             _creditsBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn");
             _creditsBtn.clicked += GoToCredits;
-            
+
             _quitBtn = root.Q<Button>("quit_button");
             _quitBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_quit_btn");
             _quitBtn.clicked += QuitGame;
-            
+
             _languageDropdown = root.Q<DropdownField>("language_selection");
             var languageDropdownChoices = new List<String>();
             foreach (var locale in LocalizationSettings.AvailableLocales.Locales)
@@ -52,20 +53,42 @@ namespace Code.Scripts.UI.MainMenu
             _languageDropdown.choices = languageDropdownChoices; // setting choices for language selection dropdown
             _languageDropdown.value = languageDropdownChoices[languageDropdownChoices.IndexOf(LanguageManager.Instance.GetCurrentLocale().LocaleName)]; // setting current selected language
             _languageDropdown.RegisterValueChangedCallback(ChangeLanguage); // setting callback function for change of language
+            
+            AddHoverSound(_playBtn);
+            AddHoverSound(_settingsBtn);
+            AddHoverSound(_creditsBtn);
+            AddHoverSound(_quitBtn);
+            AddHoverSound(_languageDropdown);
+
+        }
+        
+        private void AddHoverSound(Button button)
+        {
+            button.RegisterCallback<MouseEnterEvent>(_ 
+                => SoundManager.Instance.PlaySound(SoundType.BtnHover));
+        }
+
+        private void AddHoverSound(DropdownField dpf)
+        {
+            dpf.RegisterCallback<MouseEnterEvent>(_ 
+                => SoundManager.Instance.PlaySound(SoundType.BtnHover));
         }
         
         private void ChangeLanguage(ChangeEvent<string> @event)
         {
-            GameObject.FindObjectOfType<LocaleSelector>().ChangeLocale(_languages[@event.newValue]);
+            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
+            
+            FindObjectOfType<LocaleSelector>().ChangeLocale(_languages[@event.newValue]);
             LanguageManager.Instance.SetCurrentLocale(_languages[@event.newValue]);
         }
 
-        private void GoToLevelSelection()
+        private void GoToMainLevel()
         {
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             Destroy(GameObject.FindWithTag("MenuMusic"));
 
             PlayerPrefs.SetString("Scene to go to", "MainLevel");
-            SceneManager.LoadScene("Loading Scene");
+            SceneManager.LoadScene("LoadingScene");
         }
         
         private void GoToSettingsMenu()
@@ -77,11 +100,13 @@ namespace Code.Scripts.UI.MainMenu
         
         private void GoToCredits()
         {
+            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
             creditScreenUI.rootVisualElement.style.display = DisplayStyle.Flex;
         }
         
         private void QuitGame()
         {
+            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
             Application.Quit();
         }
 

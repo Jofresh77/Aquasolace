@@ -18,7 +18,7 @@ namespace Code.Scripts.Tile
 
         public static TileHelper Instance { get; private set; }
 
-        public Transform selectedTile;
+        public Transform SelectedTile { get; set; }
         public Tile selectedTileComponent;
 
         private List<Transform> _neighborTiles = new();
@@ -318,7 +318,7 @@ namespace Code.Scripts.Tile
 
         #endregion
 
-        #region Shaders
+        #region Shaders & Sounds
 
         private void SetHighlight(Transform tile, float highlightValue, float restrictValue)
         {
@@ -334,16 +334,37 @@ namespace Code.Scripts.Tile
             }
         }
 
+        private void PlayPlaceBiomeSound()
+        {
+            switch (GameManager.Instance.GetSelectedBiome())
+            {
+                case Biome.Meadow:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeMeadowPlace);
+                    break;
+                case Biome.Farmland:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeFarmlandPlace);
+                    break;
+                case Biome.ForestPine:
+                case Biome.ForestDeciduous:
+                case Biome.ForestMixed:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeForestPlace);
+                    break;
+                case Biome.River:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeRiverPlace);
+                    break;
+            }
+        }
+
         #endregion
 
         #region TileHover
 
         public void ShowPreview()
         {
-            if (!selectedTile) return;
+            if (!SelectedTile) return;
 
             //_neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.GetBrushSize());
-            _neighborTiles = FindNeighborTilesWithBrush(selectedTile, GameManager.Instance.BrushShape);
+            _neighborTiles = FindNeighborTilesWithBrush(SelectedTile, GameManager.Instance.BrushShape);
             List<Coordinate> neighborTileCoordinates = GetNeighborTileCoordinates();
 
             UpdateNeighborTiles();
@@ -431,7 +452,7 @@ namespace Code.Scripts.Tile
 
         public void HidePreview()
         {
-            if (!selectedTile) return;
+            if (!SelectedTile) return;
 
             //"normal" but also river un-preview
             foreach (Transform neighborTile in _neighborTiles)
@@ -472,7 +493,7 @@ namespace Code.Scripts.Tile
                 _originalRiverConfigurations.Remove(riverTile);
             }
 
-            selectedTile = null;
+            //selectedTile = null;
             selectedTileComponent.CanPlace = true;
             _originalRotations.Clear();
             _originalRiverConfigurations.Clear();
@@ -485,6 +506,8 @@ namespace Code.Scripts.Tile
 
         public void PlaceTile()
         {
+            PlayPlaceBiomeSound();
+            
             //Tile placement handling
             foreach (Transform neighborTile in _neighborTiles)
             {
