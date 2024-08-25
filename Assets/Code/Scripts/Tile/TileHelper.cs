@@ -339,11 +339,12 @@ namespace Code.Scripts.Tile
             switch (GameManager.Instance.GetSelectedBiome())
             {
                 case Biome.Meadow:
+                case Biome.Farmland:
                     SoundManager.Instance.PlaySound(SoundType.BiomeMeadowPlace);
                     break;
-                case Biome.Farmland:
-                    SoundManager.Instance.PlaySound(SoundType.BiomeFarmlandPlace);
-                    break;
+                /*case Biome.Farmland:
+                    SoundManager.Instance.PlaySound(SoundType.BiomeMeadowPlace);
+                    break;*/
                 case Biome.ForestPine:
                 case Biome.ForestDeciduous:
                 case Biome.ForestMixed:
