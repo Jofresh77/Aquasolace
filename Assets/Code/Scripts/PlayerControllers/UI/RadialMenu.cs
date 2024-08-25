@@ -204,7 +204,7 @@ namespace Code.Scripts.PlayerControllers.UI
             if (!_canClose) return;
 
             GameManager.Instance.IsPaletteOpen = false;
-            SoundManager.Instance.PlaySound(SoundType.TilePaletteSelect);
+            SoundManager.Instance.PlaySound(SoundType.BtnClick);
 
             _canClose = false;
 

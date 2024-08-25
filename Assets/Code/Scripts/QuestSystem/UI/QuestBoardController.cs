@@ -127,6 +127,8 @@ namespace Code.Scripts.QuestSystem.UI
 
                             if (updatedQuestInfo == null) return;
 
+                            SoundManager.Instance.PlaySound(SoundType.QuestBoardPin);
+
                             boardEntry.SetSelected(updatedQuestInfo.isSelected);
                         })
                         .SetRewardBiome(questInfo.rewardBiome) // Updated to use rewardBiome

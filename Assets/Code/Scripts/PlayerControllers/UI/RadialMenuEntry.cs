@@ -1,4 +1,5 @@
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -58,6 +59,7 @@ namespace Code.Scripts.PlayerControllers.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            
             _isMouseOver = true;
             if (!_isAnimating)
             {

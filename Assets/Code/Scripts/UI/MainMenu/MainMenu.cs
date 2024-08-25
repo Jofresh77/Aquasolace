@@ -54,15 +54,15 @@ namespace Code.Scripts.UI.MainMenu
             _languageDropdown.value = languageDropdownChoices[languageDropdownChoices.IndexOf(LanguageManager.Instance.GetCurrentLocale().LocaleName)]; // setting current selected language
             _languageDropdown.RegisterValueChangedCallback(ChangeLanguage); // setting callback function for change of language
             
-            AddHoverSound(_playBtn);
+            /*AddHoverSound(_playBtn);
             AddHoverSound(_settingsBtn);
             AddHoverSound(_creditsBtn);
             AddHoverSound(_quitBtn);
-            AddHoverSound(_languageDropdown);
+            AddHoverSound(_languageDropdown);*/
 
         }
         
-        private void AddHoverSound(Button button)
+        /*private void AddHoverSound(Button button)
         {
             button.RegisterCallback<MouseEnterEvent>(_ 
                 => SoundManager.Instance.PlaySound(SoundType.BtnHover));
@@ -72,11 +72,11 @@ namespace Code.Scripts.UI.MainMenu
         {
             dpf.RegisterCallback<MouseEnterEvent>(_ 
                 => SoundManager.Instance.PlaySound(SoundType.BtnHover));
-        }
+        }*/
         
         private void ChangeLanguage(ChangeEvent<string> @event)
         {
-            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
+            SoundManager.Instance.PlaySound(SoundType.BtnClick);
             
             FindObjectOfType<LocaleSelector>().ChangeLocale(_languages[@event.newValue]);
             LanguageManager.Instance.SetCurrentLocale(_languages[@event.newValue]);
@@ -100,13 +100,13 @@ namespace Code.Scripts.UI.MainMenu
         
         private void GoToCredits()
         {
-            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             creditScreenUI.rootVisualElement.style.display = DisplayStyle.Flex;
         }
         
         private void QuitGame()
         {
-            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             Application.Quit();
         }
 

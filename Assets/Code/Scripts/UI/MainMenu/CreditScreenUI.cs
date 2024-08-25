@@ -56,7 +56,7 @@ namespace Code.Scripts.UI.MainMenu
 
         private void CloseScreen(InputAction.CallbackContext obj)
         {
-            SoundManager.Instance.PlaySound(SoundType.CreditClose);
+            SoundManager.Instance.PlaySound(SoundType.BtnClick);
             
             if (_root.style.display == DisplayStyle.Flex)
             {

@@ -126,8 +126,6 @@ namespace Code.Scripts.QuestSystem.UI
         
         public QuestBoardEntry SetSelected(bool isSelected)
         {
-            SoundManager.Instance.PlaySound(SoundType.QuestBoardPin);
-            
             if (isSelected)
             {
                 _selectButton.RemoveFromClassList(SelectButtonClass);

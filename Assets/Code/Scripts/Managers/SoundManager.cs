@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Code.Scripts.Enums;
 using Code.Scripts.Music;
 using UnityEngine;
@@ -12,9 +14,11 @@ namespace Code.Scripts.Managers
 
         [FormerlySerializedAs("soundData")] [SerializeField] private GameSoundData mainMenuSd;
         [SerializeField] private GameSoundData mainLevelSd;
-        private AudioSource _audioSource;
-        
         private GameSoundData _currentSoundData;
+
+        private readonly List<AudioSource> _audioSources = new ();
+        
+        [SerializeField] private float unusedSourceLifetime = 5f;
 
         #region Callbacks
 
@@ -24,7 +28,6 @@ namespace Code.Scripts.Managers
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
-                InitializeAudioSource();
                 SceneManager.sceneLoaded += OnSceneLoaded;
             }
             else
@@ -43,20 +46,24 @@ namespace Code.Scripts.Managers
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
+        private void Update()
+        {
+            CleanupUnusedAudioSources();
+        }
+
         #endregion
 
         public void PlaySound(SoundType soundType)
         {
-            if(_currentSoundData == null) return;
+            if (_currentSoundData is null) return;
             
             AudioClip clip = _currentSoundData.GetClip(soundType);
             
-            if (clip == null) return;
-            
-            _audioSource.Stop();
+            if (clip is null) return;
 
-            _audioSource.clip = clip;
-            _audioSource.Play();
+            AudioSource source = GetAvailableAudioSource();
+            source.clip = clip;
+            source.Play();
         }
 
         private void UpdateCurrentSoundData(string sceneName)
@@ -77,10 +84,32 @@ namespace Code.Scripts.Managers
             }
         }
 
-        private void InitializeAudioSource()
+        private AudioSource GetAvailableAudioSource()
         {
-            _audioSource = gameObject.AddComponent<AudioSource>();
-            _audioSource.playOnAwake = false;
+            AudioSource availableSource = _audioSources.FirstOrDefault(source => !source.isPlaying);
+
+            if (availableSource is null)
+            {
+                availableSource = gameObject.AddComponent<AudioSource>();
+                availableSource.playOnAwake = false;
+                _audioSources.Add(availableSource);
+            }
+
+            availableSource.time = 0f; // Reset the AudioSource
+            return availableSource;
+        }
+
+        private void CleanupUnusedAudioSources()
+        {
+            var currentTime = Time.time;
+            var sourcesToRemove = _audioSources.Where(source => 
+                !source.isPlaying && (currentTime - source.time > unusedSourceLifetime)).ToList();
+
+            foreach (var source in sourcesToRemove)
+            {
+                _audioSources.Remove(source);
+                Destroy(source);
+            }
         }
     }
 }
