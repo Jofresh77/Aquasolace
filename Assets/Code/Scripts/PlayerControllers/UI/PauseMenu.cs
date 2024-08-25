@@ -1,13 +1,12 @@
 using Code.Scripts.Enums;
 using Code.Scripts.Managers;
-using Code.Scripts.PlayerControllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.HUD
+namespace Code.Scripts.PlayerControllers.UI
 {
     public class PauseMenu : MonoBehaviour
     {
@@ -22,6 +21,9 @@ namespace Code.Scripts.UI.HUD
         private Button _resumeBtn;
         private Button _backToMenuBtn;
         private Button _quitBtn;
+        
+        private Slider _musicSlider;
+        private Slider _soundSlider;
 
         private VisualElement _imageContainer;
 
@@ -51,6 +53,23 @@ namespace Code.Scripts.UI.HUD
             _imageContainer = root.Q<VisualElement>("img-container");
             _imageContainer.style.backgroundImage = new StyleBackground(
                 LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);
+            
+            InitializeVolumeSliders(root);
+        }
+        
+        private void InitializeVolumeSliders(VisualElement root)
+        {
+            _musicSlider = root.Q<Slider>("MusicSlider");
+            _soundSlider = root.Q<Slider>("SoundSlider");
+
+            SoundManager.Instance.GetMusicMixer().GetFloat("MasterVolume", out var musicVolume);
+            SoundManager.Instance.GetSoundMixer().GetFloat("MasterVolume", out var sfxVolume);
+
+            _musicSlider.value = SoundManager.DecibelToLinear(musicVolume);
+            _soundSlider.value = SoundManager.DecibelToLinear(sfxVolume);
+
+            _musicSlider.RegisterValueChangedCallback(evt => SoundManager.Instance.SetMusicMasterVolume(evt.newValue));
+            _soundSlider.RegisterValueChangedCallback(evt => SoundManager.Instance.SetSfxMasterVolume(evt.newValue));
         }
 
         private void BackToMainMenu()

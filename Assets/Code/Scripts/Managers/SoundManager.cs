@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
 using Code.Scripts.Music;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace Code.Scripts.Managers
 {
@@ -12,11 +13,16 @@ namespace Code.Scripts.Managers
     {
         public static SoundManager Instance { get; private set; }
 
-        [FormerlySerializedAs("soundData")] [SerializeField] private GameSoundData mainMenuSd;
+        [SerializeField] private GameSoundData mainMenuSd;
         [SerializeField] private GameSoundData mainLevelSd;
         private GameSoundData _currentSoundData;
 
-        private readonly List<AudioSource> _audioSources = new ();
+        private readonly List<AudioSource> _audioSources = new();
+
+        [SerializeField] private AudioMixer musicMixer;
+        [SerializeField] private AudioMixer sfxMixer;
+
+        [SerializeField] private AudioMixerGroup sfxMixerGrp;
         
         [SerializeField] private float unusedSourceLifetime = 5f;
 
@@ -56,13 +62,14 @@ namespace Code.Scripts.Managers
         public void PlaySound(SoundType soundType)
         {
             if (_currentSoundData is null) return;
-            
+
             AudioClip clip = _currentSoundData.GetClip(soundType);
-            
+
             if (clip is null) return;
 
             AudioSource source = GetAvailableAudioSource();
             source.clip = clip;
+            source.outputAudioMixerGroup = sfxMixerGrp;
             source.Play();
         }
 
@@ -102,7 +109,7 @@ namespace Code.Scripts.Managers
         private void CleanupUnusedAudioSources()
         {
             var currentTime = Time.time;
-            var sourcesToRemove = _audioSources.Where(source => 
+            var sourcesToRemove = _audioSources.Where(source =>
                 !source.isPlaying && (currentTime - source.time > unusedSourceLifetime)).ToList();
 
             foreach (var source in sourcesToRemove)
@@ -111,5 +118,20 @@ namespace Code.Scripts.Managers
                 Destroy(source);
             }
         }
+
+        public void SetMusicMasterVolume(float value) 
+            => musicMixer.SetFloat("MasterVolume", LinearToDecibel(value));
+
+        public void SetSfxMasterVolume(float value) 
+            => sfxMixer.SetFloat("MasterVolume", LinearToDecibel(value));
+
+        public static float DecibelToLinear(float dB) 
+            => Mathf.Clamp(Mathf.Pow(10f, dB / 20f), 0.0001f, 1f);
+
+        public  static float LinearToDecibel(float linear) 
+            => Mathf.Log10(linear) * 20f;
+        
+        public AudioMixer GetMusicMixer() => musicMixer;
+        public AudioMixer GetSoundMixer() => sfxMixer;
     }
 }
