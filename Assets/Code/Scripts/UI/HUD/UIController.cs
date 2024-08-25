@@ -113,7 +113,8 @@ namespace Code.Scripts.UI.HUD
                     // add manipulator to tiles to make them clickable
                     child.AddManipulator(new Clickable(evt =>
                     {
-                        if (GameManager.Instance.IsGamePaused) return;
+                        if (GameManager.Instance.IsGamePaused
+                            || GameManager.Instance.IsPaletteOpen) return;
                         
                         var target = (VisualElement)evt.target;
                         var index = _tiles.IndexOf(target);
@@ -161,20 +162,21 @@ namespace Code.Scripts.UI.HUD
                 _inputPossibilitiesLabel.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "input_possibilities");
             }
             
+            if (GameManager.Instance.IsPaletteOpen) return;
             // check if any key was pressed, afterward check if it was one of our numbers for the tiles
-            if (Input.anyKeyDown && int.TryParse(Input.inputString, out int pressedNumber) && pressedNumber >= 1 && pressedNumber <= _numOfTiles && pressedNumber != _currSelectedTile + 1)
-            {
-                var oldSelected = _currSelectedTile;
-                _currSelectedTile = pressedNumber - 1; // minus one because we need to shift (list starts with 0 not 1)
+            if (!Input.anyKeyDown || !int.TryParse(Input.inputString, out int pressedNumber) || pressedNumber < 1 ||
+                pressedNumber > _numOfTiles || pressedNumber == _currSelectedTile + 1) return;
             
-                // set classes for newly selected and old selected tiles
-                var oldTile = _tiles[oldSelected];
-                var newTile = _tiles[_currSelectedTile];
+            var oldSelected = _currSelectedTile;
+            _currSelectedTile = pressedNumber - 1; // minus one because we need to shift (list starts with 0 not 1)
             
-                oldTile.ToggleInClassList(SelectedClass);
-                newTile.ToggleInClassList(SelectedClass);
-                SetSelectedTileType();
-            }
+            // set classes for newly selected and old selected tiles
+            var oldTile = _tiles[oldSelected];
+            var newTile = _tiles[_currSelectedTile];
+            
+            oldTile.ToggleInClassList(SelectedClass);
+            newTile.ToggleInClassList(SelectedClass);
+            SetSelectedTileType();
         }
 
         private void UpdateBiomeNameLabels()
