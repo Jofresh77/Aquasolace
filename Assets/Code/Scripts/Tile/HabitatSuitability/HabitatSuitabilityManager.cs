@@ -78,6 +78,9 @@ namespace Code.Scripts.Tile.HabitatSuitability
             {
                 quest.UpdateClusters();
             }
+            
+            Debug.Log("-----------------------------------------------------------------------------------");
+            Debug.Log("-----------------------------------------------------------------------------------");
         }
 
         public void UpdateAllAreas()
