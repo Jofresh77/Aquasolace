@@ -342,9 +342,6 @@ namespace Code.Scripts.Tile
                 case Biome.Farmland:
                     SoundManager.Instance.PlaySound(SoundType.BiomeMeadowPlace);
                     break;
-                /*case Biome.Farmland:
-                    SoundManager.Instance.PlaySound(SoundType.BiomeMeadowPlace);
-                    break;*/
                 case Biome.ForestPine:
                 case Biome.ForestDeciduous:
                 case Biome.ForestMixed:

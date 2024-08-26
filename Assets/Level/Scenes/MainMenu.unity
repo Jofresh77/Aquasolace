@@ -430,7 +430,9 @@ MonoBehaviour:
   mainLevelSd: {fileID: 11400000, guid: bfa19b5968fec7d4daf85aa08f378a16, type: 2}
   musicMixer: {fileID: 24100000, guid: ef0dead7924c9134599b0218315c007e, type: 2}
   sfxMixer: {fileID: 24100000, guid: 02eb7dc84972bed498c6bade15b601b6, type: 2}
+  animalMixer: {fileID: 24100000, guid: 2a0e8408e8ce937468d64a8707caef6a, type: 2}
   sfxMixerGrp: {fileID: 24300002, guid: 02eb7dc84972bed498c6bade15b601b6, type: 2}
+  animalMixerGrp: {fileID: 24300002, guid: 2a0e8408e8ce937468d64a8707caef6a, type: 2}
   unusedSourceLifetime: 5
 --- !u!1 &1780282775
 GameObject:

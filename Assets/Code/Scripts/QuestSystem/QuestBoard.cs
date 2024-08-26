@@ -242,21 +242,5 @@ namespace Code.Scripts.QuestSystem
         }
 
         #endregion
-        
-        /*public void StartUnselectionUpdateRoutine() => StartCoroutine(DelayedUpdateQuestSelection(4));
-        
-        private IEnumerator DelayedUpdateQuestSelection(float delay)
-        {
-            Debug.Log("START");
-            yield return new WaitForSeconds(delay);
-            Debug.Log("END");
-
-            foreach (var q 
-                     in QuestManager.Instance.questList.quests
-                         .Where(q => q.IsAchieved))
-                q.isSelected = false;
-            
-            questBoardController.UpdatePinnedQuests();
-        }*/
     }
 }

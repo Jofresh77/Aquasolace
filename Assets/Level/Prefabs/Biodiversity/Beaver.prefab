@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4804417294835791062}
   - component: {fileID: 700774629740003351}
   - component: {fileID: 7090076940618767694}
-  - component: {fileID: 2524190092520194093}
   m_Layer: 0
   m_Name: Beaver
   m_TagString: Untagged
@@ -211,18 +210,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2524190092520194093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5367219524379310457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c64a4ef8caa36994090cad20ed806005, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1365008884760731976
 PrefabInstance:
   m_ObjectHideFlags: 0

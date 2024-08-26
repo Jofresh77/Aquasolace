@@ -133,5 +133,6 @@ namespace Code.Scripts.Managers
         
         public AudioMixer GetMusicMixer() => musicMixer;
         public AudioMixer GetSoundMixer() => sfxMixer;
+        
     }
 }

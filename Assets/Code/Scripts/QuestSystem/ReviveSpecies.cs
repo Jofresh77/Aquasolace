@@ -52,21 +52,21 @@ namespace Code.Scripts.QuestSystem
             List<List<Coordinate>> addedHabitats = newHabitats.Except(_currentHabitats).ToList();
             List<List<Coordinate>> unchangedHabitats = _currentHabitats.Intersect(newHabitats).ToList();
 
-            foreach (var habitat in removedHabitats)
+            foreach (var habitatCoordinates in removedHabitats)
             {
-                speciesSo.DespawnFromHabitat(habitat);
+                speciesSo.DespawnFromHabitat(habitatCoordinates);
             }
 
-            foreach (var habitat in addedHabitats)
+            foreach (var habitatCoordinates in addedHabitats)
             {
-                int desiredPopulation = CalculateDesiredPopulation(habitat);
-                speciesSo.SpawnInHabitat(habitat, desiredPopulation);
+                int desiredPopulation = CalculateDesiredPopulation(habitatCoordinates);
+                speciesSo.SpawnInHabitat(habitatCoordinates, desiredPopulation);
             }
 
-            foreach (var habitat in unchangedHabitats)
+            foreach (var habitatCoordinates in unchangedHabitats)
             {
-                int desiredPopulation = CalculateDesiredPopulation(habitat);
-                speciesSo.UpdatePopulationInHabitat(habitat, desiredPopulation);
+                int desiredPopulation = CalculateDesiredPopulation(habitatCoordinates);
+                speciesSo.UpdatePopulationInHabitat(habitatCoordinates, desiredPopulation);
             }
         }
 
