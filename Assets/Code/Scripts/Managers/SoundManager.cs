@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Scripts.Biodiversity;
 using Code.Scripts.Enums;
 using Code.Scripts.Music;
 using UnityEngine;
@@ -24,6 +25,12 @@ namespace Code.Scripts.Managers
 
         [SerializeField] private AudioMixerGroup sfxMixerGrp;
         
+        [SerializeField] private AudioMixer speciesMixer;
+        [SerializeField] private AudioMixerGroup speciesMixerGroup;
+
+        private AudioSource _speciesAudioSource;
+        private SpeciesAudio _speciesAudioComponent;
+        
         [SerializeField] private float unusedSourceLifetime = 5f;
 
         #region Callbacks
@@ -40,8 +47,31 @@ namespace Code.Scripts.Managers
             {
                 Destroy(gameObject);
             }
+            _speciesAudioSource = gameObject.AddComponent<AudioSource>();
+            _speciesAudioSource.outputAudioMixerGroup = speciesMixerGroup;
+            _speciesAudioComponent = gameObject.AddComponent<SpeciesAudio>();
         }
 
+        public void PlaySpeciesSound(AudioClip clip)
+        {
+            if (clip != null)
+            {
+                _speciesAudioSource.PlayOneShot(clip);
+            }
+        }
+
+        public void StartPeriodicSounds(List<AudioClip> sounds)
+        {
+            _speciesAudioComponent.StartPeriodicSounds(sounds);
+        }
+
+        public void StopPeriodicSounds()
+        {
+            _speciesAudioComponent.StopPeriodicSounds();
+        }
+
+        public void SetSpeciesMasterVolume(float value)
+            => speciesMixer.SetFloat("MasterVolume", LinearToDecibel(value));
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             UpdateCurrentSoundData(scene.name);

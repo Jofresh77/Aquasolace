@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Biodiversity;
 using Code.Scripts.Enums;
+using Code.Scripts.Managers;
 using Code.Scripts.Structs;
 using Code.Scripts.Tile.HabitatSuitability;
 using UnityEngine;
@@ -63,11 +64,11 @@ namespace Code.Scripts.QuestSystem
                 speciesSo.SpawnInHabitat(habitatCoordinates, desiredPopulation);
             }
 
-            foreach (var habitatCoordinates in unchangedHabitats)
+            /*foreach (var habitatCoordinates in unchangedHabitats)
             {
                 int desiredPopulation = CalculateDesiredPopulation(habitatCoordinates);
                 speciesSo.UpdatePopulationInHabitat(habitatCoordinates, desiredPopulation);
-            }
+            }*/
         }
 
         private static bool AreHabitatsEqual(List<List<Coordinate>> habitats1, List<List<Coordinate>> habitats2)
@@ -91,9 +92,18 @@ namespace Code.Scripts.QuestSystem
             bool wasAchieved = IsAchieved;
             IsAchieved = _currentHabitats.Count > 0;
 
-            if (IsAchieved != wasAchieved)
+            if (IsAchieved == wasAchieved) return;
+            
+            NotifyAchievementChange(IsAchieved);
+            if (IsAchieved)
             {
-                NotifyAchievementChange(IsAchieved);
+                SoundManager.Instance.PlaySpeciesSound(speciesSo.SpawnSound);
+                SoundManager.Instance.StartPeriodicSounds(speciesSo.PeriodicSounds);
+            }
+            else
+            {
+                SoundManager.Instance.PlaySpeciesSound(speciesSo.DespawnSound);
+                SoundManager.Instance.StopPeriodicSounds();
             }
         }
 

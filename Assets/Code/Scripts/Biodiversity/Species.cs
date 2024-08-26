@@ -12,8 +12,12 @@ namespace Code.Scripts.Biodiversity
     {
         [SerializeField] private string speciesName;
         [SerializeField] private GameObject speciesVisualPrefab;
-
         [SerializeField] private int spawnInterval = 10;
+
+        [Header("Audio")]
+        [SerializeField] private AudioClip spawnSound;
+        [SerializeField] private AudioClip despawnSound;
+        [SerializeField] private List<AudioClip> periodicSounds;
 
         private Dictionary<List<Coordinate>, List<SpawnedSpeciesInfo>> _spawnedSpeciesPerHabitat = new();
 
@@ -86,7 +90,7 @@ namespace Code.Scripts.Biodiversity
             SpeciesMovement movement = speciesVisual.GetComponent<SpeciesMovement>();
             movement.Initialize(habitat);
             AudioSource audioSource = speciesVisual.GetComponent<AudioSource>();
-            if (audioSource == null)
+            if (audioSource is null)
             {
                 audioSource = speciesVisual.AddComponent<AudioSource>();
             }
@@ -107,5 +111,9 @@ namespace Code.Scripts.Biodiversity
             return new Vector3(randomCoord.X, 0, randomCoord.Z);
         }
 
+        public AudioClip SpawnSound => spawnSound;
+        public AudioClip DespawnSound => despawnSound;
+        public List<AudioClip> PeriodicSounds => periodicSounds;
+        
     }
 }
