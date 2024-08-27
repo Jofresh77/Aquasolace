@@ -27,7 +27,7 @@ MonoBehaviour:
   biomeRequirements: []
   minTotalHabitatSize: 10
   maxSpeciesPerHabitat: 5
-  speciesPerTile: 0.1
+  speciesPerTile: 0.05
   maxDistanceFromCentroid: 10
   maxAmountTileInHabitat: 45
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.5}

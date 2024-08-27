@@ -10,32 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f7ae5ec50bd4f72873a6b91edae003f, type: 3}
-  m_Name: ReviveSpecies_LutraLutra
+  m_Name: ReviveSpecies_DendrocoposMajor
   m_EditorClassIdentifier: 
-  questName: species_lutralutra_name
-  description: species_lutralutra_description
+  questName: species_dendrocoposmajor_name
+  description: species_dendrocoposmajor_description
   isPersistAchievement: 0
   isRemoveQuestAfterAchieved: 0
   isEndRequired: 0
   isSelected: 0
-  rewardBiome: 5
+  rewardBiome: 4
   rewardAmount: 13
-  questIcon: {fileID: 2800000, guid: 3b1adf7c483208542861fd8ad00dc236, type: 3}
+  questIcon: {fileID: 2800000, guid: 734bd594a984af84ba3dbcecbda554ef, type: 3}
   achievementMsg: positive
   failureMsg: negative
-  speciesSo: {fileID: 11400000, guid: cf27ccaabde75443aac87865067e9dc1, type: 2}
-  biomeRequirements:
-  - biome: 5
-    minCount: 16
-  - biome: 0
-    minCount: 5
-  - biome: 4
-    minCount: 10
-  - biome: 2
-    minCount: 15
-  minTotalHabitatSize: 46
+  speciesSo: {fileID: 11400000, guid: 0d15ae678fd494aedb0895f5c4362b91, type: 2}
+  biomeRequirements: []
+  minTotalHabitatSize: 10
   maxSpeciesPerHabitat: 5
-  speciesPerTile: 0.1
+  speciesPerTile: 0.05
   maxDistanceFromCentroid: 10
-  maxAmountTileInHabitat: 60
-  gizmoColor: {r: 1, g: 0.08871307, b: 0, a: 0.5}
+  maxAmountTileInHabitat: 45
+  gizmoColor: {r: 0, g: 1, b: 0, a: 0.5}

@@ -41,8 +41,6 @@ namespace Code.Scripts.QuestSystem
             List<List<Coordinate>> newHabitats =
                 HabitatSuitabilityManager.Instance.FindSuitableHabitats(biomeRequirementDict, minTotalHabitatSize, maxDistanceFromCentroid, maxAmountTileInHabitat);
 
-            Debug.Log($"[ReviveSpecies] Number of habitats identified before merging: {newHabitats.Count}");
-
             List<List<Coordinate>> modifiedHabitats = new List<List<Coordinate>>();
             List<List<Coordinate>> removedHabitats = new List<List<Coordinate>>(_currentHabitats);
             List<List<Coordinate>> addedHabitats = new List<List<Coordinate>>();
@@ -65,9 +63,6 @@ namespace Code.Scripts.QuestSystem
             // Merge close clusters
             List<List<Coordinate>> mergedHabitats = MergeCloseClusters(modifiedHabitats.Concat(addedHabitats).ToList());
 
-            Debug.Log($"[ReviveSpecies] Habitats after merging - Total: {mergedHabitats.Count}, Modified: {modifiedHabitats.Count}, Added: {addedHabitats.Count}, Removed: {removedHabitats.Count}");
-
-            // Handle habitat changes
             HandleHabitatChanges(mergedHabitats, removedHabitats);
 
             _currentHabitats = mergedHabitats;
@@ -80,15 +75,12 @@ namespace Code.Scripts.QuestSystem
             foreach (var habitat in removedHabitats)
             {
                 speciesSo.DespawnFromHabitat(habitat);
-                Debug.Log($"[ReviveSpecies] Removed habitat: Size {habitat.Count}, Despawned all species");
             }
 
             // Then, handle merged habitats (which include modified and new habitats)
             foreach (var habitat in mergedHabitats)
             {
                 int desiredPopulation = CalculateDesiredPopulation(habitat);
-                int currentPopulation = speciesSo.GetPopulationInHabitat(habitat);
-                Debug.Log($"[ReviveSpecies] Updating merged habitat: Size {habitat.Count}, Desired population {desiredPopulation}, Current population {currentPopulation}");
                 speciesSo.UpdatePopulationInHabitat(habitat, desiredPopulation);
             }
         }
@@ -104,13 +96,12 @@ namespace Code.Scripts.QuestSystem
 
                 for (int i = 0; i < clusters.Count; i++)
                 {
-                    if (AreClustersMergeable(currentCluster, clusters[i]))
-                    {
-                        currentCluster.AddRange(clusters[i]);
-                        speciesSo.MergeHabitats(currentCluster, clusters[i]);
-                        clusters.RemoveAt(i);
-                        i--;
-                    }
+                    if (!AreClustersMergeable(currentCluster, clusters[i])) continue;
+                    
+                    currentCluster.AddRange(clusters[i]);
+                    speciesSo.MergeHabitats(currentCluster, clusters[i]);
+                    clusters.RemoveAt(i);
+                    i--;
                 }
 
                 mergedClusters.Add(currentCluster);

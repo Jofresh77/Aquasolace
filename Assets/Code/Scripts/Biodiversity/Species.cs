@@ -26,11 +26,10 @@ namespace Code.Scripts.Biodiversity
             public Vector3 CurrentPosition;
         }
 
-        public void SpawnInHabitat(List<Coordinate> habitat, int desiredPopulation)
+        private void SpawnInHabitat(List<Coordinate> habitat, int desiredPopulation)
         {
-            if (_spawnedSpeciesPerHabitat.TryGetValue(habitat, out var existingSpecies))
+            if (_spawnedSpeciesPerHabitat.TryGetValue(habitat, out _))
             {
-                Debug.Log($"[Species] Habitat already exists, updating population instead");
                 UpdatePopulationInHabitat(habitat, desiredPopulation);
                 return;
             }
@@ -44,7 +43,6 @@ namespace Code.Scripts.Biodiversity
             }
 
             _spawnedSpeciesPerHabitat[new List<Coordinate>(habitat)] = speciesInHabitat;
-            Debug.Log($"[Species] Spawned new habitat with {speciesInHabitat.Count} species");
         }
 
         public void DespawnFromHabitat(List<Coordinate> habitat)
@@ -57,7 +55,6 @@ namespace Code.Scripts.Biodiversity
                     Destroy(species.SpeciesVisual);
                 }
                 _spawnedSpeciesPerHabitat.Remove(habitatToRemove);
-                Debug.Log($"[Species] Despawned {speciesInHabitat.Count} species from habitat");
             }
             else
             {
@@ -73,7 +70,6 @@ namespace Code.Scripts.Biodiversity
 
         public void UpdatePopulationInHabitat(List<Coordinate> habitat, int desiredPopulation)
         {
-            Debug.Log($"[Species] Updating habitat: Desired population {desiredPopulation}");
 
             if (!_spawnedSpeciesPerHabitat.TryGetValue(habitat, out var speciesInHabitat))
             {
@@ -93,7 +89,6 @@ namespace Code.Scripts.Biodiversity
             }
 
             int currentPopulation = speciesInHabitat.Count;
-            Debug.Log($"[Species] Current population in habitat: {currentPopulation}");
 
             if (currentPopulation > desiredPopulation)
             {
@@ -105,7 +100,6 @@ namespace Code.Scripts.Biodiversity
                     Destroy(specieToRemove.SpeciesVisual);
                     speciesInHabitat.RemoveAt(speciesInHabitat.Count - 1);
                 }
-                Debug.Log($"[Species] Removed {excessCount} species from habitat");
             }
             else if (currentPopulation < desiredPopulation)
             {
@@ -116,7 +110,6 @@ namespace Code.Scripts.Biodiversity
                     SpawnedSpeciesInfo newSpecies = SpawnNewSpecies(habitat);
                     speciesInHabitat.Add(newSpecies);
                 }
-                Debug.Log($"[Species] Spawned {additionalCount} new species in habitat");
             }
             else
             {
@@ -126,19 +119,17 @@ namespace Code.Scripts.Biodiversity
             // Update the habitat reference
             _spawnedSpeciesPerHabitat[habitat] = speciesInHabitat;
 
-            Debug.Log($"[Species] Final population in habitat: {speciesInHabitat.Count}");
         }
 
         private SpawnedSpeciesInfo SpawnNewSpecies(List<Coordinate> habitat)
         {
-            Debug.Log("SPAWN");
             Vector3 spawnPosition = GetRandomPositionInHabitat(habitat);
             GameObject speciesVisual = Instantiate(speciesVisualPrefab, spawnPosition, Quaternion.identity);
             SpeciesMovement movement = speciesVisual.GetComponent<SpeciesMovement>();
             
             movement.Initialize(habitat);
             
-            AudioSource audioSource = speciesVisual.GetComponent<AudioSource>() ?? speciesVisual.AddComponent<AudioSource>();
+            _ = speciesVisual.GetComponent<AudioSource>() ?? speciesVisual.AddComponent<AudioSource>();
 
             return new SpawnedSpeciesInfo { SpeciesVisual = speciesVisual, CurrentPosition = spawnPosition};
         }
@@ -156,7 +147,6 @@ namespace Code.Scripts.Biodiversity
                     _spawnedSpeciesPerHabitat[mergedHabitat] = new List<SpawnedSpeciesInfo>(speciesToMerge);
                 }
                 _spawnedSpeciesPerHabitat.Remove(habitatToMerge);
-                Debug.Log($"[Species] Merged {speciesToMerge.Count} species into habitat of size {mergedHabitat.Count}");
             }
         }
         

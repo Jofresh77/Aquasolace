@@ -594,7 +594,7 @@ namespace Code.Scripts.Tile
             _originalRiverConfigurations.Clear();
             _riverTiles.Clear();
 
-            HabitatSuitabilityManager.Instance.UpdateAllHabitats();
+            HabitatSuitabilityManager.UpdateAllHabitats();
             HabitatSuitabilityManager.Instance.UpdateAllAreas();
         }
 
