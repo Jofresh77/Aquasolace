@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
-using Code.Scripts.UI;
 using Code.Scripts.Structs;
+using Code.Scripts.Tile;
+using Code.Scripts.UI;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-namespace Code.Scripts.Tile
+namespace Code.Scripts.Singletons
 {
     public class SealedAreaManager : MonoBehaviour
     {
@@ -35,7 +35,7 @@ namespace Code.Scripts.Tile
             {
                 foreach (var neighbor in neighbors)
                 {
-                    Tile neighborTile = neighbor.GetComponent<Tile>();
+                    Tile.Tile neighborTile = neighbor.GetComponent<Tile.Tile>();
                     if (neighborTile == null) continue;
 
                     Biome currentBiome = neighborTile.GetBiome();
@@ -64,7 +64,7 @@ namespace Code.Scripts.Tile
             TileHelper.Instance.ShowPreview();
         }
 
-        private void ReplaceWithRiverSealed(Tile tile)
+        private void ReplaceWithRiverSealed(Tile.Tile tile)
         {
             Transform riverSealed = TileHelper.Instance.FindTileWithTag(tile.gameObject, "RiverSealed");
             if (riverSealed == null) return;
@@ -88,7 +88,7 @@ namespace Code.Scripts.Tile
             }
         }
 
-        private void ReplaceWithSealed(Tile tile)
+        private void ReplaceWithSealed(Tile.Tile tile)
         {
             Transform sealedTile = TileHelper.Instance.FindTileWithTag(tile.gameObject, "Sealed");
             if (sealedTile == null) return;
@@ -96,7 +96,7 @@ namespace Code.Scripts.Tile
             UpdateTile(tile, Biome.Sealed, sealedTile);
         }
 
-        private void UpdateTile(Tile tile, Biome newBiome, Transform newPlacedTile)
+        private void UpdateTile(Tile.Tile tile, Biome newBiome, Transform newPlacedTile)
         {
             tile.placedTile.gameObject.SetActive(false);
             newPlacedTile.gameObject.SetActive(true);

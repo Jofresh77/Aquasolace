@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Scripts.QuestSystem;
 using UnityEngine;
 
-namespace Code.Scripts.QuestSystem
+namespace Code.Scripts.Singletons
 {
     public class QuestManager : MonoBehaviour
     {

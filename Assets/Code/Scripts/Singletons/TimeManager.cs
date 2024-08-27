@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Settings;
 
-namespace Code.Scripts.Managers
+namespace Code.Scripts.Singletons
 {
     public class TimeManager : MonoBehaviour
     {

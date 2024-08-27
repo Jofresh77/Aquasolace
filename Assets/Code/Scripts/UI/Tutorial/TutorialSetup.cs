@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;

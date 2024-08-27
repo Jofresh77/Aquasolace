@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Net.Mail;
-using Code.Scripts.Managers;
 using Code.Scripts.QuestSystem;
+using Code.Scripts.Singletons;
 using Code.Scripts.Tile;
 using UnityEngine;
 using UnityEngine.Localization.Settings;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
 using Code.Scripts.PlayerControllers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;

@@ -2,7 +2,7 @@
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
-namespace Code.Scripts.Managers
+namespace Code.Scripts.Singletons
 {
     public class LanguageManager : MonoBehaviour
     {

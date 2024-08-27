@@ -1,4 +1,5 @@
-﻿using Code.Scripts.UI;
+﻿using Code.Scripts.Singletons;
+using Code.Scripts.UI;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;

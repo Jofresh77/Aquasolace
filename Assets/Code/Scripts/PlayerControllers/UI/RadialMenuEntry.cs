@@ -1,5 +1,5 @@
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;

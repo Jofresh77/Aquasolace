@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Biodiversity;
@@ -8,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-namespace Code.Scripts.Managers
+namespace Code.Scripts.Singletons
 {
     public class SoundManager : MonoBehaviour
     {

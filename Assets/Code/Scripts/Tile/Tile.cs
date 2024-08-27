@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using Code.Scripts.UI;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;

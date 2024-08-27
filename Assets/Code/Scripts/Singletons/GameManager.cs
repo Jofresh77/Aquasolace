@@ -10,9 +10,8 @@ using Code.Scripts.UI.HUD;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-namespace Code.Scripts.Managers
+namespace Code.Scripts.Singletons
 {
     public class GameManager : MonoBehaviour
     {

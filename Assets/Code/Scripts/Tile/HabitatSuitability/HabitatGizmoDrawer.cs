@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Code.Scripts.QuestSystem;
+using Code.Scripts.Singletons;
 using UnityEngine;
 
 namespace Code.Scripts.Tile.HabitatSuitability

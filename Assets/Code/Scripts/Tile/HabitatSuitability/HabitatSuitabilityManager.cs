@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
 using Code.Scripts.QuestSystem;
+using Code.Scripts.Singletons;
 using Code.Scripts.Structs;
 using UnityEngine;
 

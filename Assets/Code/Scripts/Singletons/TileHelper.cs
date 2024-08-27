@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
 using Code.Scripts.QuestSystem;
 using Code.Scripts.Structs;
+using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.UI;
+using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
-using Code.Scripts.Tile.HabitatSuitability;
-using Code.Scripts.UI.HUD.Notification;
 
-namespace Code.Scripts.Tile
+namespace Code.Scripts.Singletons
 {
     public class TileHelper : MonoBehaviour
     {
@@ -19,7 +18,7 @@ namespace Code.Scripts.Tile
         public static TileHelper Instance { get; private set; }
 
         public Transform SelectedTile { get; set; }
-        public Tile selectedTileComponent;
+        public Tile.Tile selectedTileComponent;
 
         private List<Transform> _neighborTiles = new();
         private readonly List<Transform> _riverTiles = new();
@@ -387,7 +386,7 @@ namespace Code.Scripts.Tile
         {
             _originalRotations.TryAdd(neighborTile, neighborTile.rotation);
 
-            Tile tile = neighborTile.GetComponent<Tile>();
+            Tile.Tile tile = neighborTile.GetComponent<Tile.Tile>();
             tile.IsSelected = true;
             tile.previewTile =
                 FindTileWithTag(neighborTile.gameObject, GameManager.Instance.GetSelectedBiome().ToString());
@@ -441,7 +440,7 @@ namespace Code.Scripts.Tile
 
             foreach (Transform neighborTile in _neighborTiles)
             {
-                neighborTile.GetComponent<Tile>().SetPositionAnimated();
+                neighborTile.GetComponent<Tile.Tile>().SetPositionAnimated();
                 SetHighlight(neighborTile, 1, selectedTileComponent.CanPlace ? 0 : 1);
             }
 
@@ -455,7 +454,7 @@ namespace Code.Scripts.Tile
             //"normal" but also river un-preview
             foreach (Transform neighborTile in _neighborTiles)
             {
-                Tile tile = neighborTile.GetComponent<Tile>();
+                Tile.Tile tile = neighborTile.GetComponent<Tile.Tile>();
 
                 tile.IsSelected = false;
 
@@ -463,7 +462,7 @@ namespace Code.Scripts.Tile
 
                 #region UX
 
-                neighborTile.GetComponent<Tile>().SetPositionAnimated();
+                neighborTile.GetComponent<Tile.Tile>().SetPositionAnimated();
                 SetHighlight(neighborTile, 0, 0);
 
                 #endregion
@@ -509,7 +508,7 @@ namespace Code.Scripts.Tile
             //Tile placement handling
             foreach (Transform neighborTile in _neighborTiles)
             {
-                Tile tile = neighborTile.GetComponent<Tile>();
+                Tile.Tile tile = neighborTile.GetComponent<Tile.Tile>();
 
                 tile.IsSelected = false;
 
@@ -517,7 +516,7 @@ namespace Code.Scripts.Tile
 
                 #region ----- UX -----
 
-                neighborTile.GetComponent<Tile>().SetPositionAnimated();
+                neighborTile.GetComponent<Tile.Tile>().SetPositionAnimated();
                 SetHighlight(neighborTile, 0, 0);
 
                 #endregion
@@ -536,7 +535,7 @@ namespace Code.Scripts.Tile
             {
                 foreach (Transform riverTile in _riverTiles)
                 {
-                    Tile tile = riverTile.GetComponent<Tile>();
+                    Tile.Tile tile = riverTile.GetComponent<Tile.Tile>();
 
                     Coordinate coord = new Coordinate(riverTile.position.x, riverTile.position.z);
 
@@ -549,7 +548,7 @@ namespace Code.Scripts.Tile
             //Influence and Grid update
             foreach (Transform neighborTile in _neighborTiles)
             {
-                Tile tile = neighborTile.GetComponent<Tile>();
+                Tile.Tile tile = neighborTile.GetComponent<Tile.Tile>();
 
                 if (tile.GetBiome() == tile.GetPreviousBiome()) continue;
 
@@ -578,7 +577,7 @@ namespace Code.Scripts.Tile
 
             if (placedTile != 0)
             {
-                Biome biome = _neighborTiles[0].GetComponent<Tile>().GetBiome();
+                Biome biome = _neighborTiles[0].GetComponent<Tile.Tile>().GetBiome();
                 GameManager.Instance.AddNotification(
                     Notification.Create(
                         NotificationType.Biome,
@@ -600,7 +599,7 @@ namespace Code.Scripts.Tile
 
         private (float, float) PlacedTileEnvironmentInfluence(Transform tile)
         {
-            Tile tileScript = tile.GetComponent<Tile>();
+            Tile.Tile tileScript = tile.GetComponent<Tile.Tile>();
             Biome selfBiome = tileScript.GetBiome();
             Biome previousBiome = tileScript.GetPreviousBiome();
 
@@ -640,7 +639,7 @@ namespace Code.Scripts.Tile
             foreach (var neighborInfluence in closeByNeighbors.SelectMany(closeByTransform => _neighborInfluences.Where(
                          neighborInfluence => neighborInfluence.SelfBiome == selfBiome &&
                                               neighborInfluence.NeighborBiome ==
-                                              closeByTransform.GetComponent<Tile>().GetBiome())))
+                                              closeByTransform.GetComponent<Tile.Tile>().GetBiome())))
             {
                 temp += neighborInfluence.Temperature;
                 gwl += neighborInfluence.GroundWater;
@@ -843,7 +842,7 @@ namespace Code.Scripts.Tile
 
         private void StoreOriginalRiverConfiguration(Transform tileTransform)
         {
-            Tile tile = tileTransform.GetComponent<Tile>();
+            Tile.Tile tile = tileTransform.GetComponent<Tile.Tile>();
 
             if (!(tile.placedTile.CompareTag("River") || tile.placedTile.CompareTag("RiverSealed"))) return;
 
@@ -886,7 +885,7 @@ namespace Code.Scripts.Tile
 
         private void RotateTile(Transform toRotateTransform)
         {
-            if (toRotateTransform.GetComponent<Tile>().direction == GameManager.Instance.GetDirection()) return;
+            if (toRotateTransform.GetComponent<Tile.Tile>().direction == GameManager.Instance.GetDirection()) return;
 
             Quaternion targetRotation = GameManager.Instance.GetDirection() switch
             {

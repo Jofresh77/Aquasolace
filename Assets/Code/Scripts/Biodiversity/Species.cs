@@ -111,12 +111,8 @@ namespace Code.Scripts.Biodiversity
                     speciesInHabitat.Add(newSpecies);
                 }
             }
-            else
-            {
-                Debug.Log($"[Species] Population unchanged");
-            }
 
-            // Update the habitat reference
+            // Update habitat reference
             _spawnedSpeciesPerHabitat[habitat] = speciesInHabitat;
 
         }

@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
 using Code.Scripts.Structs;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-namespace Code.Scripts.Tile
+namespace Code.Scripts.Singletons
 {
     public class GridHelper : MonoBehaviour
     {
@@ -62,7 +61,7 @@ namespace Code.Scripts.Tile
             for (int i = 0; i < tileMap.childCount; i++)
             {
                 Transform tile = tileMap.GetChild(i);
-                Tile tileComponent = tile.GetComponent<Tile>();
+                Tile.Tile tileComponent = tile.GetComponent<Tile.Tile>();
                 Vector3 tilePos = tile.position;
 
                 var coordinate = new Coordinate(tilePos.x, tilePos.z);
