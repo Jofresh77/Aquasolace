@@ -216,6 +216,7 @@ namespace Code.Scripts.QuestSystem.UI
 
         private void OnCloseBtnClicked()
         {
+            SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
             _informationContainer.style.display = DisplayStyle.None;
         }
 

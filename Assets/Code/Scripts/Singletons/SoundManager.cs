@@ -21,10 +21,9 @@ namespace Code.Scripts.Singletons
 
         [SerializeField] private AudioMixer musicMixer;
         [SerializeField] private AudioMixer sfxMixer;
+        [SerializeField] private AudioMixer speciesMixer;
 
         [SerializeField] private AudioMixerGroup sfxMixerGrp;
-        
-        [SerializeField] private AudioMixer speciesMixer;
         [SerializeField] private AudioMixerGroup speciesMixerGroup;
 
         private AudioSource _speciesAudioSource;
@@ -162,6 +161,6 @@ namespace Code.Scripts.Singletons
         
         public AudioMixer GetMusicMixer() => musicMixer;
         public AudioMixer GetSoundMixer() => sfxMixer;
-        
+        public AudioMixer GetSpeciesMixer() => speciesMixer;
     }
 }

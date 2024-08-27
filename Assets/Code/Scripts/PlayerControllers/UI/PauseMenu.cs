@@ -24,6 +24,7 @@ namespace Code.Scripts.PlayerControllers.UI
         
         private Slider _musicSlider;
         private Slider _soundSlider;
+        private Slider _speciesSlider;
 
         private VisualElement _imageContainer;
 
@@ -61,15 +62,22 @@ namespace Code.Scripts.PlayerControllers.UI
         {
             _musicSlider = root.Q<Slider>("MusicSlider");
             _soundSlider = root.Q<Slider>("SoundSlider");
+            _speciesSlider = root.Q<Slider>("SpeciesSlider");
 
             SoundManager.Instance.GetMusicMixer().GetFloat("MasterVolume", out var musicVolume);
             SoundManager.Instance.GetSoundMixer().GetFloat("MasterVolume", out var sfxVolume);
+            SoundManager.Instance.GetSpeciesMixer().GetFloat("MasterVolume", out var speciesVolume);
 
             _musicSlider.value = SoundManager.DecibelToLinear(musicVolume);
             _soundSlider.value = SoundManager.DecibelToLinear(sfxVolume);
+            _speciesSlider.value = SoundManager.DecibelToLinear(speciesVolume);
 
-            _musicSlider.RegisterValueChangedCallback(evt => SoundManager.Instance.SetMusicMasterVolume(evt.newValue));
-            _soundSlider.RegisterValueChangedCallback(evt => SoundManager.Instance.SetSfxMasterVolume(evt.newValue));
+            _musicSlider.RegisterValueChangedCallback(evt => 
+                SoundManager.Instance.SetMusicMasterVolume(evt.newValue));
+            _soundSlider.RegisterValueChangedCallback(evt => 
+                SoundManager.Instance.SetSfxMasterVolume(evt.newValue));
+            _speciesSlider.RegisterValueChangedCallback(evt =>
+                SoundManager.Instance.SetSpeciesMasterVolume(evt.newValue));
         }
 
         private void BackToMainMenu()
