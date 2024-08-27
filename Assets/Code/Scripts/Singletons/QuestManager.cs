@@ -37,7 +37,7 @@ namespace Code.Scripts.Singletons
         {
             foreach (Quest questSo in questList.quests)
             {
-                if (questSo is Quest { isEndRequired: true, IsAchieved: false })
+                if (questSo is Quest { isRequired: true, IsAchieved: false })
                     
                     return false;
             }

@@ -17,11 +17,12 @@ namespace Code.Scripts.QuestSystem.UI
         [SerializeField] private int itemsPerRow = 5;
 
         private VisualElement _questBoardContainer;
+        private List<VisualElement> _rows;
 
         private Label _tipText;
         private Label _countText;
 
-        private List<VisualElement> _rows;
+        private const string RequiredIconPath = "quest_required_icon";
 
         private PlayerInputActions _playerInputActions;
 
@@ -91,7 +92,7 @@ namespace Code.Scripts.QuestSystem.UI
                 {
                     if (curIndex >= questInfoList.Count) break;
 
-                    var questInfo = questInfoList[curIndex];
+                    QuestBoard.QuestInfo questInfo = questInfoList[curIndex];
 
                     string iconPath = questInfo.questNameId switch
                     {
@@ -120,6 +121,7 @@ namespace Code.Scripts.QuestSystem.UI
                         .SetNameId(questInfo.questNameId)
                         .SetName(questInfo.questName)
                         .SetDescription(questInfo.description)
+                        .SetSmallIcon(questInfo.isRequired, Resources.Load<Texture2D>(RequiredIconPath))
                         .SetIcon(Resources.Load<Texture2D>(iconPath))
                         .SetSelectButtonClickHandler(() =>
                         {
@@ -133,7 +135,7 @@ namespace Code.Scripts.QuestSystem.UI
                         })
                         .SetRewardBiome(questInfo.rewardBiome) // Updated to use rewardBiome
                         .SetRewardAmount(questInfo.rewardAmount)
-                        .SetAchieved(questInfo.isAchieved)
+                        .SetAchieved(questInfo.isAchieved, questInfo.isRewarded)
                         .Build();
 
                     // add click callback
@@ -228,11 +230,11 @@ namespace Code.Scripts.QuestSystem.UI
             _informationContainer.style.display = DisplayStyle.Flex;
         }
 
-        public void MarkQuestAsAchieved(string questName, bool isAchieved)
+        public void MarkQuestAsAchieved(string questName, bool isAchieved, bool isRewarded)
         {
             foreach (var entry in _questBoardEntries.Where(entry => entry.GetNameId().Equals(questName)))
             {
-                entry.SetAchieved(isAchieved);
+                entry.SetAchieved(isAchieved, isRewarded);
             }
         }
 

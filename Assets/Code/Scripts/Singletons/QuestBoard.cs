@@ -30,6 +30,7 @@ namespace Code.Scripts.Singletons
             public bool isAchieved;
             public bool isRewarded;
             public bool isSelected;
+            public bool isRequired;
             public Biome rewardBiome;
             public int rewardAmount;
         }
@@ -86,11 +87,11 @@ namespace Code.Scripts.Singletons
                     description = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", quest.description),
                     isAchieved = quest.IsAchieved,
                     isRewarded = quest.IsRewarded,
-                    isSelected = quest.isSelected
+                    isSelected = quest.isSelected,
+                    isRequired = quest.isRequired,
+                    rewardBiome = quest.rewardBiome,
+                    rewardAmount = quest.rewardAmount
                 };
-
-                questInfo.rewardBiome = quest.rewardBiome;
-                questInfo.rewardAmount = quest.rewardAmount;
 
                 questInfoList.Add(questInfo);
             }
@@ -112,7 +113,7 @@ namespace Code.Scripts.Singletons
 
                 quest.IsAchieved = CheckAchievement(quest);
 
-                UpdateQuestBoardStatus(quest.questName, quest.IsAchieved);
+                UpdateQuestBoardStatus(quest.questName, quest.IsAchieved, quest.IsRewarded);
 
                 if (quest.IsAchieved && quest.isRemoveQuestAfterAchieved)
                     RemoveQuestFromList(quest.questName);
@@ -127,12 +128,12 @@ namespace Code.Scripts.Singletons
             _properEnvironmentQuest.IsAchieved = CheckAchievement(_properEnvironmentQuest);
 
             if (tempState != _properEnvironmentQuest.IsAchieved)
-                UpdateQuestBoardStatus(_properEnvironmentQuest.questName, _properEnvironmentQuest.IsAchieved);
+                UpdateQuestBoardStatus(_properEnvironmentQuest.questName, _properEnvironmentQuest.IsAchieved, _properEnvironmentQuest.IsRewarded);
         }
 
-        public void UpdateQuestBoardStatus(string questName, bool isAchieved, bool isSelected = false)
+        public void UpdateQuestBoardStatus(string questName, bool isAchieved, bool isRewarded, bool isSelected = false)
         {
-            questBoardController.MarkQuestAsAchieved(questName, isAchieved);
+            questBoardController.MarkQuestAsAchieved(questName, isAchieved, isRewarded);
             questBoardController.SetQuestSelectState(questName, isSelected);
         }
 

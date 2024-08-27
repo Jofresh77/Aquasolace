@@ -1,5 +1,4 @@
 ﻿using Code.Scripts.Enums;
-using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,27 +14,25 @@ namespace Code.Scripts.QuestSystem.UI
         #region uss classes
 
         private const string FullSizeClass = "boardFullSize";
-
         private const string EntryContainerClass = "boardEntryContainer";
-
         private const string IconContainerClass = "boardIconContainer";
-
         private const string NameContainerClass = "boardNameContainer";
         private const string NameLabelClass = "boardNameLabel";
-
         private const string SelectButtonClass = "boardSelectButton";
-
         private const string SelectedClassButtonClass = "boardSelectedButton";
-
         private const string AchievedClass = "achieved";
         private const string NotAchievedClass = "not-achieved";
+        private const string PostAchievedClass = "post-achieved";
+        private const string SmallIconContainerClass = "boardSmallIconContainer";
 
         #endregion
         
         #region variables
 
         private readonly VisualElement _iconContainer;
+        private readonly VisualElement _smallIconContainer;
         private Texture2D _icon;
+        private Texture2D _smallIcon;
         private string _nameId;
         private string _name;
         private string _description;
@@ -61,19 +58,20 @@ namespace Code.Scripts.QuestSystem.UI
             _entry.AddToClassList(EntryContainerClass);
             hierarchy.Add(_entry);
             
-            // create icon element so we can use it anywhere
             _iconContainer = new VisualElement();
-            _selectButton = new Button
-            {
-                name = "selectBtn"
-            };
+            _smallIconContainer = new VisualElement();
+            _selectButton = new Button { name = "selectBtn" };
         }
 
         public QuestBoardEntry Build()
         {
-            // add icon
+            // add main icon
             _iconContainer.AddToClassList(IconContainerClass);
             _entry.Add(_iconContainer);
+            
+            // add small icon
+            _smallIconContainer.AddToClassList(SmallIconContainerClass);
+            _entry.Add(_smallIconContainer);
             
             // add name container
             var nameContainer = new VisualElement();
@@ -81,10 +79,7 @@ namespace Code.Scripts.QuestSystem.UI
             _entry.Add(nameContainer);
             
             // add label
-            var nameLabel = new Label
-            {
-                text = _name
-            };
+            var nameLabel = new Label { text = _name };
             nameLabel.AddToClassList(NameLabelClass);
             nameContainer.Add(nameLabel);
             
@@ -103,6 +98,15 @@ namespace Code.Scripts.QuestSystem.UI
         {
             _iconContainer.style.backgroundImage = icon;
             _icon = icon;
+            return this;
+        }
+        
+        public QuestBoardEntry SetSmallIcon(bool isRequiredQuest, Texture2D icon)
+        {
+            if (!isRequiredQuest) return this;
+            
+            _smallIconContainer.style.backgroundImage = icon;
+            _smallIcon = icon;
             return this;
         }
         
@@ -140,17 +144,28 @@ namespace Code.Scripts.QuestSystem.UI
             return this;
         }
 
-        public QuestBoardEntry SetAchieved(bool isAchieved)
+        public QuestBoardEntry SetAchieved(bool isAchieved, bool isRewarded)
         {
-            if (isAchieved)
+            switch (isAchieved)
             {
-                _entry.RemoveFromClassList(NotAchievedClass);
-                _entry.AddToClassList(AchievedClass);
-            }
-            else
-            {
-                _entry.RemoveFromClassList(AchievedClass);
-                _entry.AddToClassList(NotAchievedClass);
+                case true:
+                    Debug.Log("1");
+                    _entry.RemoveFromClassList(NotAchievedClass);
+                    _entry.RemoveFromClassList(PostAchievedClass);
+                    _entry.AddToClassList(AchievedClass);
+                    break;
+                case false when isRewarded:
+                    Debug.Log("2");
+                    _entry.RemoveFromClassList(NotAchievedClass);
+                    _entry.RemoveFromClassList(AchievedClass);
+                    _entry.AddToClassList(PostAchievedClass);
+                    break;
+                default:
+                    Debug.Log("3");
+                    _entry.RemoveFromClassList(PostAchievedClass);
+                    _entry.RemoveFromClassList(AchievedClass);
+                    _entry.AddToClassList(NotAchievedClass);
+                    break;
             }
 
             return this;

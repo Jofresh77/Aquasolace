@@ -4,6 +4,7 @@ using Code.Scripts.Singletons;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Serialization;
 
 namespace Code.Scripts.QuestSystem
 {
@@ -14,7 +15,7 @@ namespace Code.Scripts.QuestSystem
         [TextArea] public string description;
         public bool isPersistAchievement = true;
         public bool isRemoveQuestAfterAchieved;
-        public bool isEndRequired;
+        [FormerlySerializedAs("isEndRequired")] public bool isRequired;
         [HideInInspector] public bool isSelected;
         
         [Header("Rewards")] 
@@ -73,7 +74,7 @@ namespace Code.Scripts.QuestSystem
                 4.5f, 
                 questIcon));
             
-            QuestBoard.Instance.UpdateQuestBoardStatus(questName, achieved);
+            QuestBoard.Instance.UpdateQuestBoardStatus(questName, achieved, IsRewarded);
         }
     }
 }
