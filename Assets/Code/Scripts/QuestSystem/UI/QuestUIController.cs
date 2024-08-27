@@ -184,7 +184,7 @@ namespace Code.Scripts.QuestSystem.UI
             _boardContainer.ToggleInClassList(HideClass);
 
             _questBoardIsShown = false;
-            
+
             SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
             
             _questLogController.UpdateQuestLogList(false);

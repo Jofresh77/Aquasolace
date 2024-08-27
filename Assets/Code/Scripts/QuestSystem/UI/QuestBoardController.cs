@@ -15,7 +15,7 @@ namespace Code.Scripts.QuestSystem.UI
     {
         [SerializeField] private int countOfRows = 3;
         [SerializeField] private int itemsPerRow = 5;
-        
+
         private VisualElement _questBoardContainer;
 
         private Label _tipText;
@@ -140,7 +140,8 @@ namespace Code.Scripts.QuestSystem.UI
                     var rowEntryIndex = i;
                     var rowIdx = rowIndex;
                     boardEntry.RegisterCallback<ClickEvent>(evt => OnBoardEntryClick(evt, rowIdx, rowEntryIndex));
-                    boardEntry.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryHover));
+                    boardEntry.RegisterCallback<MouseEnterEvent>(_ =>
+                        SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryHover));
 
                     var questContainer = row.Q<VisualElement>("quest" + i);
                     //boardEntry.SetIcon(questContainer.style.backgroundImage.value.texture);
@@ -185,7 +186,7 @@ namespace Code.Scripts.QuestSystem.UI
         private void OnBoardEntryClick(ClickEvent evt, int rowIndex, int rowEntryIndex)
         {
             SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryClick);
-            
+
             if (evt.target is Button { name: "selectBtn" })
             {
                 return;
@@ -216,6 +217,8 @@ namespace Code.Scripts.QuestSystem.UI
 
         private void OnCloseBtnClicked()
         {
+            if (_informationContainer.style.display == DisplayStyle.None) return;
+            
             SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
             _informationContainer.style.display = DisplayStyle.None;
         }

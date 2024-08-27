@@ -89,7 +89,8 @@ namespace Code.Scripts.Singletons
 
         public void PlaySound(SoundType soundType)
         {
-            Debug.Log(soundType);
+            //Debug.Log(soundType);
+            
             if (_currentSoundData is null) return;
 
             AudioClip clip = _currentSoundData.GetClip(soundType);

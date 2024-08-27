@@ -56,12 +56,10 @@ namespace Code.Scripts.UI.MainMenu
 
         private void CloseScreen(InputAction.CallbackContext obj)
         {
-            SoundManager.Instance.PlaySound(SoundType.BtnClick);
+            if (_root.style.display != DisplayStyle.Flex) return;
             
-            if (_root.style.display == DisplayStyle.Flex)
-            {
-                _root.style.display = DisplayStyle.None;
-            }
+            SoundManager.Instance.PlaySound(SoundType.BtnClick);
+            _root.style.display = DisplayStyle.None;
         }
         
         private void OnDisable()

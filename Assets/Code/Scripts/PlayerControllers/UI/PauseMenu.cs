@@ -42,14 +42,17 @@ namespace Code.Scripts.PlayerControllers.UI
             _resumeBtn = root.Q<Button>("resume-btn");
             _resumeBtn.clicked += Resume;
             _resumeBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_resume_btn");
+            _resumeBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
             
             _backToMenuBtn = root.Q<Button>("back-to-main-menu-btn");
             _backToMenuBtn.clicked += BackToMainMenu;
             _backToMenuBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_back_to_main_menu_btn");
+            _backToMenuBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _quitBtn = root.Q<Button>("quit-btn");
             _quitBtn.clicked += QuitGame;
             _quitBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn");
+            _quitBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _imageContainer = root.Q<VisualElement>("img-container");
             _imageContainer.style.backgroundImage = new StyleBackground(
@@ -83,17 +86,20 @@ namespace Code.Scripts.PlayerControllers.UI
         private void BackToMainMenu()
         {
             Time.timeScale = 1;
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             PlayerPrefs.SetString("Scene to go to", "MainMenu");
             SceneManager.LoadScene("LoadingScene");
         }
 
         private void Resume()
         {
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             GamePause(new InputAction.CallbackContext());
         }
 
         private void QuitGame()
         {
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             Application.Quit();
         }
         
