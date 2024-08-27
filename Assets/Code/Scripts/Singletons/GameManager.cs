@@ -1,15 +1,13 @@
-using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.PlayerControllers;
-using Code.Scripts.QuestSystem;
-using Code.Scripts.Tile;
 using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.UI.GameEnd;
 using Code.Scripts.UI.HUD;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Code.Scripts.Singletons
 {
@@ -23,11 +21,13 @@ namespace Code.Scripts.Singletons
 
         #region SerializeFields
 
+        [Header("Brush")]
         [SerializeField] private Biome selectedBiome = Biome.Meadow;
         [SerializeField] private BrushSize brushSize = BrushSize.Lg;
         [SerializeField] private BrushShape brushShape = BrushShape.Nm0;
         [SerializeField] private Direction direction = Direction.PosZ;
 
+        [Header("GWL & Temperature")]
         [SerializeField] private float tempNegThreshold = 18f;
         [SerializeField] private float tempPosThreshold = 22f;
         [SerializeField] private float gwlNegThreshold = 100f;
@@ -38,18 +38,16 @@ namespace Code.Scripts.Singletons
         [SerializeField] private float corneredRiverInfluenceCap = 15f;
         [SerializeField] private float gwlConsumption = -15f;
 
+        [SerializeField] private float coolDownDuration = 4f;
+
+        [Header("UI")]
         [SerializeField] private GameStateUI gameStateUIScript;
         [SerializeField] private UIController uiController;
         [SerializeField] private NotificationsController notificationsController;
 
-        [SerializeField] private float coolDownDuration = 4f;
-
-        [SerializeField] private GameObject allUIs;
-        
-        
-        [SerializeField] private GameObject bluredCirclePrefab;
-        [SerializeField] private float circleSize = 100f;
-        private GameObject _currentBlurredCircle;
+        [Header("DEBUG")]
+        [SerializeField] private List<UIDocument> allUIs;
+        [SerializeField] private GameObject canvas;
 
         #endregion
 
@@ -111,13 +109,10 @@ namespace Code.Scripts.Singletons
             if (IsGameContinue) return;
 
             if (IsGamePaused) return;
-            
+
             if (!EnvConditionsCoolDown())
                 UpdateEnvironmentalConditions();
 
-            if (_currentBlurredCircle is not null)
-                UpdateCirclePosition();
-            
             CheckTemperatureThresholds();
             CheckGroundWaterThreshold();
         }
@@ -137,7 +132,6 @@ namespace Code.Scripts.Singletons
             _playerInputActions.Enable();
             _playerInputActions.PlayerActionMap.TileRotate.performed += OnTileRotate;
             _playerInputActions.PlayerActionMap.Pause.performed += HandleGamePause;
-            _playerInputActions.PlayerActionMap.BrushSize.performed += OnBrushSizeChange;
             _playerInputActions.PlayerActionMap.UIDebug.performed += OnDebugUI;
         }
 
@@ -209,8 +203,18 @@ namespace Code.Scripts.Singletons
 
         #region Input Handling
 
-        private void OnDebugUI(InputAction.CallbackContext obj) => allUIs.SetActive(!allUIs.activeSelf);
-        
+        private void OnDebugUI(InputAction.CallbackContext obj)
+        {
+            foreach (UIDocument doc in allUIs)
+            {
+                doc.rootVisualElement.style.display = doc.rootVisualElement.style.display == DisplayStyle.None
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
+            }
+            
+            canvas.SetActive(!canvas.activeSelf);
+        }
+
         private void OnTileRotate(InputAction.CallbackContext obj)
         {
             if (!IsGameStarted || IsGamePaused) return;
@@ -226,122 +230,6 @@ namespace Code.Scripts.Singletons
 
             TileHelper.Instance.HidePreview();
             TileHelper.Instance.ShowPreview();
-        }
-
-        private void OnBrushSizeChange(InputAction.CallbackContext ctx)
-        {
-            if (!IsGameStarted || IsGamePaused) return;
-
-            /*string keyPressed = ctx.action.GetBindingForControl(ctx.control).ToString().Split("/")[1];
-
-            switch (keyPressed)
-            {
-                case "q":
-                    brushSize = BrushSize.Sm;
-                    break;
-                case "w":
-                    brushSize = BrushSize.Md;
-                    break;
-                case "e":
-                    brushSize = BrushSize.Lg;
-                    break;
-                case "tab":
-                    if (ctx.started)
-                    {
-                        ShowBlurredCircle();
-                    }
-                    else if (ctx.canceled)
-                    {
-                        HideBlurredCircle();
-                    }
-                    return;
-                default:
-                    brushSize = CycleBrushSize();
-                    break;
-            }
-
-            TileHelper.Instance.HidePreview();
-            TileHelper.Instance.ShowPreview();*/
-        }
-
-
-        private void ShowBlurredCircle()
-        {
-            if (_currentBlurredCircle == null)
-            {
-                _currentBlurredCircle = Instantiate(bluredCirclePrefab);
-        
-                // Ensure Canvas component exists
-                Canvas canvas = _currentBlurredCircle.GetComponent<Canvas>();
-                if (canvas == null)
-                {
-                    canvas = _currentBlurredCircle.AddComponent<Canvas>();
-                }
-                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        
-                // Ensure RectTransform component exists
-                RectTransform rectTransform = _currentBlurredCircle.GetComponent<RectTransform>();
-                if (rectTransform == null)
-                {
-                    rectTransform = _currentBlurredCircle.AddComponent<RectTransform>();
-                }
-                rectTransform.sizeDelta = new Vector2(circleSize, circleSize);
-            }
-    
-            UpdateCirclePosition();
-        }
-
-        private void UpdateCirclePosition()
-        {
-            if (_currentBlurredCircle == null) return;
-    
-            RectTransform rectTransform = _currentBlurredCircle.GetComponent<RectTransform>();
-            if (rectTransform == null)
-            {
-                Debug.LogError("RectTransform not found on BlurredCircle");
-                return;
-            }
-    
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            rectTransform.position = mousePosition;
-
-            // Ensure the circle stays within screen bounds
-            Vector3 pos = rectTransform.position;
-            pos.x = Mathf.Clamp(pos.x, 0, Screen.width);
-            pos.y = Mathf.Clamp(pos.y, 0, Screen.height);
-            rectTransform.position = pos;
-        }
-
-        private void HideBlurredCircle()
-        {
-            if (_currentBlurredCircle == null) return;
-            
-            Destroy(_currentBlurredCircle);
-            _currentBlurredCircle = null;
-        }
-        
-        /*private void OnBrushSizeChange(InputAction.CallbackContext ctx)
-        {
-            if (!IsGameStarted || IsGamePaused) return;
-
-            brushSize = ctx.action.GetBindingForControl(ctx.control).ToString().Split("/")[1] switch
-            {
-                "q" => BrushSize.Sm,
-                "w" => BrushSize.Md,
-                "e" => BrushSize.Lg,
-                "tab" => CycleBrushSize(),
-                _ => brushSize
-            };
-
-            TileHelper.Instance.HidePreview();
-            TileHelper.Instance.ShowPreview();
-        }*/
-
-        private BrushSize CycleBrushSize()
-        {
-            BrushSize[] brushSizes = (BrushSize[])Enum.GetValues(typeof(BrushSize));
-            int currentIndex = Array.IndexOf(brushSizes, brushSize);
-            return brushSizes[(currentIndex + 1) % brushSizes.Length];
         }
 
         private void HandleGamePause(InputAction.CallbackContext obj)
@@ -463,7 +351,6 @@ namespace Code.Scripts.Singletons
 
             _playerInputActions.PlayerActionMap.TileRotate.performed -= OnTileRotate;
             _playerInputActions.PlayerActionMap.Pause.performed -= HandleGamePause;
-            _playerInputActions.PlayerActionMap.BrushSize.performed -= OnBrushSizeChange;
             _playerInputActions.PlayerActionMap.UIDebug.performed -= OnDebugUI;
             _playerInputActions.Disable();
             _playerInputActions = null;
