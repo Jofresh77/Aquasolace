@@ -82,7 +82,6 @@ namespace Code.Scripts.Biodiversity
                 }
                 else
                 {
-                    Debug.Log($"[Species] No existing habitat found, creating new one");
                     SpawnInHabitat(habitat, desiredPopulation);
                     return;
                 }
