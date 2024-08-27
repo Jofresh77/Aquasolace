@@ -22,7 +22,7 @@ namespace Code.Scripts.QuestSystem.UI
         private Label _tipText;
         private Label _countText;
 
-        private const string RequiredIconPath = "quest_required_icon";
+        private const string RequiredIconPath = "quest_required_icon2";
 
         private PlayerInputActions _playerInputActions;
 
