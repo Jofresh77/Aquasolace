@@ -26,19 +26,19 @@
     border-right-width: 10px;
     border-bottom-width: 10px;
     border-left-width: 10px;
-    border-radius: 25px;
+    border-radius: 20px;
 }
 
 .boardEntryContainer.achieved {
+    background-color: rgba(180, 211, 131, 0.1);
     border-left-color: rgba(180, 211, 131, 0.8);
     border-right-color: rgba(180, 211, 131, 0.8);
     border-top-color: rgba(180, 211, 131, 0.8);
     border-bottom-color: rgba(180, 211, 131, 0.8);
-    
-    
 }
 
 .boardEntryContainer.achieved:hover {
+    background-color: rgba(220, 234, 197, 0.1);
     border-left-color: rgba(220, 234, 197, 0.8);
     border-right-color: rgba(220, 234, 197, 0.8);
     border-top-color: rgba(220, 234, 197, 0.8);
@@ -46,6 +46,7 @@
 }
 
 .boardEntryContainer.not-achieved {
+    background-color: rgba(235, 130, 117, 0.1);
     border-left-color: rgba(235, 130, 117, 0.8);
     border-right-color: rgba(235, 130, 117, 0.8);
     border-top-color: rgba(235, 130, 117, 0.8);
@@ -53,6 +54,7 @@
 }
 
 .boardEntryContainer.not-achieved:hover {
+    background-color: rgba(246, 196, 185, 0.1);
     border-left-color: rgba(246, 196, 185, 0.8);
     border-right-color: rgba(246, 196, 185, 0.8);
     border-top-color: rgba(246, 196, 185, 0.8);
@@ -60,6 +62,7 @@
 }
 
 .boardEntryContainer.post-achieved {
+    background-color: rgba(255, 223, 125, 0.1);
     border-left-color: rgba(255, 223, 125, 0.8);
     border-right-color: rgba(255, 223, 125, 0.8);
     border-top-color: rgba(255, 223, 125, 0.8);
@@ -67,6 +70,7 @@
 }
 
 .boardEntryContainer.post-achieved:hover {
+    background-color: rgba(255, 239, 194, 0.1);
     border-left-color: rgba(255, 239, 194, 0.8);
     border-right-color: rgba(255, 239, 194, 0.8);
     border-top-color: rgba(255, 239, 194, 0.8);
