@@ -129,7 +129,7 @@ namespace Code.Scripts.UI.HUD
                         oldTile.ToggleInClassList(SelectedClass);
                         newTile.ToggleInClassList(SelectedClass);
                         
-                        SetSelectedTileType(false);
+                        SetSelectedTileType(true);
                     }));
                 }
             }

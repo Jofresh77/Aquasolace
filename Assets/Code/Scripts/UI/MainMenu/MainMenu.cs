@@ -40,20 +40,24 @@ namespace Code.Scripts.UI.MainMenu
             _playBtn = root.Q<Button>("play_button");
             _playBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
             _playBtn.clicked += GoToMainLevel;
+            _playBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _settingsBtn = root.Q<Button>("settings_button");
             _settingsBtn.text =
                 LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn");
             _settingsBtn.clicked += GoToSettingsMenu;
+            _settingsBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _creditsBtn = root.Q<Button>("credits_button");
             _creditsBtn.text =
                 LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn");
             _creditsBtn.clicked += GoToCredits;
+            _creditsBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _quitBtn = root.Q<Button>("quit_button");
             _quitBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_quit_btn");
             _quitBtn.clicked += QuitGame;
+            _quitBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
         }
 
         private void InitializeLanguageDropdown(VisualElement root)
@@ -65,6 +69,7 @@ namespace Code.Scripts.UI.MainMenu
                 languageDropdownChoices.Add(locale.LocaleName);
                 _languages.Add(locale.LocaleName, locale);
             }
+            _languageDropdown.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _languageDropdown.choices = languageDropdownChoices;
             _languageDropdown.value =

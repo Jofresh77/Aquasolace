@@ -140,7 +140,7 @@ namespace Code.Scripts.QuestSystem.UI
                     var rowEntryIndex = i;
                     var rowIdx = rowIndex;
                     boardEntry.RegisterCallback<ClickEvent>(evt => OnBoardEntryClick(evt, rowIdx, rowEntryIndex));
-                    //boardEntry.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryHover));
+                    boardEntry.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryHover));
 
                     var questContainer = row.Q<VisualElement>("quest" + i);
                     //boardEntry.SetIcon(questContainer.style.backgroundImage.value.texture);
