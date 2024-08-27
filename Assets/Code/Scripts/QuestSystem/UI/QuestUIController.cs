@@ -2,7 +2,6 @@
 using Code.Scripts.Enums;
 using Code.Scripts.PlayerControllers;
 using Code.Scripts.Singletons;
-using Code.Scripts.Tile;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -11,10 +10,14 @@ namespace Code.Scripts.QuestSystem.UI
 {
     public class QuestUIController : MonoBehaviour
     {
+        [SerializeField] private QuestLogController questLogController;
+        
         private UIDocument _uiDocument;
 
         private VisualElement _logContainer;
         private VisualElement _boardContainer;
+        private VisualElement _innerLogContainer;
+        private VisualElement _outerLogContainer;
 
         private Button _logOpenBtn;
         private Button _logCloseBtn;
@@ -22,14 +25,16 @@ namespace Code.Scripts.QuestSystem.UI
         private Button _boardOpenBtn;
         private Button _boardCloseBtn;
 
-        private const string OpenClass = "open";
-        private const string CloseClass = "close";
-        private const string FastCloseClass = "fastClose";
-        private const string ShowClass = "show";
+        private const string AbsoluteClass = "absolute";
+        private const string RelativeClass = "relative";
+        private const string InClass = "in";
+        private const string OutClass = "out";
         private const string HideClass = "hide";
+        private const string FadeInClass = "fadeIn";
+        private const string FadeOutClass = "fadeOut";
 
-        private bool _questBoardIsShown;
-        private bool _questLogIsShown = true;
+        public bool IsQuestLogOpen { get; set; }
+        private bool _isQuestBoardOpen;
 
         private QuestLogController _questLogController;
 
@@ -63,12 +68,9 @@ namespace Code.Scripts.QuestSystem.UI
             _logContainer.RegisterCallback<MouseEnterEvent>(OnMouseEnterLog);
             _logContainer.RegisterCallback<MouseLeaveEvent>(OnMouseLeaveLog);
 
-            _logOpenBtn = root.Q<Button>("OpenBtn");
-            _logOpenBtn.clicked += OpenLog;
-
-            _logCloseBtn = root.Q<Button>("CloseBtn");
-            _logCloseBtn.clicked += CloseLog;
-
+            _innerLogContainer = root.Q<VisualElement>("InnerContainer");
+            _outerLogContainer = root.Q<VisualElement>("OuterContainer");
+            
             _boardContainer = root.Q<VisualElement>("BoardContainer");
             _boardContainer.style.display = DisplayStyle.None;
 
@@ -82,7 +84,6 @@ namespace Code.Scripts.QuestSystem.UI
         private void OnMouseEnterLog(MouseEnterEvent evt)
         {
             TileHelper.Instance.HidePreview();
-            GameManager.Instance.IsMouseOverUi = _questLogIsShown;
         }
 
         private void OnMouseLeaveLog(MouseLeaveEvent evt)
@@ -95,74 +96,37 @@ namespace Code.Scripts.QuestSystem.UI
 
         private void CloseQuestBoard() => CloseMenu(new InputAction.CallbackContext());
 
-        private void OpenLog()
-        {
-            if (_questBoardIsShown)
-                return; // the player should not be able to open the quest log when the quest board is shown
-
-            _logOpenBtn.RemoveFromClassList(ShowClass);
-            _logOpenBtn.AddToClassList(HideClass);
-            _logContainer.RemoveFromClassList(CloseClass);
-            _logContainer.AddToClassList(OpenClass);
-
-            _questLogIsShown = true;
-        }
-
-        private void CloseLog()
-        {
-            TileHelper.Instance.HidePreview();
-            GameManager.Instance.IsMouseOverUi = false;
-
-            _logOpenBtn.RemoveFromClassList(HideClass);
-            _logOpenBtn.AddToClassList(ShowClass);
-            _logContainer.RemoveFromClassList(OpenClass);
-            _logContainer.AddToClassList(CloseClass);
-
-            _questLogIsShown = false;
-        }
-
         private void FastCloseLog()
         {
-            _logOpenBtn.RemoveFromClassList(HideClass);
-            _logContainer.RemoveFromClassList(OpenClass);
-            _logContainer.AddToClassList(FastCloseClass);
+            _innerLogContainer.RemoveFromClassList(InClass);
+            _innerLogContainer.RemoveFromClassList(FadeInClass);
+            _innerLogContainer.RemoveFromClassList(RelativeClass);
+            _innerLogContainer.AddToClassList(AbsoluteClass);
+            _innerLogContainer.AddToClassList(OutClass);
 
-            // no change of _questLogIsShown since we need it to reopen the log if it was opened before (only in this case)
+            _outerLogContainer.RemoveFromClassList(OutClass);
+            _outerLogContainer.RemoveFromClassList(FadeOutClass);
+            _outerLogContainer.AddToClassList(FadeInClass);
         }
 
         private void Update()
         {
             // fix for the ui sorting order
-            _uiDocument.sortingOrder = GameManager.Instance.IsGamePaused && !_questBoardIsShown ? 0 : 1;
+            _uiDocument.sortingOrder = GameManager.Instance.IsGamePaused && !_isQuestBoardOpen ? 0 : 1;
         }
 
         private void OnLPress(InputAction.CallbackContext obj)
         {
             if (GameManager.Instance.IsGameInTutorial) return;
-
-            _boardContainer.ToggleInClassList(HideClass);
-
+            
             if (_boardContainer.style.display == DisplayStyle.Flex)
             {
-                _questBoardIsShown = false;
-
-                SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
-                
-                _questLogController.UpdateQuestLogList(false);
-
-                _boardContainer.style.display = DisplayStyle.None;
-
-                if (_questLogIsShown)
-                {
-                    OpenLog();
-                }
-
-                GameManager.Instance.IsQuestMenuOpened = _questBoardIsShown;
-                GameManager.Instance.SetIsGamePaused(false);
+                CloseMenu(new InputAction.CallbackContext());
             }
             else
             {
-                _questBoardIsShown = true;
+                _boardContainer.ToggleInClassList(HideClass);
+                
                 FastCloseLog();
                 
                 SoundManager.Instance.PlaySound(SoundType.QuestBoardOpen);
@@ -171,8 +135,10 @@ namespace Code.Scripts.QuestSystem.UI
 
                 TileHelper.Instance.HidePreview();
 
-                GameManager.Instance.IsQuestMenuOpened = _questBoardIsShown;
+                GameManager.Instance.IsQuestMenuOpened = _isQuestBoardOpen;
                 GameManager.Instance.SetIsGamePaused(true);
+                
+                _isQuestBoardOpen = true;
             }
         }
 
@@ -183,7 +149,10 @@ namespace Code.Scripts.QuestSystem.UI
 
             _boardContainer.ToggleInClassList(HideClass);
 
-            _questBoardIsShown = false;
+            if (IsQuestLogOpen)
+                _questLogController.OpenLog();
+            
+            _isQuestBoardOpen = false;
 
             SoundManager.Instance.PlaySound(SoundType.QuestBoardAndEntryClose);
             
@@ -191,12 +160,7 @@ namespace Code.Scripts.QuestSystem.UI
 
             _boardContainer.style.display = DisplayStyle.None;
 
-            if (_questLogIsShown)
-            {
-                OpenLog();
-            }
-
-            GameManager.Instance.IsQuestMenuOpened = _questBoardIsShown;
+            GameManager.Instance.IsQuestMenuOpened = _isQuestBoardOpen;
             GameManager.Instance.SetIsGamePaused(false);
         }
 

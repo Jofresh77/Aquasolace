@@ -149,19 +149,16 @@ namespace Code.Scripts.QuestSystem.UI
             switch (isAchieved)
             {
                 case true:
-                    Debug.Log("1");
                     _entry.RemoveFromClassList(NotAchievedClass);
                     _entry.RemoveFromClassList(PostAchievedClass);
                     _entry.AddToClassList(AchievedClass);
                     break;
                 case false when isRewarded:
-                    Debug.Log("2");
                     _entry.RemoveFromClassList(NotAchievedClass);
                     _entry.RemoveFromClassList(AchievedClass);
                     _entry.AddToClassList(PostAchievedClass);
                     break;
                 default:
-                    Debug.Log("3");
                     _entry.RemoveFromClassList(PostAchievedClass);
                     _entry.RemoveFromClassList(AchievedClass);
                     _entry.AddToClassList(NotAchievedClass);

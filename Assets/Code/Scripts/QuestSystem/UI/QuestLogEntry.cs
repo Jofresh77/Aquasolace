@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Code.Scripts.QuestSystem.UI
@@ -61,24 +60,9 @@ namespace Code.Scripts.QuestSystem.UI
 
         private bool _rewarded;
 
-        private readonly MonoBehaviour _coroutineRunner;
-
         #endregion
 
         #region building the quest log entry
-
-        public QuestLogEntry(MonoBehaviour coroutineRunner)
-        {
-            _coroutineRunner = coroutineRunner;
-
-            AddToClassList(FullSize);
-
-            _entry = new VisualElement();
-            _entry.AddToClassList(EntryContainerClass);
-            hierarchy.Add(_entry);
-
-            _rewardImage = new VisualElement();
-        }
 
         public QuestLogEntry()
         {
@@ -192,18 +176,6 @@ namespace Code.Scripts.QuestSystem.UI
 
         #region setter methods
 
-        public QuestLogEntry SetCountCurrent(int count)
-        {
-            _countCurrent = count;
-            return this;
-        }
-
-        public QuestLogEntry SetCountToReach(int count)
-        {
-            _countToReach = count;
-            return this;
-        }
-
         public QuestLogEntry SetName(string questName)
         {
             _name = questName;
@@ -219,11 +191,6 @@ namespace Code.Scripts.QuestSystem.UI
         public QuestLogEntry SetRewardLabel(string rewardText)
         {
             _rewardLabel = rewardText;
-
-            /*if (_achieved)
-                _rewardLabelComp.AddToClassList(NameLabelAchievedClass);
-            else
-                _rewardLabelComp.RemoveFromClassList(NameLabelClass);    */
             
             return this;
         }
@@ -252,32 +219,11 @@ namespace Code.Scripts.QuestSystem.UI
             return this;
         }
 
-        public bool GetAchieved() => _achieved;
-
         public QuestLogEntry SetRewarded(bool value)
         {
             _rewarded = value;
             return this;
         } 
         #endregion
-
-        public void StartSelfDestruct(float delay)
-        {
-            _coroutineRunner.StartCoroutine(SelfDestructCoroutine(delay));
-        }
-
-        private IEnumerator SelfDestructCoroutine(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            RemoveSelf();
-        }
-
-        private void RemoveSelf()
-        {
-            if (parent != null)
-            {
-                parent.Remove(this);
-            }
-        }
     }
 }

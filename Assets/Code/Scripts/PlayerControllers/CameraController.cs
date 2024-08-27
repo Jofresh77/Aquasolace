@@ -53,6 +53,8 @@ namespace Code.Scripts.PlayerControllers
             _upBorder = new Rect(0, Screen.height - 50, Screen.width, 50);
             _downBorder = new Rect(0, 0, Screen.width, 50);
             
+            if (GameManager.Instance.IsMouseOverUi) return;
+            
             Move();
             LimitPosition();
             UpdateCameraAngle();

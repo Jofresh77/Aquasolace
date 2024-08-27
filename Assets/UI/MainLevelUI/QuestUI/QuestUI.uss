@@ -1,6 +1,6 @@
 * {
-    -unity-font: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular');
-    -unity-font-definition: url('project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1');
+    -unity-font: url("project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular.ttf?fileID=12800000&guid=d287f11caeaed4a428d71ed0b612ba62&type=3#SwiftCom-Regular");
+    -unity-font-definition: url("project://database/Assets/Fonts/SwiftCom/SwiftCom-Regular%20SDF%201.asset?fileID=11400000&guid=a85f57de198344743a35fb0f3cb5cc3f&type=2#SwiftCom-Regular SDF 1");
 }
 
 .backgroundBlur {
@@ -47,6 +47,38 @@
     transition-property: left;
     transition-duration: 1s;
     transition-timing-function: linear;
+}
+
+.in {
+    opacity: 1;
+}
+
+.out {
+    opacity: 0;
+}
+
+.fadeIn {
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.fadeOut {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.absolute {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.relative {
+    position: relative;
 }
 
 .btn:hover {
@@ -143,7 +175,7 @@
 }
 
 .boardButton {
-    background-image: url('project://database/Assets/Art/Textures/quest-icon.png?fileID=2800000&guid=0137785e4c6914a428c38f63a4aa4753&type=3#quest-icon');
+    background-image: url("project://database/Assets/Art/Sprites/quest/quest-icon.png?fileID=2800000&guid=0137785e4c6914a428c38f63a4aa4753&type=3#quest-icon");
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 

@@ -14,7 +14,11 @@
     width: 100%;
     height: 100%;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*
     margin-left: 5px;
+    */
 }
 
 .countContainer {
@@ -36,10 +40,11 @@
 
 .textContainer {
     width: 70%;
-    -unity-text-align: middle-left;
+    -unity-text-align: middle-right;
 }
 
 .nameLabel {
+    -unity-text-align: middle-right;
     font-size: 18px;
     padding: 0;
     white-space: normal;
@@ -76,7 +81,7 @@
     background-image: resource('forest_pine_preview');
     -unity-background-scale-mode: scale-to-fit;
     width: 100%;
-    height: 75%;
+    height: 100%;
 }
 
 .logImageRewarded {

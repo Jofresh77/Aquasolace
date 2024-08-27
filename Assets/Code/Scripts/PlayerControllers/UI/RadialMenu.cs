@@ -161,7 +161,7 @@ namespace Code.Scripts.PlayerControllers.UI
                     DOTween.Sequence()
                         .Join(
                             rect.DOScale(Vector3.one, .3f)
-                                .SetEase(Ease.InOutExpo)
+                                .SetEase(Ease.OutBack)
                                 .SetDelay(0.03f)
                         )
                         .Join(
@@ -188,7 +188,7 @@ namespace Code.Scripts.PlayerControllers.UI
                 DOTween.Sequence()
                     .Join(
                         rectCancel.DOScale(Vector3.one, .3f)
-                            .SetEase(Ease.InOutExpo)
+                            .SetEase(Ease.OutBack)
                             .SetDelay(0.03f)
                     )
                     .OnComplete(() => entryCancel.SetAnimating(false))
