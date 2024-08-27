@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using Code.Scripts.Tile;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -129,14 +129,14 @@ namespace Code.Scripts.UI.HUD
                         oldTile.ToggleInClassList(SelectedClass);
                         newTile.ToggleInClassList(SelectedClass);
                         
-                        SetSelectedTileType();
+                        SetSelectedTileType(false);
                     }));
                 }
             }
         
             // add selected class to first tile
             _tiles[_currSelectedTile].AddToClassList(SelectedClass);
-            SetSelectedTileType();
+            SetSelectedTileType(false);
         }
         
         // Update is called once per frame
@@ -176,7 +176,7 @@ namespace Code.Scripts.UI.HUD
             
             oldTile.ToggleInClassList(SelectedClass);
             newTile.ToggleInClassList(SelectedClass);
-            SetSelectedTileType();
+            SetSelectedTileType(true);
         }
 
         private void UpdateBiomeNameLabels()
@@ -244,14 +244,15 @@ namespace Code.Scripts.UI.HUD
             }
         }
 
-        private void SetSelectedTileType()
+        private void SetSelectedTileType(bool withSound)
         {
             var selectedTileElement = _tiles[_currSelectedTile];
             Enum.TryParse<Biome>(selectedTileElement.name, out var selectedTile);
             
             GameManager.Instance.SetSelectedBiome(selectedTile);
             
-            SoundManager.Instance.PlaySound(SoundType.TileSelect);
+            if(withSound)
+                SoundManager.Instance.PlaySound(SoundType.TileSelect);
             
             if (GameManager.Instance.GetSelectedBiome() == Biome.River)
                 GameManager.Instance.BrushShape = BrushShape.Rv0;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using Code.Scripts.Tile;
 using DG.Tweening;
 using UnityEngine;

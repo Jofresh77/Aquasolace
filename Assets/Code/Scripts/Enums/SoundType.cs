@@ -24,6 +24,11 @@ namespace Code.Scripts.Enums
         NotificationEvent,
         NotificationRestriction,
         NotificationAchievement,
-        NotificationFailure
+        NotificationFailure,
+        SpecieSpawn,
+        SpecieDespawn,
+        SpeciePeriodic1,
+        SpeciePeriodic2,
+        SpeciePeriodic3
     }
 }

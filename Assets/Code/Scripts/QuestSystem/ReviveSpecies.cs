@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Biodiversity;
 using Code.Scripts.Enums;
+using Code.Scripts.Singletons;
 using Code.Scripts.Structs;
 using Code.Scripts.Tile.HabitatSuitability;
 using UnityEngine;
@@ -12,7 +14,7 @@ namespace Code.Scripts.QuestSystem
     [CreateAssetMenu(fileName = "ReviveSpecies", menuName = "System Quest/Nested Quest/Revive Species", order = 1)]
     public class ReviveSpecies : Quest
     {
-        [System.Serializable]
+        [Serializable]
         public class BiomeRequirement
         {
             public Biome biome;
@@ -39,51 +41,98 @@ namespace Code.Scripts.QuestSystem
             List<List<Coordinate>> newHabitats =
                 HabitatSuitabilityManager.Instance.FindSuitableHabitats(biomeRequirementDict, minTotalHabitatSize, maxDistanceFromCentroid, maxAmountTileInHabitat);
 
-            if (AreHabitatsEqual(_currentHabitats, newHabitats)) return;
-            
-            HandleHabitatChanges(newHabitats);
-            _currentHabitats = newHabitats;
+            List<List<Coordinate>> modifiedHabitats = new List<List<Coordinate>>();
+            List<List<Coordinate>> removedHabitats = new List<List<Coordinate>>(_currentHabitats);
+            List<List<Coordinate>> addedHabitats = new List<List<Coordinate>>();
+
+            // Identify modified, new, and removed habitats
+            foreach (var newHabitat in newHabitats)
+            {
+                var similarOldHabitat = FindSimilarHabitat(newHabitat, _currentHabitats);
+                if (similarOldHabitat != null)
+                {
+                    modifiedHabitats.Add(newHabitat);
+                    removedHabitats.Remove(similarOldHabitat);
+                }
+                else
+                {
+                    addedHabitats.Add(newHabitat);
+                }
+            }
+
+            // Merge close clusters
+            List<List<Coordinate>> mergedHabitats = MergeCloseClusters(modifiedHabitats.Concat(addedHabitats).ToList());
+
+            HandleHabitatChanges(mergedHabitats, removedHabitats);
+
+            _currentHabitats = mergedHabitats;
             UpdateAchievementStatus();
         }
 
-        private void HandleHabitatChanges(List<List<Coordinate>> newHabitats)
+        private void HandleHabitatChanges(List<List<Coordinate>> mergedHabitats, List<List<Coordinate>> removedHabitats)
         {
-            List<List<Coordinate>> removedHabitats = _currentHabitats.Except(newHabitats).ToList();
-            List<List<Coordinate>> addedHabitats = newHabitats.Except(_currentHabitats).ToList();
-            List<List<Coordinate>> unchangedHabitats = _currentHabitats.Intersect(newHabitats).ToList();
-
+            // First, handle removed habitats
             foreach (var habitat in removedHabitats)
             {
                 speciesSo.DespawnFromHabitat(habitat);
             }
 
-            foreach (var habitat in addedHabitats)
-            {
-                int desiredPopulation = CalculateDesiredPopulation(habitat);
-                speciesSo.SpawnInHabitat(habitat, desiredPopulation);
-            }
-
-            foreach (var habitat in unchangedHabitats)
+            // Then, handle merged habitats (which include modified and new habitats)
+            foreach (var habitat in mergedHabitats)
             {
                 int desiredPopulation = CalculateDesiredPopulation(habitat);
                 speciesSo.UpdatePopulationInHabitat(habitat, desiredPopulation);
             }
         }
 
-        private static bool AreHabitatsEqual(List<List<Coordinate>> habitats1, List<List<Coordinate>> habitats2)
+        private List<List<Coordinate>> MergeCloseClusters(List<List<Coordinate>> clusters)
         {
-            if (habitats1.Count != habitats2.Count) return false;
+            List<List<Coordinate>> mergedClusters = new List<List<Coordinate>>();
 
-            for (int i = 0; i < habitats1.Count; i++)
+            while (clusters.Count > 0)
             {
-                if (habitats1[i].Count != habitats2[i].Count) return false;
+                var currentCluster = clusters[0];
+                clusters.RemoveAt(0);
 
-                HashSet<Coordinate> set1 = new HashSet<Coordinate>(habitats1[i]);
-                HashSet<Coordinate> set2 = new HashSet<Coordinate>(habitats2[i]);
-                if (!set1.SetEquals(set2)) return false;
+                for (int i = 0; i < clusters.Count; i++)
+                {
+                    if (!AreClustersMergeable(currentCluster, clusters[i])) continue;
+                    
+                    currentCluster.AddRange(clusters[i]);
+                    speciesSo.MergeHabitats(currentCluster, clusters[i]);
+                    clusters.RemoveAt(i);
+                    i--;
+                }
+
+                mergedClusters.Add(currentCluster);
             }
 
-            return true;
+            return mergedClusters;
+        }
+
+        private bool AreClustersMergeable(List<Coordinate> cluster1, List<Coordinate> cluster2)
+        {
+            int smallerClusterSize = Math.Min(cluster1.Count, cluster2.Count);
+            int threshold = Mathf.CeilToInt(smallerClusterSize * 0.5f); // 50% of the smaller cluster
+
+            int commonCoordinates = cluster1.Count(c1 => cluster2.Any(c2 => AreCoordinatesClose(c1, c2)));
+            return commonCoordinates >= threshold;
+        }
+
+        private bool AreCoordinatesClose(Coordinate c1, Coordinate c2)
+        {
+            return Mathf.Abs(c1.X - c2.X) <= 1 || Mathf.Abs(c1.Z - c2.Z) <= 1;
+        }
+
+        private List<Coordinate> FindSimilarHabitat(List<Coordinate> newHabitat, List<List<Coordinate>> oldHabitats)
+        {
+            return oldHabitats.FirstOrDefault(oldHabitat => AreSimilarHabitats(newHabitat, oldHabitat));
+        }
+
+        private bool AreSimilarHabitats(List<Coordinate> habitat1, List<Coordinate> habitat2)
+        {
+            int commonCoordinates = habitat1.Count(c1 => habitat2.Any(c2 => c1.X == c2.X && c1.Z == c2.Z));
+            return commonCoordinates >= Mathf.Min(habitat1.Count, habitat2.Count) * 0.5f;
         }
 
         private void UpdateAchievementStatus()
@@ -91,9 +140,18 @@ namespace Code.Scripts.QuestSystem
             bool wasAchieved = IsAchieved;
             IsAchieved = _currentHabitats.Count > 0;
 
-            if (IsAchieved != wasAchieved)
+            if (IsAchieved == wasAchieved) return;
+            
+            NotifyAchievementChange(IsAchieved);
+            if (IsAchieved)
             {
-                NotifyAchievementChange(IsAchieved);
+                SoundManager.Instance.PlaySpeciesSound(speciesSo.SpawnSound);
+                SoundManager.Instance.StartPeriodicSounds(speciesSo.PeriodicSounds);
+            }
+            else
+            {
+                SoundManager.Instance.PlaySpeciesSound(speciesSo.DespawnSound);
+                SoundManager.Instance.StopPeriodicSounds();
             }
         }
 
@@ -102,7 +160,7 @@ namespace Code.Scripts.QuestSystem
             return Mathf.Min(Mathf.FloorToInt(habitat.Count * speciesPerTile), maxSpeciesPerHabitat);
         }
         
-        public void OnDrawGizmos()
+        public void DrawHabitatGizmos()
         {
             if (_currentHabitats == null || _currentHabitats.Count == 0) return;
 
@@ -116,12 +174,6 @@ namespace Code.Scripts.QuestSystem
                     Gizmos.DrawCube(position, Vector3.one * 0.9f); 
                 }
             }
-        }
-
-        // Add this method to be called from a MonoBehaviour in the scene
-        public void DrawHabitatGizmos()
-        {
-            OnDrawGizmos();
         }
     }
 }

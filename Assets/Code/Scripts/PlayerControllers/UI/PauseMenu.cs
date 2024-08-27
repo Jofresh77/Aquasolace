@@ -1,13 +1,12 @@
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
-using Code.Scripts.PlayerControllers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Code.Scripts.UI.HUD
+namespace Code.Scripts.PlayerControllers.UI
 {
     public class PauseMenu : MonoBehaviour
     {
@@ -22,6 +21,10 @@ namespace Code.Scripts.UI.HUD
         private Button _resumeBtn;
         private Button _backToMenuBtn;
         private Button _quitBtn;
+        
+        private Slider _musicSlider;
+        private Slider _soundSlider;
+        private Slider _speciesSlider;
 
         private VisualElement _imageContainer;
 
@@ -51,6 +54,30 @@ namespace Code.Scripts.UI.HUD
             _imageContainer = root.Q<VisualElement>("img-container");
             _imageContainer.style.backgroundImage = new StyleBackground(
                 LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);
+            
+            InitializeVolumeSliders(root);
+        }
+        
+        private void InitializeVolumeSliders(VisualElement root)
+        {
+            _musicSlider = root.Q<Slider>("MusicSlider");
+            _soundSlider = root.Q<Slider>("SoundSlider");
+            _speciesSlider = root.Q<Slider>("SpeciesSlider");
+
+            SoundManager.Instance.GetMusicMixer().GetFloat("MasterVolume", out var musicVolume);
+            SoundManager.Instance.GetSoundMixer().GetFloat("MasterVolume", out var sfxVolume);
+            SoundManager.Instance.GetSpeciesMixer().GetFloat("MasterVolume", out var speciesVolume);
+
+            _musicSlider.value = SoundManager.DecibelToLinear(musicVolume);
+            _soundSlider.value = SoundManager.DecibelToLinear(sfxVolume);
+            _speciesSlider.value = SoundManager.DecibelToLinear(speciesVolume);
+
+            _musicSlider.RegisterValueChangedCallback(evt => 
+                SoundManager.Instance.SetMusicMasterVolume(evt.newValue));
+            _soundSlider.RegisterValueChangedCallback(evt => 
+                SoundManager.Instance.SetSfxMasterVolume(evt.newValue));
+            _speciesSlider.RegisterValueChangedCallback(evt =>
+                SoundManager.Instance.SetSpeciesMasterVolume(evt.newValue));
         }
 
         private void BackToMainMenu()

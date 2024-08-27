@@ -1,6 +1,6 @@
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
 using Code.Scripts.PlayerControllers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
@@ -56,7 +56,7 @@ namespace Code.Scripts.UI.MainMenu
 
         private void CloseScreen(InputAction.CallbackContext obj)
         {
-            SoundManager.Instance.PlaySound(SoundType.CreditClose);
+            SoundManager.Instance.PlaySound(SoundType.BtnClick);
             
             if (_root.style.display == DisplayStyle.Flex)
             {

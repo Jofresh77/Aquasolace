@@ -1,6 +1,6 @@
 using System;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using Code.Scripts.UI.HUD.Notification;
 using UnityEngine;
 using UnityEngine.Localization.Settings;

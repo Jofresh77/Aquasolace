@@ -114,7 +114,6 @@ namespace Editor
                     
                     if (childChild.CompareTag("Sealed"))
                     {
-                        Debug.Log("HERE");
                         childChild.gameObject.SetActive(true);
                         
                         if (stage != null)

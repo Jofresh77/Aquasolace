@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -13,35 +13,51 @@ namespace Code.Scripts.UI.MainMenu
     public class MainMenu : MonoBehaviour
     {
         [SerializeField] private UIDocument creditScreenUI;
-        
+
         private Button _playBtn;
         private Button _settingsBtn;
         private Button _creditsBtn;
         private Button _quitBtn;
-        
+
+        private Slider _musicSlider;
+        private Slider _soundSlider;
+        private Slider _speciesSlider;
+
         private DropdownField _languageDropdown;
-        private Dictionary<String, Locale> _languages = new Dictionary<string, Locale>();
+        private readonly Dictionary<String, Locale> _languages = new();
 
         private void Start()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
 
+            InitializeButtons(root);
+            InitializeLanguageDropdown(root);
+            InitializeVolumeSliders(root);
+        }
+
+        private void InitializeButtons(VisualElement root)
+        {
             _playBtn = root.Q<Button>("play_button");
             _playBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
             _playBtn.clicked += GoToMainLevel;
 
             _settingsBtn = root.Q<Button>("settings_button");
-            _settingsBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn");
+            _settingsBtn.text =
+                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn");
             _settingsBtn.clicked += GoToSettingsMenu;
 
             _creditsBtn = root.Q<Button>("credits_button");
-            _creditsBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn");
+            _creditsBtn.text =
+                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn");
             _creditsBtn.clicked += GoToCredits;
 
             _quitBtn = root.Q<Button>("quit_button");
             _quitBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_quit_btn");
             _quitBtn.clicked += QuitGame;
+        }
 
+        private void InitializeLanguageDropdown(VisualElement root)
+        {
             _languageDropdown = root.Q<DropdownField>("language_selection");
             var languageDropdownChoices = new List<String>();
             foreach (var locale in LocalizationSettings.AvailableLocales.Locales)
@@ -50,34 +66,39 @@ namespace Code.Scripts.UI.MainMenu
                 _languages.Add(locale.LocaleName, locale);
             }
 
-            _languageDropdown.choices = languageDropdownChoices; // setting choices for language selection dropdown
-            _languageDropdown.value = languageDropdownChoices[languageDropdownChoices.IndexOf(LanguageManager.Instance.GetCurrentLocale().LocaleName)]; // setting current selected language
-            _languageDropdown.RegisterValueChangedCallback(ChangeLanguage); // setting callback function for change of language
-            
-            AddHoverSound(_playBtn);
-            AddHoverSound(_settingsBtn);
-            AddHoverSound(_creditsBtn);
-            AddHoverSound(_quitBtn);
-            AddHoverSound(_languageDropdown);
-
-        }
-        
-        private void AddHoverSound(Button button)
-        {
-            button.RegisterCallback<MouseEnterEvent>(_ 
-                => SoundManager.Instance.PlaySound(SoundType.BtnHover));
+            _languageDropdown.choices = languageDropdownChoices;
+            _languageDropdown.value =
+                languageDropdownChoices[
+                    languageDropdownChoices.IndexOf(LanguageManager.Instance.GetCurrentLocale().LocaleName)];
+            _languageDropdown.RegisterValueChangedCallback(ChangeLanguage);
         }
 
-        private void AddHoverSound(DropdownField dpf)
+        private void InitializeVolumeSliders(VisualElement root)
         {
-            dpf.RegisterCallback<MouseEnterEvent>(_ 
-                => SoundManager.Instance.PlaySound(SoundType.BtnHover));
+            _musicSlider = root.Q<Slider>("MusicSlider");
+            _soundSlider = root.Q<Slider>("SoundSlider");
+            _speciesSlider = root.Q<Slider>("SpeciesSlider");
+
+            SoundManager.Instance.GetMusicMixer().GetFloat("MasterVolume", out var musicVolume);
+            SoundManager.Instance.GetSoundMixer().GetFloat("MasterVolume", out var sfxVolume);
+            SoundManager.Instance.GetSpeciesMixer().GetFloat("MasterVolume", out var speciesVolume);
+
+            _musicSlider.value = SoundManager.DecibelToLinear(musicVolume);
+            _soundSlider.value = SoundManager.DecibelToLinear(sfxVolume);
+            _speciesSlider.value = SoundManager.DecibelToLinear(speciesVolume);
+
+            _musicSlider.RegisterValueChangedCallback(evt => 
+                SoundManager.Instance.SetMusicMasterVolume(evt.newValue));
+            _soundSlider.RegisterValueChangedCallback(evt => 
+                SoundManager.Instance.SetSfxMasterVolume(evt.newValue));
+            _speciesSlider.RegisterValueChangedCallback(evt =>
+                SoundManager.Instance.SetSpeciesMasterVolume(evt.newValue));
         }
-        
+
         private void ChangeLanguage(ChangeEvent<string> @event)
         {
-            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
-            
+            SoundManager.Instance.PlaySound(SoundType.BtnClick);
+
             FindObjectOfType<LocaleSelector>().ChangeLocale(_languages[@event.newValue]);
             LanguageManager.Instance.SetCurrentLocale(_languages[@event.newValue]);
         }
@@ -90,23 +111,21 @@ namespace Code.Scripts.UI.MainMenu
             PlayerPrefs.SetString("Scene to go to", "MainLevel");
             SceneManager.LoadScene("LoadingScene");
         }
-        
+
         private void GoToSettingsMenu()
         {
-            // PlayerPrefs.SetString("Scene to go to", "Settings Scene"); <- edit scene name to settings scene name || if is not scene then show ui document or sth
-            // SceneManager.LoadScene("Loading Scene");
             Debug.Log("open settings menu");
         }
-        
+
         private void GoToCredits()
         {
-            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             creditScreenUI.rootVisualElement.style.display = DisplayStyle.Flex;
         }
-        
+
         private void QuitGame()
         {
-            SoundManager.Instance.PlaySound(SoundType.LocalesCreditEndBtnClick);
+            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             Application.Quit();
         }
 
@@ -135,51 +154,34 @@ namespace Code.Scripts.UI.MainMenu
             if (!float.IsNaN(_languageDropdown.resolvedStyle.width))
             {
                 var fontSize = _languageDropdown.resolvedStyle.width / _languageDropdown.text.Length;
-                
+
                 if (fontSize < smallestFontSize) smallestFontSize = fontSize;
             }
-            
+
             foreach (var btn in btns)
             {
                 if (!btn.visible) continue;
-                
+
                 btn.style.fontSize = new StyleLength(smallestFontSize);
             }
 
             _languageDropdown.style.fontSize = new StyleLength(smallestFontSize);
         }
-        
+
         private void Update()
         {
             CalcButtonTextSize();
-            
-            if (_playBtn.text != 
-                    LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn"))
-            {
-                _playBtn.text =
-                    LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
-            }
-        
-            if (_settingsBtn.text !=
-                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn"))
-            {
-                _settingsBtn.text =
-                    LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn");
-            }
-            
-            if (_quitBtn.text !=
-                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_quit_btn"))
-            {
-                _quitBtn.text =
-                    LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_quit_btn");
-            }
-            
-            if (_creditsBtn.text !=
-                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn"))
-            {
-                _creditsBtn.text =
-                    LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn");
-            }
+            UpdateButtonTexts();
         }
-    }   
+
+        private void UpdateButtonTexts()
+        {
+            _playBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
+            _settingsBtn.text =
+                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_settings_btn");
+            _quitBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_quit_btn");
+            _creditsBtn.text =
+                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_credits_btn");
+        }
+    }
 }

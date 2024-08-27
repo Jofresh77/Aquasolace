@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
 using Code.Scripts.QuestSystem;
+using Code.Scripts.Singletons;
 using Code.Scripts.Structs;
 using UnityEngine;
 
@@ -41,36 +40,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
             IsInit = true;
         }
 
-        public void StartPeriodicUpdates()
-        {
-            if (_updateCoroutine != null)
-            {
-                StopCoroutine(_updateCoroutine);
-            }
-
-            _updateCoroutine = StartCoroutine(PeriodicUpdate());
-        }
-
-        public void StopPeriodicUpdates()
-        {
-            if (_updateCoroutine != null)
-            {
-                StopCoroutine(_updateCoroutine);
-                _updateCoroutine = null;
-            }
-        }
-
-        private IEnumerator PeriodicUpdate()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(updateInterval);
-                UpdateAllHabitats();
-                UpdateAllAreas();
-            }
-        }
-
-        public void UpdateAllHabitats()
+        public static void UpdateAllHabitats()
         {
             var reviveSpeciesQuests = QuestManager.Instance.questList.quests.OfType<ReviveSpecies>();
 

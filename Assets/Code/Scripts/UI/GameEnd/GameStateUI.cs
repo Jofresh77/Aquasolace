@@ -1,4 +1,4 @@
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;

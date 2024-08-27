@@ -48,8 +48,7 @@ namespace Code.Scripts.Biodiversity
             }
         }
 
-        private IEnumerator PlayPeriodicSoundWithFade(AudioSource audioSource, AudioClip clip, float targetVolume,
-            float fadeDuration, float playDuration)
+        private IEnumerator PlayPeriodicSoundWithFade(AudioSource audioSource, AudioClip clip, float targetVolume, float fadeDuration, float playDuration)
         {
             audioSource.clip = clip;
             audioSource.volume = 0f; // Start with volume at 0
@@ -68,8 +67,7 @@ namespace Code.Scripts.Biodiversity
                 }
                 else if (elapsedTime > fadeOutStartTime)
                 {
-                    audioSource.volume = Mathf.Clamp01(1 - ((elapsedTime - fadeOutStartTime) / fadeDuration)) *
-                                         targetVolume;
+                    audioSource.volume = Mathf.Clamp01(1 - ((elapsedTime - fadeOutStartTime) / fadeDuration)) * targetVolume;
                 }
 
                 yield return null;

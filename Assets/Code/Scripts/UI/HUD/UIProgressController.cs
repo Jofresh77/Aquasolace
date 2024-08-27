@@ -1,5 +1,5 @@
 using System;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;

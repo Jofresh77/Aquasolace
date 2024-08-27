@@ -1,6 +1,6 @@
 ﻿using System;
 using Code.Scripts.Enums;
-using Code.Scripts.Managers;
+using Code.Scripts.Singletons;
 using UnityEngine;
 
 namespace Code.Scripts.UI.HUD.Notification
