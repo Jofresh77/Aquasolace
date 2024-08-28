@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.Singletons;
-using Code.Scripts.Tile;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
 
 namespace Code.Scripts.UI.HUD
 {
@@ -36,8 +34,9 @@ namespace Code.Scripts.UI.HUD
         //TESTING AND DEBUG
         private Label _gwlInf;
         private Label _tempInf;
-        
-        //private Button
+
+        private Button _pauseBtn;
+        private Button _helpBtn;
 
         private GroupBox _hotBarContainer;
 
@@ -63,6 +62,8 @@ namespace Code.Scripts.UI.HUD
             _gwlInf = root.Q<Label>("gwlinf");
             _tempInf = root.Q<Label>("tempinf");
 
+            #region Tile Hotbar-Bot
+            
             _hotBarContainer = root.Q<GroupBox>("BlurContainer");
             _hotBarContainer.RegisterCallback<MouseEnterEvent>(OnMouseEnterLog);
             _hotBarContainer.RegisterCallback<MouseLeaveEvent>(OnMouseLeaveLog);
@@ -140,6 +141,24 @@ namespace Code.Scripts.UI.HUD
             // add selected class to first tile
             _tiles[_currSelectedTile].AddToClassList(SelectedClass);
             SetSelectedTileType(false);
+
+                #endregion
+
+            _pauseBtn = root.Q<Button>("PauseBtn");
+            _pauseBtn.RegisterCallback<MouseEnterEvent>(_ => {
+                GameManager.Instance.IsMouseOverUi = true;
+                SoundManager.Instance.PlaySound(SoundType.BtnHover);
+            });
+            _pauseBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
+            _pauseBtn.clicked += GameManager.Instance.PauseGame;
+            
+            _helpBtn = root.Q<Button>("HelpBtn");
+            _helpBtn.RegisterCallback<MouseEnterEvent>(_ => {
+                GameManager.Instance.IsMouseOverUi = true;
+                SoundManager.Instance.PlaySound(SoundType.BtnHover);
+            });
+            _helpBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
+            _helpBtn.clicked += GameManager.Instance.GetTutorialUIController().Initialize;
         }
         
         // Update is called once per frame

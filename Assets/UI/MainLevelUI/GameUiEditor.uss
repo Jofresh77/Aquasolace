@@ -180,3 +180,18 @@
 .hide {
     display: none;
 }
+
+.topLeftBtns {
+    background-color: #6F9ED4;
+    opacity: 60;
+}
+
+.topLeftBtns:hover {
+    background-color: #BBCDEB;
+    opacity: 60;
+}
+
+.topLeftBtns:focus {
+    background-color: #004f8C;
+    opacity: 60;
+}

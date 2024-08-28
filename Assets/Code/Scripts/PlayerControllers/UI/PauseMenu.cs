@@ -14,8 +14,6 @@ namespace Code.Scripts.PlayerControllers.UI
         [SerializeField] private Sprite keymapEn;
         [SerializeField] private Sprite keymapDe;
         
-        private PlayerInputActions _playerInputActions;
-        
         private VisualElement _pauseMenu;
 
         private Button _resumeBtn;
@@ -28,12 +26,10 @@ namespace Code.Scripts.PlayerControllers.UI
 
         private VisualElement _imageContainer;
 
+        #region Init
+
         private void Start()
         {
-            _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();
-            _playerInputActions.PlayerActionMap.Pause.performed += GamePause;
-            
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             
             _pauseMenu = root.Q<VisualElement>("pause-menu-holder");
@@ -83,6 +79,28 @@ namespace Code.Scripts.PlayerControllers.UI
                 SoundManager.Instance.SetSpeciesMasterVolume(evt.newValue));
         }
 
+        #endregion
+        
+        public void GamePause(InputAction.CallbackContext obj)
+        {
+            if (GameManager.Instance.IsQuestMenuOpened
+                || GameManager.Instance.IsGameEndStateOpened) return;
+
+            GameManager.Instance.IsPauseMenuOpened = !GameManager.Instance.IsPauseMenuOpened;
+            GameManager.Instance.SetIsGamePaused(!GameManager.Instance.IsGamePaused);
+            
+            SoundManager.Instance.PlaySound(GameManager.Instance.IsPauseMenuOpened
+                ? SoundType.Pause
+                : SoundType.Resume);
+            
+            UpdateLocales();
+            
+            _imageContainer.style.backgroundImage = new StyleBackground(
+                LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);
+            
+            _pauseMenu.style.display = GameManager.Instance.IsGamePaused ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
         private void BackToMainMenu()
         {
             Time.timeScale = 1;
@@ -102,32 +120,16 @@ namespace Code.Scripts.PlayerControllers.UI
             SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             Application.Quit();
         }
+
+        private void UpdateLocales()
+        {
+            _resumeBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_resume_btn");
+            _backToMenuBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_back_to_main_menu_btn");
+            _quitBtn.text = _quitBtn.text =
+                LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn");
+        }
         
-        public void GamePause(InputAction.CallbackContext obj)
-        {
-            if (GameManager.Instance.IsQuestMenuOpened
-                || GameManager.Instance.IsGameEndStateOpened) return;
-
-            GameManager.Instance.IsPauseMenuOpened = !GameManager.Instance.IsPauseMenuOpened;
-            GameManager.Instance.SetIsGamePaused(!GameManager.Instance.IsGamePaused);
-            
-            SoundManager.Instance.PlaySound(GameManager.Instance.IsPauseMenuOpened
-                ? SoundType.Pause
-                : SoundType.Resume);
-            
-            _imageContainer.style.backgroundImage = new StyleBackground(
-                LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);
-            
-            _pauseMenu.style.display = GameManager.Instance.IsGamePaused ? DisplayStyle.Flex : DisplayStyle.None;
-        }
-
-        private void OnDisable()
-        {
-            _playerInputActions.PlayerActionMap.Pause.performed -= GamePause;
-            _playerInputActions.Disable();
-        }
-
-        private void Update()
+        /*private void Update()
         {
             if (_resumeBtn.text != LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_resume_btn"))
             {
@@ -144,6 +146,6 @@ namespace Code.Scripts.PlayerControllers.UI
                 _quitBtn.text = _quitBtn.text =
                     LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn");
             }
-        }
+        }*/
     }
 }

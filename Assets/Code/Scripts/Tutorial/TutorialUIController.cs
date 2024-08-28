@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.Singletons;
@@ -19,9 +18,8 @@ namespace Code.Scripts.Tutorial
         [Header("UI")] 
         [SerializeField] private UIDocument uiDocument;
         [SerializeField] private List<UIDocument> otherDocs;
+        private readonly List<UIDocument> _toRevertDocs = new ();
         
-        private readonly Dictionary<UIDocument, DisplayStyle> _otherDocsWithOldStyle = new();
-
         #region UI-Doc variables
 
         private VisualElement _root;
@@ -59,15 +57,27 @@ namespace Code.Scripts.Tutorial
             _root.style.display = DisplayStyle.None;
 
             _leftBtn = _root.Q<Button>("LeftBtn");
-            _leftBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
+            _leftBtn.RegisterCallback<MouseEnterEvent>(_ => {
+                GameManager.Instance.IsMouseOverUi = true;
+                SoundManager.Instance.PlaySound(SoundType.BtnHover);
+            });
+            _leftBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
             _leftBtn.clicked += OnLeftBtnClick;
 
             _rightBtn = _root.Q<Button>("RightBtn");
-            _leftBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
+            _rightBtn.RegisterCallback<MouseEnterEvent>(_ => {
+                GameManager.Instance.IsMouseOverUi = true;
+                SoundManager.Instance.PlaySound(SoundType.BtnHover);
+            });
+            _rightBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
             _rightBtn.clicked += OnRightBtnClick;
 
             _skipBtn = _root.Q<Button>("SkipBtn");
-            _leftBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
+            _skipBtn.RegisterCallback<MouseEnterEvent>(_ => {
+                GameManager.Instance.IsMouseOverUi = true;
+                SoundManager.Instance.PlaySound(SoundType.BtnHover);
+            });
+            _skipBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
             _skipBtn.clicked += OnSkipBtnClick;
 
             _infoLabel = _root.Q<Label>("InfoLabel");
@@ -83,7 +93,9 @@ namespace Code.Scripts.Tutorial
         {
             foreach (UIDocument document in otherDocs)
             {
-                _otherDocsWithOldStyle.Add(document, document.rootVisualElement.style.display.value);
+                if (document.rootVisualElement.style.display == DisplayStyle.None) continue;
+
+                _toRevertDocs.Add(document);
                 document.rootVisualElement.style.display = DisplayStyle.None;
             }
             
@@ -144,7 +156,7 @@ namespace Code.Scripts.Tutorial
 
         #endregion
 
-        private void UpdateLeftRightSkipBtns(int oldIndex = 0)
+        private void UpdateLeftRightSkipBtns(int oldIndex = -1)
         {
             switch (_currentStepIndex)
             {
@@ -172,6 +184,21 @@ namespace Code.Scripts.Tutorial
                 case 3:
                 case 4:
                 case 5:
+                    if (oldIndex != -1)
+                    {
+                        switch (oldIndex)
+                        {
+                            case 0 when IsMainMenuLoaded:
+                                _leftBtn.clicked -= RevertOnMainMenu;
+                                _leftBtn.clicked += OnLeftBtnClick;
+                                break;
+                            case 6:
+                                _rightBtn.clicked -= EndTutorial;
+                                _rightBtn.clicked += OnRightBtnClick;
+                                break;
+                        }    
+                    }
+
                     _leftBtn.text =
                         LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_previous_btn");
                     _leftBtn.style.display = DisplayStyle.Flex;
@@ -179,20 +206,15 @@ namespace Code.Scripts.Tutorial
                     _rightBtn.text =
                         LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_next_btn");
                     _rightBtn.style.display = DisplayStyle.Flex;
-                    
-                    if (oldIndex == 6)
-                    {
-                        _rightBtn.clicked -= EndTutorial;
-                        _rightBtn.clicked += OnRightBtnClick;
-                    }
                     break;
                 case 6:
+                    _rightBtn.clicked -= OnRightBtnClick;
+                    _rightBtn.clicked += EndTutorial;
+                    
                     _leftBtn.text =
                         LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_previous_btn");
                     _leftBtn.style.display = DisplayStyle.Flex;
                     
-                    _rightBtn.clicked -= OnRightBtnClick;
-                    _rightBtn.clicked += EndTutorial;
                     if (IsMainLevelLoaded)
                         _rightBtn.text =
                             LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_end_btn");
@@ -223,6 +245,8 @@ namespace Code.Scripts.Tutorial
 
         private void EndTutorial()
         {
+            _currentStepIndex = 0;
+            
             if (IsMainMenuLoaded)
             {
                 SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
@@ -241,6 +265,9 @@ namespace Code.Scripts.Tutorial
                 
                 _root.style.display = DisplayStyle.None;
             }
+
+            _rightBtn.clicked -= EndTutorial;
+            _rightBtn.clicked += OnRightBtnClick;
         }
         
         private void RevertOnMainMenu()
@@ -253,11 +280,11 @@ namespace Code.Scripts.Tutorial
 
         private void RevertDisabledDocuments()
         {
-            foreach (KeyValuePair<UIDocument,DisplayStyle> kvp in _otherDocsWithOldStyle)
+            foreach (UIDocument document in _toRevertDocs)
             {
-                kvp.Key.rootVisualElement.style.display = kvp.Value;
+                document.rootVisualElement.style.display = DisplayStyle.Flex;
             }
-            _otherDocsWithOldStyle.Clear();
+            _toRevertDocs.Clear();
         }
     }
 }
