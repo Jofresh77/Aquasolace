@@ -250,7 +250,7 @@ namespace Code.Scripts.UI.HUD
         // Update is called once per frame
         void Update()
         {
-            if (!GameManager.Instance.IsGameStarted || GameManager.Instance.IsGamePaused) return;
+            if (!GameManager.Instance.IsGameInTutorial || GameManager.Instance.IsGamePaused) return;
             
             if (_thermometer.value > 93f)
             {

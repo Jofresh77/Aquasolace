@@ -27,7 +27,7 @@ namespace Code.Scripts.UI.Tutorial
         
         private void OnEnable()
         {
-            GameManager.Instance.IsGameInTutorial = true;
+            //GameManager.Instance.IsGameInTutorial = true;
             GameManager.Instance.SetIsGamePaused(true);
             
             UIDocument ui = GetComponent<UIDocument>();
@@ -278,13 +278,13 @@ namespace Code.Scripts.UI.Tutorial
             else
             {
                 // tutorial ended -> start game time now
-                GameManager.Instance.SetIsGamePaused(false);
-                GameManager.Instance.IsGameInTutorial = false;
+                /*GameManager.Instance.SetIsGamePaused(false);
+                //GameManager.Instance.IsGameInTutorial = false;
                 GameManager.Instance.IsGameStarted = true;
                 GameManager.Instance.InitializeHabitatSuitabilityProcess();
                 
                 _active = false;
-                Time.timeScale = 1;
+                Time.timeScale = 1;*/
             }
             
             CheckTutorialStepForHints();
@@ -313,13 +313,13 @@ namespace Code.Scripts.UI.Tutorial
 
         private void SkipTutorial()
         {
-            GameManager.Instance.SetIsGamePaused(false);
-            GameManager.Instance.IsGameInTutorial = false;
+            /*GameManager.Instance.SetIsGamePaused(false);
+            //GameManager.Instance.IsGameInTutorial = false;
             GameManager.Instance.IsGameStarted = true;
             GameManager.Instance.InitializeHabitatSuitabilityProcess();
 
             _active = false;
-            _root.Remove(_currentPopup);
+            _root.Remove(_currentPopup);*/
             HideAllHints();
         }
 

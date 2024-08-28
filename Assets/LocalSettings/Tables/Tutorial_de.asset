@@ -147,6 +147,10 @@ MonoBehaviour:
       wie ein solches \xF6kologisches \nGleichgewicht erreicht werden kann."
     m_Metadata:
       m_Items: []
+  - m_Id: 13248967429840896
+    m_Localized: "Zur\xFCckgehen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

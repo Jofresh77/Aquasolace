@@ -58,7 +58,7 @@ namespace Code.Scripts.UI.Tutorial
 
         private void InitializeUI()
         {
-            GameManager.Instance.IsGameInTutorial = true;
+            //GameManager.Instance.IsGameInTutorial = true;
             GameManager.Instance.SetIsGamePaused(true);
 
             foreach (UIDocument doc in otherDocs)
@@ -232,8 +232,8 @@ namespace Code.Scripts.UI.Tutorial
 
         private void EndTutorial()
         {
-            GameManager.Instance.IsGameInTutorial = false;
-            GameManager.Instance.SetIsGamePaused(false);
+            //GameManager.Instance.IsGameInTutorial = false;
+            /*GameManager.Instance.SetIsGamePaused(false);
 
             foreach (UIDocument doc in otherDocs)
             {
@@ -243,7 +243,7 @@ namespace Code.Scripts.UI.Tutorial
             uiDoc.rootVisualElement.style.display = DisplayStyle.None;
 
             GameManager.Instance.IsGameStarted = true;
-            GameManager.Instance.InitializeHabitatSuitabilityProcess();
+            GameManager.Instance.InitializeHabitatSuitabilityProcess();*/
         }
     }
 }

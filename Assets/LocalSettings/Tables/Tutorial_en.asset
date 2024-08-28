@@ -148,6 +148,10 @@ MonoBehaviour:
       balance can be achieved."
     m_Metadata:
       m_Items: []
+  - m_Id: 13248967429840896
+    m_Localized: Go back
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.Singletons;
+using Code.Scripts.Tutorial;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -12,6 +13,7 @@ namespace Code.Scripts.UI.MainMenu
 {
     public class MainMenu : MonoBehaviour
     {
+        [SerializeField] private TutorialUIController tutorialUIController;
         [SerializeField] private UIDocument creditScreenUI;
 
         private Button _playBtn;
@@ -33,13 +35,15 @@ namespace Code.Scripts.UI.MainMenu
             InitializeButtons(root);
             InitializeLanguageDropdown(root);
             InitializeVolumeSliders(root);
+            
+            tutorialUIController.IsMainMenuLoaded = true;
         }
 
         private void InitializeButtons(VisualElement root)
         {
             _playBtn = root.Q<Button>("play_button");
             _playBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
-            _playBtn.clicked += GoToMainLevel;
+            _playBtn.clicked += PlayTutorial;
             _playBtn.RegisterCallback<MouseEnterEvent>(_ => SoundManager.Instance.PlaySound(SoundType.BtnHover));
 
             _settingsBtn = root.Q<Button>("settings_button");
@@ -108,13 +112,9 @@ namespace Code.Scripts.UI.MainMenu
             LanguageManager.Instance.SetCurrentLocale(_languages[@event.newValue]);
         }
 
-        private void GoToMainLevel()
+        private void PlayTutorial()
         {
-            SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
-            Destroy(GameObject.FindWithTag("MenuMusic"));
-
-            PlayerPrefs.SetString("Scene to go to", "MainLevel");
-            SceneManager.LoadScene("LoadingScene");
+            tutorialUIController.Initialize();
         }
 
         private void GoToSettingsMenu()

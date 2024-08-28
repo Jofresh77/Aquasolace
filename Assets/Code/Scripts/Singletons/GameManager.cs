@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.PlayerControllers;
 using Code.Scripts.Tile.HabitatSuitability;
+using Code.Scripts.Tutorial;
 using Code.Scripts.UI.GameEnd;
 using Code.Scripts.UI.HUD;
 using Code.Scripts.UI.HUD.Notification;
@@ -20,6 +21,8 @@ namespace Code.Scripts.Singletons
         #endregion
 
         #region SerializeFields
+
+        [SerializeField] private TutorialUIController tutorialUIController;
 
         [Header("Brush")]
         [SerializeField] private Biome selectedBiome = Biome.Meadow;
@@ -55,8 +58,6 @@ namespace Code.Scripts.Singletons
 
         public float TemperatureLevel { get; private set; } = 20f;
         public float GroundWaterLevel { get; private set; } = 850f;
-
-        public bool IsGameStarted { get; set; }
         public bool IsGameWon { get; private set; }
         public bool IsGameContinue { get; set; }
         public bool IsGamePaused { get; private set; }
@@ -95,12 +96,24 @@ namespace Code.Scripts.Singletons
                 return;
             }
 
+            IsGameWon = false;
+            IsGameContinue = false;
+            IsPauseMenuOpened = false;
+            IsQuestMenuOpened = false;
+            IsGameEndStateOpened = false;
+            IsGameInTutorial = false;
+            IsPaletteOpen = false;
+
             InitializeInputActions();
-            InitializeResources();
         }
 
         private void Start()
         {
+            InitializeResources();
+            InitializeHabitatSuitabilityProcess();
+            
+            tutorialUIController.IsMainLevelLoaded = true;
+            
             StartEnvConditionsCooldown();
         }
 
@@ -148,10 +161,9 @@ namespace Code.Scripts.Singletons
             };
         }
 
-        public void InitializeHabitatSuitabilityProcess()
+        private void InitializeHabitatSuitabilityProcess()
         {
             HabitatSuitabilityManager.Instance.InitializeMap(GridHelper.Instance.widthAndHeight);
-            //HabitatSuitabilityManager.Instance.StartPeriodicUpdates();
         }
 
         #endregion
@@ -217,7 +229,7 @@ namespace Code.Scripts.Singletons
 
         private void OnTileRotate(InputAction.CallbackContext obj)
         {
-            if (!IsGameStarted || IsGamePaused) return;
+            if (!IsGameInTutorial || IsGamePaused) return;
 
             direction = direction switch
             {

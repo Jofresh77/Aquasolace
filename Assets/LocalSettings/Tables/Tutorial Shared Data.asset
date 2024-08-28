@@ -107,6 +107,10 @@ MonoBehaviour:
     m_Key: tutorial_conclusion
     m_Metadata:
       m_Items: []
+  - m_Id: 13248967429840896
+    m_Key: tutorial_mainmenu_back
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

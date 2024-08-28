@@ -6,6 +6,7 @@ using Code.Scripts.Tile;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 namespace Code.Scripts.UI.HUD
 {
@@ -35,6 +36,8 @@ namespace Code.Scripts.UI.HUD
         //TESTING AND DEBUG
         private Label _gwlInf;
         private Label _tempInf;
+        
+        //private Button
 
         private GroupBox _hotBarContainer;
 
@@ -142,7 +145,7 @@ namespace Code.Scripts.UI.HUD
         // Update is called once per frame
         void Update()
         {
-            if(!GameManager.Instance.IsGameStarted || GameManager.Instance.IsGamePaused) return;
+            if(!GameManager.Instance.IsGameInTutorial || GameManager.Instance.IsGamePaused) return;
             
             if (useTileLabelAsResourceCount)
             {

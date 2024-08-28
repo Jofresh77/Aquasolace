@@ -124,9 +124,8 @@ namespace Code.Scripts.Tile
 
         private bool InvalidInteractable()
         {
-            return !GameManager.Instance.IsGameStarted
+            return GameManager.Instance.IsGameInTutorial
                    || GameManager.Instance.IsGamePaused
-                   || GameManager.Instance.IsMouseOverUi
                    || GetBiome() == Biome.Sealed
                    || GetBiome() == Biome.RiverSealed
                    || GetBiome() == Biome.IgnoreTile;

@@ -47,7 +47,10 @@ namespace Code.Scripts.PlayerControllers.UI
 
         private void OnPress(InputAction.CallbackContext ctx)
         {
-            if (!_canOpen) return;
+            if (!_canOpen 
+                || GameManager.Instance.IsGamePaused
+                || GameManager.Instance.IsGameInTutorial
+                || GameManager.Instance.IsMouseOverUi) return;
             _canOpen = false;
 
             TileHelper.Instance.HidePreview();
