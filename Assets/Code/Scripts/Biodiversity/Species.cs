@@ -11,7 +11,6 @@ namespace Code.Scripts.Biodiversity
     {
         [SerializeField] private string speciesName;
         [SerializeField] private GameObject speciesVisualPrefab;
-        [SerializeField] private int spawnInterval = 10;
 
         [Header("Audio")]
         [SerializeField] private AudioClip spawnSound;

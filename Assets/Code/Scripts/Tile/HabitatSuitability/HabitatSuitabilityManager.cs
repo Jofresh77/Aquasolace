@@ -15,7 +15,6 @@ namespace Code.Scripts.Tile.HabitatSuitability
         private Biome[] _biomeMap;
         private int _mapSize;
 
-        [SerializeField] private float updateInterval = 5f;
         private Coroutine _updateCoroutine;
         
         public bool IsInit { get; private set; }

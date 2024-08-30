@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.PlayerControllers;
+using Code.Scripts.PlayerControllers.UI;
+using Code.Scripts.QuestSystem.UI;
 using Code.Scripts.Tile.HabitatSuitability;
+using Code.Scripts.Tutorial;
 using Code.Scripts.UI.GameEnd;
 using Code.Scripts.UI.HUD;
 using Code.Scripts.UI.HUD.Notification;
@@ -20,7 +23,7 @@ namespace Code.Scripts.Singletons
         #endregion
 
         #region SerializeFields
-
+        
         [Header("Brush")]
         [SerializeField] private Biome selectedBiome = Biome.Meadow;
         [SerializeField] private BrushSize brushSize = BrushSize.Lg;
@@ -44,7 +47,10 @@ namespace Code.Scripts.Singletons
         [SerializeField] private GameStateUI gameStateUIScript;
         [SerializeField] private UIController uiController;
         [SerializeField] private NotificationsController notificationsController;
-
+        [SerializeField] private TutorialUIController tutorialUIController;
+        [SerializeField] private PauseMenu pauseMenu;
+        [SerializeField] private QuestUIController questUIController;
+        
         [Header("DEBUG")]
         [SerializeField] private List<UIDocument> allUIs;
         [SerializeField] private GameObject canvas;
@@ -55,8 +61,6 @@ namespace Code.Scripts.Singletons
 
         public float TemperatureLevel { get; private set; } = 20f;
         public float GroundWaterLevel { get; private set; } = 850f;
-
-        public bool IsGameStarted { get; set; }
         public bool IsGameWon { get; private set; }
         public bool IsGameContinue { get; set; }
         public bool IsGamePaused { get; private set; }
@@ -95,12 +99,24 @@ namespace Code.Scripts.Singletons
                 return;
             }
 
+            IsGameWon = false;
+            IsGameContinue = false;
+            IsPauseMenuOpened = false;
+            IsQuestMenuOpened = false;
+            IsGameEndStateOpened = false;
+            IsGameInTutorial = false;
+            IsPaletteOpen = false;
+
             InitializeInputActions();
-            InitializeResources();
         }
 
         private void Start()
         {
+            InitializeResources();
+            InitializeHabitatSuitabilityProcess();
+            
+            tutorialUIController.IsMainLevelLoaded = true;
+            
             StartEnvConditionsCooldown();
         }
 
@@ -131,7 +147,7 @@ namespace Code.Scripts.Singletons
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.PlayerActionMap.TileRotate.performed += OnTileRotate;
-            _playerInputActions.PlayerActionMap.Pause.performed += HandleGamePause;
+            _playerInputActions.PlayerActionMap.Pause.performed += OnPauseGame;
             _playerInputActions.PlayerActionMap.UIDebug.performed += OnDebugUI;
         }
 
@@ -148,15 +164,24 @@ namespace Code.Scripts.Singletons
             };
         }
 
-        public void InitializeHabitatSuitabilityProcess()
+        private void InitializeHabitatSuitabilityProcess()
         {
             HabitatSuitabilityManager.Instance.InitializeMap(GridHelper.Instance.widthAndHeight);
-            //HabitatSuitabilityManager.Instance.StartPeriodicUpdates();
         }
 
         #endregion
 
         #region Game State Management
+
+        public void PauseGame()
+        {
+            TileHelper.Instance.HidePreview();
+            TileHelper.Instance.SelectedTile = null;
+            
+            questUIController.FastCloseLog();
+            
+            pauseMenu.GamePause(new InputAction.CallbackContext());
+        }
 
         public void OnGameTimeEnd()
         {
@@ -217,7 +242,7 @@ namespace Code.Scripts.Singletons
 
         private void OnTileRotate(InputAction.CallbackContext obj)
         {
-            if (!IsGameStarted || IsGamePaused) return;
+            if (!IsGameInTutorial || IsGamePaused) return;
 
             direction = direction switch
             {
@@ -232,10 +257,9 @@ namespace Code.Scripts.Singletons
             TileHelper.Instance.ShowPreview();
         }
 
-        private void HandleGamePause(InputAction.CallbackContext obj)
+        private void OnPauseGame(InputAction.CallbackContext obj)
         {
-            TileHelper.Instance.HidePreview();
-            TileHelper.Instance.SelectedTile = null;
+            PauseGame();
         }
 
         #endregion
@@ -304,6 +328,8 @@ namespace Code.Scripts.Singletons
 
         #region Getters and Setters
 
+        public TutorialUIController GetTutorialUIController() => tutorialUIController;
+        
         public BrushShape BrushShape
         {
             get => brushShape;
@@ -350,7 +376,7 @@ namespace Code.Scripts.Singletons
             if (_playerInputActions == null) return;
 
             _playerInputActions.PlayerActionMap.TileRotate.performed -= OnTileRotate;
-            _playerInputActions.PlayerActionMap.Pause.performed -= HandleGamePause;
+            _playerInputActions.PlayerActionMap.Pause.performed -= OnPauseGame;
             _playerInputActions.PlayerActionMap.UIDebug.performed -= OnDebugUI;
             _playerInputActions.Disable();
             _playerInputActions = null;
