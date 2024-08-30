@@ -58,26 +58,20 @@ namespace Code.Scripts.Tutorial
 
             _leftBtn = _root.Q<Button>("LeftBtn");
             _leftBtn.RegisterCallback<MouseEnterEvent>(_ => {
-                GameManager.Instance.IsMouseOverUi = true;
                 SoundManager.Instance.PlaySound(SoundType.BtnHover);
             });
-            _leftBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
             _leftBtn.clicked += OnLeftBtnClick;
 
             _rightBtn = _root.Q<Button>("RightBtn");
             _rightBtn.RegisterCallback<MouseEnterEvent>(_ => {
-                GameManager.Instance.IsMouseOverUi = true;
                 SoundManager.Instance.PlaySound(SoundType.BtnHover);
             });
-            _rightBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
             _rightBtn.clicked += OnRightBtnClick;
 
             _skipBtn = _root.Q<Button>("SkipBtn");
             _skipBtn.RegisterCallback<MouseEnterEvent>(_ => {
-                GameManager.Instance.IsMouseOverUi = true;
                 SoundManager.Instance.PlaySound(SoundType.BtnHover);
             });
-            _skipBtn.RegisterCallback<MouseLeaveEvent>(_ => GameManager.Instance.IsMouseOverUi = false);
             _skipBtn.clicked += OnSkipBtnClick;
 
             _infoLabel = _root.Q<Label>("InfoLabel");
@@ -101,6 +95,7 @@ namespace Code.Scripts.Tutorial
             
             if (IsMainLevelLoaded)
             {
+                GameManager.Instance.IsMouseOverUi = true;
                 GameManager.Instance.IsGameInTutorial = true;
                 GameManager.Instance.SetIsGamePaused(true);
             }
@@ -259,8 +254,9 @@ namespace Code.Scripts.Tutorial
             if (IsMainLevelLoaded)
             {
                 RevertDisabledDocuments();
-                
+
                 GameManager.Instance.SetIsGamePaused(false);
+                GameManager.Instance.IsMouseOverUi = false;
                 GameManager.Instance.IsGameInTutorial = false;
                 
                 _root.style.display = DisplayStyle.None;
