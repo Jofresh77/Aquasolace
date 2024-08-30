@@ -65,8 +65,16 @@ namespace Code.Scripts.QuestSystem.UI
             var root = GetComponent<UIDocument>().rootVisualElement;
 
             _logContainer = root.Q<VisualElement>("LogContainer");
-            _logContainer.RegisterCallback<MouseEnterEvent>(OnMouseEnterLog);
-            _logContainer.RegisterCallback<MouseLeaveEvent>(OnMouseLeaveLog);
+            _logContainer.RegisterCallback<MouseEnterEvent>(_ =>
+            {
+                TileHelper.Instance.HidePreview();
+                GameManager.Instance.IsMouseOverUi = true;
+            });
+            _logContainer.RegisterCallback<MouseLeaveEvent>(_ =>
+            {
+                TileHelper.Instance.HidePreview();
+                GameManager.Instance.IsMouseOverUi = false;
+            });
 
             _innerLogContainer = root.Q<VisualElement>("InnerContainer");
             _outerLogContainer = root.Q<VisualElement>("OuterContainer");
@@ -81,22 +89,11 @@ namespace Code.Scripts.QuestSystem.UI
             _boardCloseBtn.clicked += CloseQuestBoard;
         }
 
-        private void OnMouseEnterLog(MouseEnterEvent evt)
-        {
-            TileHelper.Instance.HidePreview();
-        }
-
-        private void OnMouseLeaveLog(MouseLeaveEvent evt)
-        {
-            TileHelper.Instance.HidePreview();
-            GameManager.Instance.IsMouseOverUi = false;
-        }
-
         private void OpenQuestBoard() => OnLPress(new InputAction.CallbackContext());
 
         private void CloseQuestBoard() => CloseMenu(new InputAction.CallbackContext());
 
-        private void FastCloseLog()
+        public void FastCloseLog()
         {
             _innerLogContainer.RemoveFromClassList(InClass);
             _innerLogContainer.RemoveFromClassList(FadeInClass);
@@ -162,6 +159,12 @@ namespace Code.Scripts.QuestSystem.UI
 
             GameManager.Instance.IsQuestMenuOpened = _isQuestBoardOpen;
             GameManager.Instance.SetIsGamePaused(false);
+        }
+
+        public void OnUnpause()
+        {
+            if (IsQuestLogOpen)
+                _questLogController.OpenLog();
         }
 
         private void OnDisable()

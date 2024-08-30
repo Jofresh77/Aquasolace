@@ -1,4 +1,5 @@
 using Code.Scripts.Enums;
+using Code.Scripts.QuestSystem.UI;
 using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ namespace Code.Scripts.PlayerControllers.UI
         [SerializeField] private UIDocument uiDoc;
         [SerializeField] private Sprite keymapEn;
         [SerializeField] private Sprite keymapDe;
+        [SerializeField] private QuestUIController questUIController;
         
         private VisualElement _pauseMenu;
 
@@ -99,6 +101,9 @@ namespace Code.Scripts.PlayerControllers.UI
                 LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);
             
             _pauseMenu.style.display = GameManager.Instance.IsGamePaused ? DisplayStyle.Flex : DisplayStyle.None;
+            
+            if (!GameManager.Instance.IsGamePaused)
+                questUIController.OnUnpause();
         }
 
         private void BackToMainMenu()
@@ -128,24 +133,5 @@ namespace Code.Scripts.PlayerControllers.UI
             _quitBtn.text = _quitBtn.text =
                 LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn");
         }
-        
-        /*private void Update()
-        {
-            if (_resumeBtn.text != LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_resume_btn"))
-            {
-                _resumeBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_resume_btn");
-            }
-            
-            if (_backToMenuBtn.text != LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_back_to_main_menu_btn"))
-            {
-                _backToMenuBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_back_to_main_menu_btn");
-            }
-
-            if (_quitBtn.text != LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn"))
-            {
-                _quitBtn.text = _quitBtn.text =
-                    LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn");
-            }
-        }*/
     }
 }

@@ -61,8 +61,8 @@ namespace Code.Scripts.Tile
                 return;
             }
 
-            if(!IsVerified) return;
-            
+            if (!IsVerified) return;
+
             TileHelper.Instance.PlaceTile();
         }
 
@@ -124,7 +124,8 @@ namespace Code.Scripts.Tile
 
         private bool InvalidInteractable()
         {
-            return GameManager.Instance.IsGameInTutorial
+            return GameManager.Instance.IsMouseOverUi
+                   || GameManager.Instance.IsGameInTutorial
                    || GameManager.Instance.IsGamePaused
                    || GetBiome() == Biome.Sealed
                    || GetBiome() == Biome.RiverSealed

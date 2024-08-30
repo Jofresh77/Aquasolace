@@ -1,6 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/TutorialNew/TutorialStyle.uss?fileID=7433441132597879392&amp;guid=cdb55076aa86b7048b81a8a4b10c8c56&amp;type=3#TutorialStyle" />
-    <Style src="project://database/Assets/UI/TutorialNew/TutorialVideoStyle.uss?fileID=7433441132597879392&amp;guid=791674b4af64a534894853447aa34d76&amp;type=3#TutorialVideoStyle" />
     <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 79, 140, 0); justify-content: center;">
         <ui:VisualElement name="MainContainer" style="flex-grow: 1; flex-direction: row; justify-content: center; align-self: stretch; background-color: rgba(0, 104, 180, 0.59);">
             <ui:VisualElement name="LeftContainer" style="flex-grow: 1; align-self: stretch; justify-content: center; align-items: center; flex-shrink: 1; max-width: 15%;">
@@ -17,7 +16,7 @@
             <ui:VisualElement name="RightContainer" style="flex-grow: 1; align-self: stretch; justify-content: center; align-items: center; max-width: 15%;">
                 <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RightBtn" style="color: rgb(215, 225, 242); background-color: rgba(47, 79, 105, 0.59); -unity-font-definition: url(&quot;project://database/Assets/Fonts/SourceSans/SourceSansPro-Black%20SDF%201.asset?fileID=11400000&amp;guid=ce544b64ed982024c89300d4ccfe2921&amp;type=2#SourceSansPro-Black SDF 1&quot;); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; font-size: 32px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="SkipContainer" style="flex-grow: 1; position: absolute; right: 5%; bottom: 5%; min-width: 20%; min-height: 20%; align-self: center; justify-content: flex-end; align-items: flex-end;">
+            <ui:VisualElement name="SkipContainer" style="flex-grow: 1; position: absolute; right: 2%; bottom: 5%; min-width: 20%; min-height: 20%; align-self: center; justify-content: flex-end; align-items: flex-end;">
                 <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SkipBtn" style="color: rgb(215, 225, 242); background-color: rgba(0, 28, 51, 0.59); -unity-font-definition: url(&quot;project://database/Assets/Fonts/SourceSans/SourceSansPro-Black%20SDF%201.asset?fileID=11400000&amp;guid=ce544b64ed982024c89300d4ccfe2921&amp;type=2#SourceSansPro-Black SDF 1&quot;); border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; font-size: 18px;" />
             </ui:VisualElement>
         </ui:VisualElement>

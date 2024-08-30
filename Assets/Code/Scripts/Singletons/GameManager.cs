@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.PlayerControllers;
 using Code.Scripts.PlayerControllers.UI;
+using Code.Scripts.QuestSystem.UI;
 using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.Tutorial;
 using Code.Scripts.UI.GameEnd;
@@ -48,6 +49,7 @@ namespace Code.Scripts.Singletons
         [SerializeField] private NotificationsController notificationsController;
         [SerializeField] private TutorialUIController tutorialUIController;
         [SerializeField] private PauseMenu pauseMenu;
+        [SerializeField] private QuestUIController questUIController;
         
         [Header("DEBUG")]
         [SerializeField] private List<UIDocument> allUIs;
@@ -175,6 +177,8 @@ namespace Code.Scripts.Singletons
         {
             TileHelper.Instance.HidePreview();
             TileHelper.Instance.SelectedTile = null;
+            
+            questUIController.FastCloseLog();
             
             pauseMenu.GamePause(new InputAction.CallbackContext());
         }

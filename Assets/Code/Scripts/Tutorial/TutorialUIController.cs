@@ -125,10 +125,9 @@ namespace Code.Scripts.Tutorial
         {
             if (_currentStepIndex <= 0) return;
 
-            int oldIndex = _currentStepIndex;
             _currentStepIndex--;
 
-            UpdateLeftRightSkipBtns(oldIndex);
+            UpdateLeftRightSkipBtns();
             UpdateInfoLabelText();
             UpdateVideo();
         }
@@ -151,77 +150,59 @@ namespace Code.Scripts.Tutorial
 
         #endregion
 
-        private void UpdateLeftRightSkipBtns(int oldIndex = -1)
+        private void UpdateLeftRightSkipBtns()
         {
-            switch (_currentStepIndex)
+            UpdateLeftButton();
+
+            UpdateRightButton();
+
+            _skipBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_skip_btn");
+        }
+
+        private void UpdateLeftButton()
+        {
+            _leftBtn.clicked -= OnLeftBtnClick;
+            _leftBtn.clicked -= RevertOnMainMenu;
+
+            if (_currentStepIndex == 0)
             {
-                case 0:
-                    if (IsMainMenuLoaded)
-                    {
-                        _leftBtn.clicked -= OnLeftBtnClick;
-                        _leftBtn.clicked += RevertOnMainMenu;
-                        _leftBtn.text = 
-                            LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_mainmenu_back");
-                    }
-                    else
-                    {
-                        _leftBtn.text = 
-                            LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_previous_btn");
-                    }
+                if (IsMainMenuLoaded)
+                {
+                    _leftBtn.clicked += RevertOnMainMenu;
+                    _leftBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_mainmenu_back");    
                     _leftBtn.style.display = DisplayStyle.Flex;
-
-                    _rightBtn.text =
-                        LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_next_btn");
-                    _rightBtn.style.display = DisplayStyle.Flex;
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                    if (oldIndex != -1)
-                    {
-                        switch (oldIndex)
-                        {
-                            case 0 when IsMainMenuLoaded:
-                                _leftBtn.clicked -= RevertOnMainMenu;
-                                _leftBtn.clicked += OnLeftBtnClick;
-                                break;
-                            case 6:
-                                _rightBtn.clicked -= EndTutorial;
-                                _rightBtn.clicked += OnRightBtnClick;
-                                break;
-                        }    
-                    }
-
-                    _leftBtn.text =
-                        LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_previous_btn");
-                    _leftBtn.style.display = DisplayStyle.Flex;
-                    
-                    _rightBtn.text =
-                        LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_next_btn");
-                    _rightBtn.style.display = DisplayStyle.Flex;
-                    break;
-                case 6:
-                    _rightBtn.clicked -= OnRightBtnClick;
-                    _rightBtn.clicked += EndTutorial;
-                    
-                    _leftBtn.text =
-                        LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_previous_btn");
-                    _leftBtn.style.display = DisplayStyle.Flex;
-                    
-                    if (IsMainLevelLoaded)
-                        _rightBtn.text =
-                            LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_end_btn");
-                    if (IsMainMenuLoaded)
-                        _rightBtn.text =
-                            LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
-                    _rightBtn.style.display = DisplayStyle.Flex;
-                    break;
+                }
+                else
+                {
+                    _leftBtn.style.display = DisplayStyle.None;
+                }
             }
+            else
+            {
+                _leftBtn.clicked += OnLeftBtnClick;
+                _leftBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_previous_btn");
+                _leftBtn.style.display = DisplayStyle.Flex;
+            }
+        }
 
-            _skipBtn.text =
-                LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_skip_btn");
+        private void UpdateRightButton()
+        {
+            _rightBtn.clicked -= OnRightBtnClick;
+            _rightBtn.clicked -= EndTutorial;
+
+            if (_currentStepIndex == 6)
+            {
+                _rightBtn.clicked += EndTutorial;
+                _rightBtn.text = IsMainLevelLoaded
+                    ? LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_end_btn")
+                    : LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "main_menu_play_btn");
+            }
+            else
+            {
+                _rightBtn.clicked += OnRightBtnClick;
+                _rightBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", "tutorial_next_btn");
+            }
+            _rightBtn.style.display = DisplayStyle.Flex;
         }
 
         private void UpdateInfoLabelText()
@@ -264,6 +245,8 @@ namespace Code.Scripts.Tutorial
 
             _rightBtn.clicked -= EndTutorial;
             _rightBtn.clicked += OnRightBtnClick;
+
+            _currentStepIndex = 0;
         }
         
         private void RevertOnMainMenu()
