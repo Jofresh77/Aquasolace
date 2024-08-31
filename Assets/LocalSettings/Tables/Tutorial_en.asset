@@ -34,106 +34,44 @@ MonoBehaviour:
     m_Localized: End Tutorial
     m_Metadata:
       m_Items: []
-  - m_Id: 32581298876416
-    m_Localized: "Hello and welcome to AquaSolace!\\nMy name is Mizu. Let\u2019s
-      save our drinking water together \u2013 I\u2019ll\\nexplain you how."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32664530644992
-    m_Localized: Here you can see the groundwater level. This is the main source
-      of our drinking water. It's pretty low right now. We have to take action!
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32715319472128
-    m_Localized: Here you can see the temperature. With your game actions you influence
-      the groundwater level and temperature.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32833854697472
-    m_Localized: Now you come into play! You can change the environment. These living
-      spaces are available to you.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32913001213952
-    m_Localized: Select a habitat by clicking on it and place it on the playing field
-      with another click.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 33078009327616
-    m_Localized: Be careful! Any changes in the environment affect the groundwater
-      level and temperature. Can you save our drinking water?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1694516273152
-    m_Localized: The Wasserrahmenrichtlinie (WRRL) aims to bring all bodies of water
-      to a good status by 2027. The timer shows the current month and year. Plan
-      and act to achieve the required quests on time!
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7064848588800
-    m_Localized: This is the quest log where you can track your selected quests.
-      The quest log can be collapsed or expanded at any time.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 75959634649088
-    m_Localized: Here you see the quest board, which you can open by pressing the
-      "L" key. Click on a quest for more information. Use the pin icon to select
-      up to two quests to be shown in the quest log. This way, you always keep track
-      of your important tasks!
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362133073616896
-    m_Localized: During gameplay, you can create habitats for various animals, as
-      shown in the image. Each new habitat you build helps these creatures thrive
-      in their environment. Get ready to make a difference!
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362811955273728
-    m_Localized: "Remember to read the quest descriptions carefully! Each species
-      has unique needs and requires different areas to live. By understanding their
-      requirements, you\u2019ll become a master habitat creator!"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362853113978880
-    m_Localized: "Oops! Be careful where you place\\nthat tile. Placing it incorrectly
-      can harm the animals living there. Your thoughtful planning can protect and
-      nurture these wonderful creatures.\r"
-    m_Metadata:
-      m_Items: []
   - m_Id: 6527653159624704
     m_Localized: "Hello and welcome to AquaSolace!\nmy name is Mizu. Let\u2019s save
       our drinking water together I\u2019ll\nexplain you how."
     m_Metadata:
       m_Items: []
   - m_Id: 6527761779515392
-    m_Localized: "You can interact with this world by selecting biomes in the pannel
-      below \neither by clicking it with your mouse or pressing \"1 to 6\" on your
-      keyboard."
+    m_Localized: "You can interact with this world by selecting biomes\n in the pannel
+      below your game screen either by clicking \nit with your mouse or pressing
+      \"1 to 6\" on your keyboard."
     m_Metadata:
       m_Items: []
   - m_Id: 6527778401542144
-    m_Localized: 'You can also switch the size of your brush by pressing "TAB"
+    m_Localized: 'You can also switch the shape of your brush by pressing / holding
+      "TAB"
 
-      as
-      well as rotating it by pressing "R" keyboard keys.
+      as well as rotating it by pressing "R" keyboard keys.
 
 
-      NOTE: all of the
-      inputs can be seen in the pause menu when pressing "ESC".'
+      NOTE:
+      all of the inputs can be seen in the pause menu when pressing "ESC".'
     m_Metadata:
       m_Items: []
   - m_Id: 6527791131254784
-    m_Localized: "Complete quests to win the game! \nYou can open the quest board
-      by either clicking on the quest log to the left\nof your screen or pressing
-      \"L\". Not all quests need to completed for you to win,\nbut you can try to
-      achieve them all before time ends."
+    m_Localized: "Complete quests to win the game!\nNot all quests are required for
+      you to win, only the ones with an icon \nat the top left of their box. Each
+      quest contains details on how to achieve \nthem so don't be afraid to read
+      through them!"
     m_Metadata:
       m_Items: []
   - m_Id: 6527815739236352
-    m_Localized: "Your biggest objective is to bring and keep ground water level
-      at a sufficient state. \nIf the level goes under 5% the game is lost, \nplacing
-      new biome on the map will have an impact on the environments, \nso take decisions
-      wisely."
+    m_Localized: 'To open the quest board, you can either click on the quest log
+      to
+
+      the left of your screen, or by pressing "L".
+
+
+      NOTE: pinned
+      quests will be displayed in the quest log.'
     m_Metadata:
       m_Items: []
   - m_Id: 6527832801665024
@@ -150,6 +88,13 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 13248967429840896
     m_Localized: Go back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14431047926022144
+    m_Localized: "Your biggest objective is to bring and keep ground water level
+      at a sufficient state. \nIf the level goes under 5% the game is lost, \nplacing
+      new biome on the map will have an impact on the environments, \nso take decisions
+      wisely."
     m_Metadata:
       m_Items: []
   references:

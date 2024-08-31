@@ -34,105 +34,35 @@ MonoBehaviour:
     m_Localized: Tutorial beenden
     m_Metadata:
       m_Items: []
-  - m_Id: 32581298876416
-    m_Localized: "Hallo und herzlich willkommen zu AquaSolace! Mein Name ist Mizu.\\nLass
-      uns zusammen unser Trinkwasser retten \u2013 ich erkl\xE4re dir wie."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32664530644992
-    m_Localized: "Hier siehst du den aktuellen Grundwasserspiegel. Das ist die Hauptquelle
-      unseres Trinkwassers. Leider ist da ziemlich wenig Wasser drin. Deshalb m\xFCssen
-      wir was tun!"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32715319472128
-    m_Localized: Hier siehst du die Temperatur. Mit deinen Spielaktionen beeinflusst
-      du Grundwasserspiegel und Temperatur.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32833854697472
-    m_Localized: "Jetzt kommst du ins Spiel! Du\\nkannst die Umgebung ver\xE4ndern.
-      Daf\xFCr stehen dir diese Lebensr\xE4ume zur Verf\xFCgung."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32913001213952
-    m_Localized: "W\xE4hle einen Lebensraum mit einem Klick auf ihn aus und platziere
-      ihn mit einem weiteren Klick auf dem Spielfeld."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 33078009327616
-    m_Localized: "Pass gut auf! Alle Ver\xE4nderungen\\nder Umgebung beeinflussen
-      den Grundwasserspiegel und die Temperatur. Schaffst du es, unser Trinkwasser
-      zu retten?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1694516273152
-    m_Localized: "Die Wasserrahmenrichtlinie (WRRL) zielt darauf ab, alle Gew\xE4sser
-      bis 2027 in einen guten Zustand zu bringen. Der Timer zeigt den aktuellen Monat
-      und das Jahr an. Plane und handle, um die Ziele rechtzeitig zu erreichen!"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7064848588800
-    m_Localized: "Dies ist die Aufgabenliste, in der du deine ausgew\xE4hlten Quests
-      verfolgen kannst. Die Aufgabenliste kann jederzeit ein- oder ausgeklappt werden."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 75959634649088
-    m_Localized: "Hier siehst du das Aufgaben-Board, welches du mit der Taste \"L\"
-      \xF6ffnen kannst. Klicke auf eine Aufgabe f\xFCr mehr Infos. Nutze das Pinn-Symbol,
-      um bis zu zwei Aufgaben in der Aufgabenliste anzuzeigen. So beh\xE4ltst du
-      immer den \xDCberblick \xFCber deine wichtigen Aufgaben!"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362133073616896
-    m_Localized: "W\xE4hrend des Spiels kannst du Lebensr\xE4ume f\xFCr verschiedene
-      Tiere schaffen, wie in der Abbildung gezeigt. Jeder neue Lebensraum, den du
-      baust, hilft diesen Kreaturen, in ihrer Umgebung zu gedeihen. Mach dich bereit,
-      einen Unterschied zu machen!"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362811955273728
-    m_Localized: "Denke daran, die Aufgabenbeschreibungen sorgf\xE4ltig zu lesen!
-      Jede Art hat einzigartige Bed\xFCrfnisse und ben\xF6tigt unterschiedliche Lebensr\xE4ume.
-      Wenn du ihre Anforderungen verstehst, wirst du ein Meister der Lebensraumgestaltung!"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362853113978880
-    m_Localized: "Ups! Achte darauf, wo du die Kachel platzierst. Eine falsche Platzierung
-      kann den dort lebenden Tieren schaden. Deine durchdachte Planung kann diese
-      wunderbaren Kreaturen sch\xFCtzen und f\xF6rdern."
-    m_Metadata:
-      m_Items: []
   - m_Id: 6527653159624704
     m_Localized: "Hallo und herzlich willkommen zu AquaSolace! Mein Name ist Mizu.\nLass
       uns zusammen unser Trinkwasser retten ich erkl\xE4re dir wie."
     m_Metadata:
       m_Items: []
   - m_Id: 6527761779515392
-    m_Localized: "Du kannst mit dieser Welt interagieren, \nindem du Biome in dem
-      Feld unten ausw\xE4hlst entweder durch \nAnklicken mit der Maus oder durch
-      Dr\xFCcken der Tasten \"1 bis 6\" \nauf deiner Tastatur."
+    m_Localized: "Du kannst mit dieser Welt interagieren, indem du in dem Feld unter
+      \ndeinem Spielbildschirm Biome ausw\xE4hlst, indem du entweder\n mit der Maus
+      darauf klickst oder die Tasten \u201E1 bis 6\u201C auf deiner Tastatur dr\xFCckst."
     m_Metadata:
       m_Items: []
   - m_Id: 6527778401542144
-    m_Localized: "Du kannst auch die Gr\xF6\xDFe deines Pinsels \xE4ndern, \nindem
-      du die \"TAB\"-Taste dr\xFCckst, sowie ihn mit der \"R\"-Taste drehen.\r\n\r\nHINWEIS:
-      Alle Eingaben sind im Pausenmen\xFC zu sehen, wenn du \"ESC\" dr\xFCckst."
+    m_Localized: "Du kannst auch die Form deines Pinsels \xE4ndern, indem du \ndie
+      \u201ETAB\u201C-Taste dr\xFCckst oder gedr\xFCckt h\xE4ltst, und du kannst
+      \nihn mit der \u201ER\u201C-Taste drehen.\r\n\r\nHINWEIS: Alle Eingaben sind
+      im Pausenmen\xFC zu sehen, wenn du \u201EESC\u201C dr\xFCckst."
     m_Metadata:
       m_Items: []
   - m_Id: 6527791131254784
-    m_Localized: "Erf\xFClle Quests, um das Spiel zu gewinnen! \r\nDu kannst die
-      Questtafel \xF6ffnen, indem du entweder auf das \nQuestlog auf der linken Seite
-      deines Bildschirms klickst oder \"L\" dr\xFCckst. \nDu musst nicht alle Quests
-      erf\xFCllen, um zu gewinnen, aber du kannst versuchen, \nsie alle vor Ablauf
-      der Zeit zu erf\xFCllen."
+    m_Localized: "Erf\xFClle Quests, um das Spiel zu gewinnen!\r\nDu musst nicht
+      alle Quests erf\xFCllen, um zu gewinnen, sondern nur die,\ndie oben links in
+      der Box ein Symbol haben.\r Jede Quest enth\xE4lt Details,\nwie du sie erreichen
+      kannst, also scheue dich nicht, sie durchzulesen!"
     m_Metadata:
       m_Items: []
   - m_Id: 6527815739236352
-    m_Localized: "Dein gr\xF6\xDFtes Ziel ist es, den Grundwasserspiegel auf einen
-      \nausreichenden Stand zu bringen und zu halten. \r\nWenn der Pegel unter 5%
-      f\xE4llt, ist das Spiel verloren.\nWenn du neue Biome auf der Karte platzierst,
-      hat das Auswirkungen \nauf die Umgebung, Triff also weise Entscheidungen."
+    m_Localized: "Um die Questtafel zu \xF6ffnen, kannst du entweder auf das Questlog
+      auf\n der linken Seite deines Bildschirms klicken oder \u201EL\u201C dr\xFCcken.\n\nHINWEIS:
+      Angeheftete Quests werden im Questlog angezeigt."
     m_Metadata:
       m_Items: []
   - m_Id: 6527832801665024
@@ -149,6 +79,13 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 13248967429840896
     m_Localized: "Zur\xFCckgehen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14431047926022144
+    m_Localized: "Dein gr\xF6\xDFtes Ziel ist es, den Grundwasserspiegel auf einen
+      \nausreichenden Stand zu bringen und zu halten. \r\nWenn der Pegel unter 5%
+      f\xE4llt, ist das Spiel verloren.\nWenn du neue Biome auf der Karte platzierst,
+      hat das Auswirkungen \nauf die Umgebung, Triff also weise Entscheidungen."
     m_Metadata:
       m_Items: []
   references:

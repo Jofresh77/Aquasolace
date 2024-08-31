@@ -64,14 +64,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialClips:
   - {fileID: 32900000, guid: db0978d57f95e1f42832aa6a56f5aabd, type: 3}
-  - {fileID: 32900000, guid: e78398f3545d7044390e08dd8429b347, type: 3}
   - {fileID: 32900000, guid: b5b6988f05a32cb4c93a39e11c25f488, type: 3}
+  - {fileID: 32900000, guid: e78398f3545d7044390e08dd8429b347, type: 3}
   - {fileID: 32900000, guid: ae952175f65e8934e84fa223de24c069, type: 3}
   - {fileID: 32900000, guid: 8f5d41c6089c61542a138bfe24bb44fd, type: 3}
   - {fileID: 32900000, guid: 50216b0d99ca21b49a3cdc6cdf94a16a, type: 3}
   - {fileID: 32900000, guid: 8bb24cc1a7ef9f840810069348e4148f, type: 3}
+  - {fileID: 32900000, guid: db0978d57f95e1f42832aa6a56f5aabd, type: 3}
   videoPlayer: {fileID: 766128689438424742}
   uiDocument: {fileID: 6517924241270191580}
+  otherDocs: []
 --- !u!328 &766128689438424742
 VideoPlayer:
   m_ObjectHideFlags: 0

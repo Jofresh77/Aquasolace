@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: tutorial_skip_btn
     m_Metadata:
       m_Items: []
+  - m_Id: 13248967429840896
+    m_Key: tutorial_mainmenu_back
+    m_Metadata:
+      m_Items: []
   - m_Id: 28839698690048
     m_Key: tutorial_next_btn
     m_Metadata:
@@ -31,84 +35,36 @@ MonoBehaviour:
     m_Key: tutorial_end_btn
     m_Metadata:
       m_Items: []
-  - m_Id: 32581298876416
+  - m_Id: 6527653159624704
     m_Key: tutorial_msg_1
     m_Metadata:
       m_Items: []
-  - m_Id: 32664530644992
+  - m_Id: 6527761779515392
     m_Key: tutorial_msg_2
     m_Metadata:
       m_Items: []
-  - m_Id: 32715319472128
+  - m_Id: 6527778401542144
     m_Key: tutorial_msg_3
     m_Metadata:
       m_Items: []
-  - m_Id: 32833854697472
+  - m_Id: 6527791131254784
     m_Key: tutorial_msg_4
     m_Metadata:
       m_Items: []
-  - m_Id: 32913001213952
+  - m_Id: 6527815739236352
     m_Key: tutorial_msg_5
     m_Metadata:
       m_Items: []
-  - m_Id: 33078009327616
+  - m_Id: 14431047926022144
     m_Key: tutorial_msg_6
     m_Metadata:
       m_Items: []
-  - m_Id: 1694516273152
-    m_Key: tutorial_msg_timer
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7064848588800
-    m_Key: tutorial_msg_quest_log
-    m_Metadata:
-      m_Items: []
-  - m_Id: 75959634649088
-    m_Key: tutorial_msg_quest_board_1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362133073616896
-    m_Key: tutorial_msg_biodiversity_1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362811955273728
-    m_Key: tutorial_msg_biodiversity_2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3362853113978880
-    m_Key: tutorial_msg_biodiversity_3
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6527653159624704
-    m_Key: tutorial_welcome
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6527761779515392
-    m_Key: tutorial_interaction_1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6527778401542144
-    m_Key: tutorial_interaction_2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6527791131254784
-    m_Key: tutorial_quest
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6527815739236352
-    m_Key: tutorial_condition_1
-    m_Metadata:
-      m_Items: []
   - m_Id: 6527832801665024
-    m_Key: tutorial_condition_2
+    m_Key: tutorial_msg_7
     m_Metadata:
       m_Items: []
   - m_Id: 6527847695638528
-    m_Key: tutorial_conclusion
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13248967429840896
-    m_Key: tutorial_mainmenu_back
+    m_Key: tutorial_msg_8
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -107,13 +107,14 @@ namespace Code.Scripts.Tutorial
         {
             _tutorialTexts = new List<string>
             {
-                "tutorial_welcome",
-                "tutorial_interaction_1",
-                "tutorial_interaction_2",
-                "tutorial_quest",
-                "tutorial_condition_1",
-                "tutorial_condition_2",
-                "tutorial_conclusion",
+                "tutorial_msg_1",
+                "tutorial_msg_2",
+                "tutorial_msg_3",
+                "tutorial_msg_4",
+                "tutorial_msg_5",
+                "tutorial_msg_6",
+                "tutorial_msg_7",
+                "tutorial_msg_8"
             };
         }
 
@@ -134,7 +135,7 @@ namespace Code.Scripts.Tutorial
 
         private void OnRightBtnClick()
         {
-            if (_currentStepIndex >= 6) return;
+            if (_currentStepIndex >= 7) return;
 
             _currentStepIndex++;
 
@@ -190,7 +191,7 @@ namespace Code.Scripts.Tutorial
             _rightBtn.clicked -= OnRightBtnClick;
             _rightBtn.clicked -= EndTutorial;
 
-            if (_currentStepIndex == 6)
+            if (_currentStepIndex == 7)
             {
                 _rightBtn.clicked += EndTutorial;
                 _rightBtn.text = IsMainLevelLoaded
