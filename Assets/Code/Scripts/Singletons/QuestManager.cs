@@ -44,10 +44,5 @@ namespace Code.Scripts.Singletons
 
             return true;
         }
-        
-        public List<ReviveSpecies> GetReviveSpeciesQuests()
-        {
-            return questList.quests.OfType<ReviveSpecies>().ToList();
-        }
     }
 }

@@ -3,7 +3,6 @@ using Code.Scripts.Enums;
 using Code.Scripts.PlayerControllers;
 using Code.Scripts.PlayerControllers.UI;
 using Code.Scripts.QuestSystem.UI;
-using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.Tutorial;
 using Code.Scripts.UI.GameEnd;
 using Code.Scripts.UI.HUD;
@@ -26,13 +25,10 @@ namespace Code.Scripts.Singletons
         
         [Header("Brush")]
         [SerializeField] private Biome selectedBiome = Biome.Meadow;
-        [SerializeField] private BrushSize brushSize = BrushSize.Lg;
         [SerializeField] private BrushShape brushShape = BrushShape.Nm0;
         [SerializeField] private Direction direction = Direction.PosZ;
 
         [Header("GWL & Temperature")]
-        [SerializeField] private float tempNegThreshold = 18f;
-        [SerializeField] private float tempPosThreshold = 22f;
         [SerializeField] private float gwlNegThreshold = 100f;
         [SerializeField] private float gwlPosThreshold = 2000f;
 
@@ -59,7 +55,6 @@ namespace Code.Scripts.Singletons
 
         #region Properties
 
-        public float TemperatureLevel { get; private set; } = 20f;
         public float GroundWaterLevel { get; private set; } = 850f;
         public bool IsGameWon { get; private set; }
         public bool IsGameContinue { get; set; }
@@ -128,7 +123,6 @@ namespace Code.Scripts.Singletons
             if (!EnvConditionsCoolDown())
                 UpdateEnvironmentalConditions();
 
-            CheckTemperatureThresholds();
             CheckGroundWaterThreshold();
         }
 
@@ -191,17 +185,8 @@ namespace Code.Scripts.Singletons
         private void UpdateEnvironmentalConditions()
         {
             _corneredRiversInfluence = GridHelper.Instance.GetCorneredRiversInfluence(corneredRiverInfluenceCap);
-            TemperatureLevel += tempInfluence * _corneredRiversInfluence;
             GroundWaterLevel += gwlInfluence * _corneredRiversInfluence + gwlConsumption;
             StartEnvConditionsCooldown();
-        }
-
-        private void CheckTemperatureThresholds()
-        {
-            if (TemperatureLevel <= tempNegThreshold || TemperatureLevel >= tempPosThreshold)
-            {
-                TemperatureLevel = tempNegThreshold;
-            }
         }
 
         private void CheckGroundWaterThreshold()
@@ -236,7 +221,7 @@ namespace Code.Scripts.Singletons
 
         private void OnTileRotate(InputAction.CallbackContext obj)
         {
-            if (!IsGameInTutorial || IsGamePaused) return;
+            if (IsGameInTutorial || IsGamePaused) return;
 
             direction = direction switch
             {
@@ -323,42 +308,24 @@ namespace Code.Scripts.Singletons
         #region Getters and Setters
 
         public TutorialUIController GetTutorialUIController() => tutorialUIController;
-        
         public BrushShape BrushShape
         {
             get => brushShape;
             set => brushShape = value;
         }
-
         public Biome GetSelectedBiome() => selectedBiome;
         public void SetSelectedBiome(Biome newBiome) => selectedBiome = newBiome;
-
-        public BrushSize GetBrushSize() => brushSize;
-        public void SetBrushSize(BrushSize newBrushSize) => brushSize = newBrushSize;
-
         public Direction GetDirection() => direction;
-        public void SetDirection(Direction newDirection) => direction = newDirection;
-
-        public void SetTemperatureLevel(float temperature) => TemperatureLevel += temperature;
-        public void SetGroundWaterLevel(float groundWater) => GroundWaterLevel += groundWater;
-
         public void SetIsGamePaused(bool newIsGamePaused)
         {
             IsGamePaused = newIsGamePaused;
             Time.timeScale = IsGamePaused ? 0 : 1;
         }
-
-        public float GetTempNegThreshold() => tempNegThreshold;
-        public float GetTempPosThreshold() => tempPosThreshold;
         public float GetGwlNegThreshold() => gwlNegThreshold;
         public float GetGwlPosThreshold() => gwlPosThreshold;
-
-        public void SetTempInfluence(float influence) => tempInfluence += influence;
         public float GetTempInfluence() => tempInfluence;
-
         public void SetGwlInfluence(float influence) => gwlInfluence += influence;
         public float GetGwlInfluence() => gwlInfluence;
-
         public bool ScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;
 
         #endregion

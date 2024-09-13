@@ -4,7 +4,6 @@ using System.Linq;
 using Code.Scripts.Enums;
 using Code.Scripts.QuestSystem;
 using Code.Scripts.QuestSystem.UI;
-using Code.Scripts.Structs;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
@@ -13,13 +12,6 @@ namespace Code.Scripts.Singletons
     public class QuestBoard : MonoBehaviour
     {
         public static QuestBoard Instance { get; private set; }
-
-        private Transform _tile;
-        private Coordinate _checkedTileCoordinate;
-        private Biome _checkedTileBiome;
-
-        [SerializeField] private int maxCountOfQuestsSelected = 2;
-        private int _countOfQuestsSelected;
 
         [Serializable]
         public class QuestInfo
@@ -34,11 +26,16 @@ namespace Code.Scripts.Singletons
             public Biome rewardBiome;
             public int rewardAmount;
         }
-
+        
+        [SerializeField] private int maxCountOfQuestsSelected = 2;
         [SerializeField] private List<QuestInfo> questInfoList = new();
-
         [SerializeField] private QuestBoardController questBoardController;
         [SerializeField] private QuestLogController questLogController;
+
+        private Transform _tile;
+        private Biome _checkedTileBiome;
+
+        private int _countOfQuestsSelected;
 
         private ProperEnvironment _properEnvironmentQuest;
 
@@ -73,6 +70,57 @@ namespace Code.Scripts.Singletons
         {
             DisplayQuests();
         }
+
+        #region Achievement checks
+
+        public void CheckAchievement()
+        {
+            _tile = TileHelper.Instance.SelectedTile;
+            _checkedTileBiome = _tile.GetComponent<Tile.Tile>().GetBiome();
+
+            foreach (var quest in QuestManager.Instance.questList.quests)
+            {
+                if (quest is ReviveSpecies or GetAreaSize)
+                    continue;
+
+                if (quest.IsAchieved && quest.isPersistAchievement)
+                    continue;
+
+                quest.IsAchieved = CheckAchievement(quest);
+
+                UpdateQuestBoardStatus(quest.questName, quest.IsAchieved, quest.IsRewarded);
+
+                if (quest.IsAchieved && quest.isRemoveQuestAfterAchieved)
+                    RemoveQuestFromList(quest.questName);
+            }
+        }
+
+        private bool CheckAchievement(Quest quest)
+        {
+            return quest switch
+            {
+                ProperEnvironment => CheckProperEnvironmentAchievement(),
+                CountPlacedBiome countPlacedBiome => CheckCountPlacedBiomeAchievement(countPlacedBiome),
+                CountZigzagRiverPresent countZigZagRiver => CheckCountZigZagRiver(countZigZagRiver),
+                _ => false
+            };
+        }
+
+        private bool CheckProperEnvironmentAchievement() =>
+            GameManager.Instance.GroundWaterLevel >= GameManager.Instance.GetGwlPosThreshold() * 0.6;
+
+        private bool CheckCountPlacedBiomeAchievement(CountPlacedBiome countBiome)
+        {
+            if (_checkedTileBiome != countBiome.biome) return false;
+
+            countBiome.count++;
+
+            if (countBiome.count >= countBiome.mustPlace) return true;
+
+            return false;
+        }
+
+        #endregion
         
         private void DisplayQuests()
         {
@@ -97,40 +145,6 @@ namespace Code.Scripts.Singletons
             }
         }
 
-        public void CheckAchievement()
-        {
-            _tile = TileHelper.Instance.SelectedTile;
-            _checkedTileBiome = _tile.GetComponent<Tile.Tile>().GetBiome();
-            _checkedTileCoordinate = GridHelper.Instance.GetTileCoordinate(_tile);
-
-            foreach (var quest in QuestManager.Instance.questList.quests)
-            {
-                if (quest is ProperEnvironment or ReviveSpecies or GetAreaSize)
-                    continue;
-
-                if (quest.IsAchieved && quest.isPersistAchievement)
-                    continue;
-
-                quest.IsAchieved = CheckAchievement(quest);
-
-                UpdateQuestBoardStatus(quest.questName, quest.IsAchieved, quest.IsRewarded);
-
-                if (quest.IsAchieved && quest.isRemoveQuestAfterAchieved)
-                    RemoveQuestFromList(quest.questName);
-            }
-        }
-
-        public void CheckProperEnvironment()
-        {
-            if (_properEnvironmentQuest == null) return;
-
-            var tempState = _properEnvironmentQuest.IsAchieved;
-            _properEnvironmentQuest.IsAchieved = CheckAchievement(_properEnvironmentQuest);
-
-            if (tempState != _properEnvironmentQuest.IsAchieved)
-                UpdateQuestBoardStatus(_properEnvironmentQuest.questName, _properEnvironmentQuest.IsAchieved, _properEnvironmentQuest.IsRewarded);
-        }
-
         public void UpdateQuestBoardStatus(string questName, bool isAchieved, bool isRewarded, bool isSelected = false)
         {
             questBoardController.MarkQuestAsAchieved(questName, isAchieved, isRewarded);
@@ -144,11 +158,6 @@ namespace Code.Scripts.Singletons
             {
                 questInfoList.Remove(questToRemove);
             }
-        }
-
-        public List<QuestInfo> GetQuestInfoList()
-        {
-            return questInfoList;
         }
 
         public QuestInfo ToggleQuestIsSelected(int index)
@@ -179,42 +188,14 @@ namespace Code.Scripts.Singletons
             return questInfo;
         }
 
+        public List<QuestInfo> GetQuestInfoList()
+        {
+            return questInfoList;
+        }
+
         public int GetCountOfSelectedQuests() => _countOfQuestsSelected;
 
         public int GetMaxCountOfSelectedQuests() => maxCountOfQuestsSelected;
-
-        private bool CheckAchievement(Quest quest)
-        {
-            return quest switch
-            {
-                ProperEnvironment properEnvironment => CheckProperEnvironmentAchievement(properEnvironment),
-                CountPlacedBiome countPlacedBiome => CheckCountPlacedBiomeAchievement(countPlacedBiome),
-                CountZigzagRiverPresent countZigZagRiver => CheckCountZigZagRiver(countZigZagRiver),
-                _ => false
-            };
-        }
-
-        #region CheckProperEnvironment
-
-        private bool CheckProperEnvironmentAchievement(ProperEnvironment properEnvironment) =>
-            GameManager.Instance.GroundWaterLevel >= GameManager.Instance.GetGwlPosThreshold() * 0.6;
-
-        #endregion
-
-        #region CheckCountPlaceBiome
-
-        private bool CheckCountPlacedBiomeAchievement(CountPlacedBiome countBiome)
-        {
-            if (_checkedTileBiome != countBiome.biome) return false;
-
-            countBiome.count++;
-
-            if (countBiome.count >= countBiome.mustPlace) return true;
-
-            return false;
-        }
-
-        #endregion
 
         #region CheckZigZagRiver
 

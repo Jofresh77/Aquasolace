@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Scripts.Enums;
-using Code.Scripts.QuestSystem;
 using Code.Scripts.Structs;
 using Code.Scripts.Tile.HabitatSuitability;
 using Code.Scripts.UI;
@@ -33,7 +32,6 @@ namespace Code.Scripts.Singletons
         private readonly List<SelfInfluence> _negativeSelfInfluences = new();
         private readonly List<NeighborInfluence> _neighborInfluences = new();
 
-        private const float TemperatureFactor = 0.0001f;
         private const float GwlFactor = 0.1f;
 
         //Shader props
@@ -62,45 +60,33 @@ namespace Code.Scripts.Singletons
 
             #region Positive
 
-            _selfInfluences.Add(new SelfInfluence(Biome.River,
-                -5 * TemperatureFactor, 4 * GwlFactor));
+            _selfInfluences.Add(new SelfInfluence(Biome.River, 4 * GwlFactor));
 
-            _selfInfluences.Add(new SelfInfluence(Biome.Meadow,
-                -1 * TemperatureFactor, 1 * GwlFactor));
+            _selfInfluences.Add(new SelfInfluence(Biome.Meadow, 1 * GwlFactor));
 
-            _selfInfluences.Add(new SelfInfluence(Biome.Farmland,
-                0 * TemperatureFactor, -1 * GwlFactor));
+            _selfInfluences.Add(new SelfInfluence(Biome.Farmland, -1 * GwlFactor));
 
-            _selfInfluences.Add(new SelfInfluence(Biome.ForestDeciduous,
-                -4 * TemperatureFactor, 2 * GwlFactor));
+            _selfInfluences.Add(new SelfInfluence(Biome.ForestDeciduous, 2 * GwlFactor));
 
-            _selfInfluences.Add(new SelfInfluence(Biome.ForestMixed,
-                -3 * TemperatureFactor, 2 * GwlFactor));
+            _selfInfluences.Add(new SelfInfluence(Biome.ForestMixed, 2 * GwlFactor));
 
-            _selfInfluences.Add(new SelfInfluence(Biome.ForestPine,
-                -2 * TemperatureFactor, 2 * GwlFactor));
+            _selfInfluences.Add(new SelfInfluence(Biome.ForestPine, 2 * GwlFactor));
 
             #endregion
 
             #region Negative
 
-            _negativeSelfInfluences.Add(new SelfInfluence(Biome.River,
-                5 * TemperatureFactor, -5 * GwlFactor));
+            _negativeSelfInfluences.Add(new SelfInfluence(Biome.River, -5 * GwlFactor));
 
-            _negativeSelfInfluences.Add(new SelfInfluence(Biome.Meadow,
-                1 * TemperatureFactor, -1 * GwlFactor));
+            _negativeSelfInfluences.Add(new SelfInfluence(Biome.Meadow, -1 * GwlFactor));
 
-            _negativeSelfInfluences.Add(new SelfInfluence(Biome.Farmland,
-                0 * TemperatureFactor, 1 * GwlFactor));
+            _negativeSelfInfluences.Add(new SelfInfluence(Biome.Farmland, 1 * GwlFactor));
 
-            _negativeSelfInfluences.Add(new SelfInfluence(Biome.ForestDeciduous,
-                4 * TemperatureFactor, -2 * GwlFactor));
+            _negativeSelfInfluences.Add(new SelfInfluence(Biome.ForestDeciduous, -2 * GwlFactor));
 
-            _negativeSelfInfluences.Add(new SelfInfluence(Biome.ForestMixed,
-                3 * TemperatureFactor, -2 * GwlFactor));
+            _negativeSelfInfluences.Add(new SelfInfluence(Biome.ForestMixed, -2 * GwlFactor));
 
-            _negativeSelfInfluences.Add(new SelfInfluence(Biome.ForestPine,
-                2 * TemperatureFactor, -2 * GwlFactor));
+            _negativeSelfInfluences.Add(new SelfInfluence(Biome.ForestPine, -2 * GwlFactor));
 
             #endregion
 
@@ -110,175 +96,111 @@ namespace Code.Scripts.Singletons
 
             #region Water
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.River,
-                -1 * TemperatureFactor, 0.2f * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.River, 0.2f * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.Meadow,
-                1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.Meadow, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.Farmland,
-                1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.Farmland, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.ForestDeciduous,
-                0 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.ForestDeciduous, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.ForestMixed,
-                0 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.ForestMixed, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.ForestPine,
-                1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.ForestPine, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.Sealed,
-                1 * TemperatureFactor, -2 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.River, Biome.Sealed, -2 * GwlFactor));
 
             #endregion
 
             #region Meadow
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.River,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.River, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.Meadow,
-                0 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.Meadow, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.Farmland,
-                1 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.Farmland, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.ForestDeciduous,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.ForestDeciduous, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.ForestMixed,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.ForestMixed, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.ForestPine,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.ForestPine, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.Sealed,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Meadow, Biome.Sealed, 0 * GwlFactor));
 
             #endregion
 
             #region Farmland
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.River,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.River, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.Meadow,
-                -1 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.Meadow, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.Farmland,
-                0 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.Farmland, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.ForestDeciduous,
-                -1 * TemperatureFactor, -1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.ForestDeciduous, -1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.ForestMixed,
-                -1 * TemperatureFactor, -1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.ForestMixed, -1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.ForestPine,
-                -1 * TemperatureFactor, -1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.ForestPine, -1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.Sealed,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.Farmland, Biome.Sealed, 0 * GwlFactor));
 
             #endregion
 
             #region ForestDeciduous
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.River,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.River, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.Meadow,
-                1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.Meadow, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.Farmland,
-                1 * TemperatureFactor, -1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.Farmland, -1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestDeciduous,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestDeciduous, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestMixed,
-                0 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestMixed, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestPine,
-                1 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestPine, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestPine,
-                1 * TemperatureFactor, -3 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestDeciduous, Biome.ForestPine, -3 * GwlFactor));
 
             #endregion
 
             #region ForestMixed
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.River,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.River, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.Meadow,
-                1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.Meadow, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.Farmland,
-                1 * TemperatureFactor, -1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.Farmland, -1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.ForestDeciduous,
-                -1 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.ForestDeciduous, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.ForestMixed,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.ForestMixed, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.ForestPine,
-                0 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.ForestPine, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.Sealed,
-                0 * TemperatureFactor, -3 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestMixed, Biome.Sealed, -3 * GwlFactor));
 
             #endregion
 
             #region ForestPine
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.River,
-                -1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.River, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.Meadow,
-                1 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.Meadow, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.Farmland,
-                1 * TemperatureFactor, -1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.Farmland, -1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.ForestDeciduous,
-                -1 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.ForestDeciduous, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.ForestMixed,
-                -1 * TemperatureFactor, 1 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.ForestMixed, 1 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.ForestPine,
-                0 * TemperatureFactor, 0 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.ForestPine, 0 * GwlFactor));
 
-            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.Sealed,
-                0 * TemperatureFactor, -3 * GwlFactor));
+            _neighborInfluences.Add(new NeighborInfluence(Biome.ForestPine, Biome.Sealed, -3 * GwlFactor));
 
             #endregion
-
-            /*#region Sealed
-
-            NeighborInfluences.Add(new NeighborInfluence(Biome.Sealed, Biome.River,
-                1 * TemperatureFactor, -1 * GwlFactor));
-
-            NeighborInfluences.Add(new NeighborInfluence(Biome.Sealed, Biome.Meadow,
-                1 * TemperatureFactor, -1 * GwlFactor));
-
-            NeighborInfluences.Add(new NeighborInfluence(Biome.Sealed, Biome.Farmland,
-                1 * TemperatureFactor, -1 * GwlFactor));
-
-            NeighborInfluences.Add(new NeighborInfluence(Biome.Sealed, Biome.ForestDeciduous,
-                1 * TemperatureFactor, -1 * GwlFactor));
-
-            NeighborInfluences.Add(new NeighborInfluence(Biome.Sealed, Biome.ForestMixed,
-                1 * TemperatureFactor, -1 * GwlFactor));
-
-            NeighborInfluences.Add(new NeighborInfluence(Biome.Sealed, Biome.ForestPine,
-                1 * TemperatureFactor, -1 * GwlFactor));
-
-            #endregion*/
 
             #endregion
         }
@@ -288,13 +210,11 @@ namespace Code.Scripts.Singletons
         private struct SelfInfluence
         {
             public readonly Biome Biome;
-            public readonly float Temperature;
             public readonly float GroundWater;
 
-            public SelfInfluence(Biome biome, float temperature, float groundWater)
+            public SelfInfluence(Biome biome, float groundWater)
             {
                 Biome = biome;
-                Temperature = temperature;
                 GroundWater = groundWater;
             }
         }
@@ -303,14 +223,12 @@ namespace Code.Scripts.Singletons
         {
             public readonly Biome SelfBiome;
             public readonly Biome NeighborBiome;
-            public readonly float Temperature;
             public readonly float GroundWater;
 
-            public NeighborInfluence(Biome selfBiome, Biome neighborBiome, float temperature, float groundWater)
+            public NeighborInfluence(Biome selfBiome, Biome neighborBiome, float groundWater)
             {
                 SelfBiome = selfBiome;
                 NeighborBiome = neighborBiome;
-                Temperature = temperature;
                 GroundWater = groundWater;
             }
         }
@@ -504,7 +422,7 @@ namespace Code.Scripts.Singletons
         public void PlaceTile()
         {
             PlayPlaceBiomeSound();
-            
+
             //Tile placement handling
             foreach (Transform neighborTile in _neighborTiles)
             {
@@ -555,10 +473,9 @@ namespace Code.Scripts.Singletons
                 placedTile++;
                 GameManager.Instance.RemainingResources[GameManager.Instance.GetSelectedBiome()]--;
 
-                (float Temperature, float GroundWater) influence = PlacedTileEnvironmentInfluence(neighborTile);
+                float gwlInfluence = PlacedTileEnvironmentInfluence(neighborTile);
 
-                GameManager.Instance.SetTempInfluence(influence.Temperature);
-                GameManager.Instance.SetGwlInfluence(influence.GroundWater);
+                GameManager.Instance.SetGwlInfluence(gwlInfluence);
 
                 tile.previewTile = null;
 
@@ -597,13 +514,12 @@ namespace Code.Scripts.Singletons
             HabitatSuitabilityManager.Instance.UpdateAllAreas();
         }
 
-        private (float, float) PlacedTileEnvironmentInfluence(Transform tile)
+        private float PlacedTileEnvironmentInfluence(Transform tile)
         {
             Tile.Tile tileScript = tile.GetComponent<Tile.Tile>();
             Biome selfBiome = tileScript.GetBiome();
             Biome previousBiome = tileScript.GetPreviousBiome();
 
-            float temp = 0;
             float gwl = 0;
             float negativeRiverCornerFactor = 1;
 
@@ -622,7 +538,6 @@ namespace Code.Scripts.Singletons
             foreach (var negativeSelfInfluence in _negativeSelfInfluences.Where(negativeSelfInfluence =>
                          negativeSelfInfluence.Biome == previousBiome))
             {
-                temp += negativeSelfInfluence.Temperature;
                 gwl += negativeSelfInfluence.GroundWater * negativeRiverCornerFactor;
             }
 
@@ -630,7 +545,6 @@ namespace Code.Scripts.Singletons
             foreach (var selfInfluence in _selfInfluences.Where(selfInfluence =>
                          selfInfluence.Biome == selfBiome))
             {
-                temp += selfInfluence.Temperature;
                 gwl += selfInfluence.GroundWater;
             }
 
@@ -641,11 +555,10 @@ namespace Code.Scripts.Singletons
                                               neighborInfluence.NeighborBiome ==
                                               closeByTransform.GetComponent<Tile.Tile>().GetBiome())))
             {
-                temp += neighborInfluence.Temperature;
                 gwl += neighborInfluence.GroundWater;
             }
 
-            return (temp, gwl);
+            return gwl;
         }
 
         #endregion
@@ -666,7 +579,7 @@ namespace Code.Scripts.Singletons
             string configuration = GetRiverConfigurationByNeighborCount(neighborCount, riverNeighbors);
             SetRiverConfiguration(riverTile, riverTag, configuration);
 
-            if (neighborCount >= 1 && neighborCount <= 3)
+            if (neighborCount is >= 1 and <= 3)
             {
                 RotateRiverConfiguration(riverTile, riverNeighbors, neighborCount);
             }
@@ -723,15 +636,15 @@ namespace Code.Scripts.Singletons
             Vector3 orientation = (neighbors[0].position - riverPos) - (neighbors[1].position - riverPos);
 
             Quaternion rotation;
-            if (orientation.x < 0 && orientation.z < 0)
+            if (orientation is { x: < 0, z: < 0 })
             {
                 rotation = Quaternion.Euler(0, 180, 0);
             }
-            else if (orientation.x < 0 && orientation.z > 0)
+            else if (orientation is { x: < 0, z: > 0 })
             {
                 rotation = Quaternion.Euler(0, 90, 0);
             }
-            else if (orientation.x > 0 && orientation.z < 0)
+            else if (orientation is { x: > 0, z: < 0 })
             {
                 rotation = Quaternion.Euler(0, -90, 0);
             }
@@ -920,25 +833,6 @@ namespace Code.Scripts.Singletons
             return GridHelper.Instance.GetTransformsFromCoordinates(neighborCoords);
         }
 
-        private List<Transform> FindNeighborTilesWithBrush(Transform source, BrushSize brushSize)
-        {
-            Coordinate sourceCoord = GridHelper.Instance.GetTileCoordinate(source);
-            bool isRiver = GameManager.Instance.GetSelectedBiome() == Biome.River;
-            Direction direction = GameManager.Instance.GetDirection();
-
-            List<Coordinate> tilesWithinBrush =
-                GridHelper.Instance.GetTilesWithinBrush(sourceCoord, brushSize, direction, isRiver);
-
-            // Filter out sealed tiles using GridHelper's TileData
-            List<Coordinate> filteredCoordinates = tilesWithinBrush.Where(coord =>
-            {
-                Biome biomeTile = GridHelper.Instance.GetTileDataAt(coord).Biome;
-                return biomeTile != Biome.Sealed && biomeTile != Biome.RiverSealed && biomeTile != Biome.IgnoreTile;
-            }).ToList();
-
-            return GridHelper.Instance.GetTransformsFromCoordinates(filteredCoordinates);
-        }
-        
         private List<Transform> FindNeighborTilesWithBrush(Transform source, BrushShape brushShape)
         {
             Coordinate sourceCoord = GridHelper.Instance.GetTileCoordinate(source);
