@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Code.Scripts.Enums;
+using Code.Scripts.PlayerControllers;
 using Code.Scripts.Singletons;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
@@ -20,6 +22,8 @@ namespace Code.Scripts.UI.HUD
         private int _currSelectedTile;
         private GroupBox _tileSelectGroup;
         private List<VisualElement> _tiles;
+
+        private PlayerInputActions _playerInputActions;
 
         #region USS Classes
 
@@ -40,20 +44,32 @@ namespace Code.Scripts.UI.HUD
 
         private GroupBox _hotBarContainer;
 
-        private void OnMouseEnterElement(MouseEnterEvent evt)
+        private void Awake()
+        {
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.PlayerActionMap.BiomeSelect.performed += OnBiomeSelect;
+        }
+
+        private void OnDestroy()
+        {
+            _playerInputActions.PlayerActionMap.BiomeSelect.performed -= OnBiomeSelect;
+            _playerInputActions.Disable();
+        }
+
+        private static void OnMouseEnterElement(MouseEnterEvent evt)
         {
             TileHelper.Instance.HidePreview();
             GameManager.Instance.IsMouseOverUi = true;
         }
 
-        private void OnMouseLeaveElement(MouseLeaveEvent evt)
+        private static void OnMouseLeaveElement(MouseLeaveEvent evt)
         {
             TileHelper.Instance.HidePreview();
             GameManager.Instance.IsMouseOverUi = false;
         }
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
             Panel = root.panel;
@@ -125,17 +141,9 @@ namespace Code.Scripts.UI.HUD
                         var target = (VisualElement)evt.target;
                         var index = _tiles.IndexOf(target);
 
-                        var oldSelected = _currSelectedTile;
-                        _currSelectedTile = index;
-
-                        // set classes for newly selected and old selected tiles
-                        var oldTile = _tiles[oldSelected];
-                        var newTile = _tiles[_currSelectedTile];
-
-                        oldTile.ToggleInClassList(SelectedClass);
-                        newTile.ToggleInClassList(SelectedClass);
-
-                        SetSelectedTileType(true);
+                        SelectTile(index);
+                        
+                        TileHelper.Instance.HidePreview();
                     }));
                 }
             }
@@ -165,8 +173,7 @@ namespace Code.Scripts.UI.HUD
             _helpBtn.clicked += GameManager.Instance.GetTutorialUIController().Initialize;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (!GameManager.Instance.IsGameInTutorial || GameManager.Instance.IsGamePaused) return;
 
@@ -189,14 +196,28 @@ namespace Code.Scripts.UI.HUD
                 _inputPossibilitiesLabel.text =
                     LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "input_possibilities");
             }
+        }
 
-            if (GameManager.Instance.IsPaletteOpen) return;
-            // check if any key was pressed, afterward check if it was one of our numbers for the tiles
-            if (!Input.anyKeyDown || !int.TryParse(Input.inputString, out int pressedNumber) || pressedNumber < 1 ||
-                pressedNumber > _numOfTiles || pressedNumber == _currSelectedTile + 1) return;
+        private void OnBiomeSelect(InputAction.CallbackContext context)
+        {
+            if (GameManager.Instance.IsGamePaused || GameManager.Instance.IsPaletteOpen) return;
 
+            var bindingIndex = context.action.GetBindingIndexForControl(context.control);
+            var newSelectedTile = bindingIndex; // The binding index corresponds to the tile index (0-5)
+
+            if (newSelectedTile >= 0 && newSelectedTile < _numOfTiles)
+            {
+                SelectTile(newSelectedTile);
+            }
+            
+            TileHelper.Instance.HidePreview();
+            TileHelper.Instance.ShowPreview();
+        }
+
+        private void SelectTile(int index)
+        {
             var oldSelected = _currSelectedTile;
-            _currSelectedTile = pressedNumber - 1; // minus one because we need to shift (list starts with 0 not 1)
+            _currSelectedTile = index;
 
             // set classes for newly selected and old selected tiles
             var oldTile = _tiles[oldSelected];
@@ -204,6 +225,7 @@ namespace Code.Scripts.UI.HUD
 
             oldTile.ToggleInClassList(SelectedClass);
             newTile.ToggleInClassList(SelectedClass);
+
             SetSelectedTileType(true);
         }
 
@@ -217,9 +239,7 @@ namespace Code.Scripts.UI.HUD
                     LocalizationSettings.StringDatabase.GetLocalizedString("Biomes", biome.ToString());
             }
         }
-
-        // with this approach we have this code running every frame, but therefor the labels will always be updated (also if the player regains resources)
-        // another option is to only update the selected resource as only this can be placed -> contra: no update yet on regaining resources
+        
         private void UpdateResourceCountLabels()
         {
             foreach (var tile in _tiles)
@@ -285,9 +305,6 @@ namespace Code.Scripts.UI.HUD
 
             if (GameManager.Instance.GetSelectedBiome() == Biome.River)
                 GameManager.Instance.BrushShape = BrushShape.Rv0;
-
-            TileHelper.Instance.HidePreview();
-            //TileHelper.Instance.ShowPreview();
         }
     }
 }

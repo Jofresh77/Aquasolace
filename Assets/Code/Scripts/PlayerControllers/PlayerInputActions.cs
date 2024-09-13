@@ -82,6 +82,15 @@ namespace Code.Scripts.PlayerControllers
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BiomeSelect"",
+                    ""type"": ""Button"",
+                    ""id"": ""6431c02e-35e8-4c3d-bb96-9f7732d3953c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -150,6 +159,72 @@ namespace Code.Scripts.PlayerControllers
                     ""action"": ""UIDebug"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f10db84a-f981-4fcc-9ebe-22ef3a93b069"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BiomeSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d323f394-5175-42bf-9f1f-7ce9161b4101"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BiomeSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""906a254c-fd61-4061-a5f3-cd402eab6ea9"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BiomeSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4dd24a2-8575-4a8f-a7a7-55c7e569bebe"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BiomeSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c8c5c8b-3ed9-42fb-a411-c8c1e876087f"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BiomeSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a466efd-d691-4a06-900d-0988abbd5bf5"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BiomeSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +239,7 @@ namespace Code.Scripts.PlayerControllers
             m_PlayerActionMap_BrushSize = m_PlayerActionMap.FindAction("BrushSize", throwIfNotFound: true);
             m_PlayerActionMap_QuestMenu = m_PlayerActionMap.FindAction("QuestMenu", throwIfNotFound: true);
             m_PlayerActionMap_UIDebug = m_PlayerActionMap.FindAction("UIDebug", throwIfNotFound: true);
+            m_PlayerActionMap_BiomeSelect = m_PlayerActionMap.FindAction("BiomeSelect", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -231,6 +307,7 @@ namespace Code.Scripts.PlayerControllers
         private readonly InputAction m_PlayerActionMap_BrushSize;
         private readonly InputAction m_PlayerActionMap_QuestMenu;
         private readonly InputAction m_PlayerActionMap_UIDebug;
+        private readonly InputAction m_PlayerActionMap_BiomeSelect;
         public struct PlayerActionMapActions
         {
             private @PlayerInputActions m_Wrapper;
@@ -241,6 +318,7 @@ namespace Code.Scripts.PlayerControllers
             public InputAction @BrushSize => m_Wrapper.m_PlayerActionMap_BrushSize;
             public InputAction @QuestMenu => m_Wrapper.m_PlayerActionMap_QuestMenu;
             public InputAction @UIDebug => m_Wrapper.m_PlayerActionMap_UIDebug;
+            public InputAction @BiomeSelect => m_Wrapper.m_PlayerActionMap_BiomeSelect;
             public InputActionMap Get() { return m_Wrapper.m_PlayerActionMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -268,6 +346,9 @@ namespace Code.Scripts.PlayerControllers
                 @UIDebug.started += instance.OnUIDebug;
                 @UIDebug.performed += instance.OnUIDebug;
                 @UIDebug.canceled += instance.OnUIDebug;
+                @BiomeSelect.started += instance.OnBiomeSelect;
+                @BiomeSelect.performed += instance.OnBiomeSelect;
+                @BiomeSelect.canceled += instance.OnBiomeSelect;
             }
 
             private void UnregisterCallbacks(IPlayerActionMapActions instance)
@@ -290,6 +371,9 @@ namespace Code.Scripts.PlayerControllers
                 @UIDebug.started -= instance.OnUIDebug;
                 @UIDebug.performed -= instance.OnUIDebug;
                 @UIDebug.canceled -= instance.OnUIDebug;
+                @BiomeSelect.started -= instance.OnBiomeSelect;
+                @BiomeSelect.performed -= instance.OnBiomeSelect;
+                @BiomeSelect.canceled -= instance.OnBiomeSelect;
             }
 
             public void RemoveCallbacks(IPlayerActionMapActions instance)
@@ -315,6 +399,7 @@ namespace Code.Scripts.PlayerControllers
             void OnBrushSize(InputAction.CallbackContext context);
             void OnQuestMenu(InputAction.CallbackContext context);
             void OnUIDebug(InputAction.CallbackContext context);
+            void OnBiomeSelect(InputAction.CallbackContext context);
         }
     }
 }
