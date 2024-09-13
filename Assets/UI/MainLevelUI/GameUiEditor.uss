@@ -43,32 +43,32 @@
 }
 
 .biomeImage.meadow {
-    background-image: url('project://database/Assets/UI/GameUI/Resources/meadow_preview.png?fileID=2800000&guid=04f19e33faeabb845bf7550806bad474&type=3#meadow_preview');
+    background-image: url('project://database/Assets/UI/MainLevelUI/Resources/meadow_preview.png?fileID=2800000&guid=04f19e33faeabb845bf7550806bad474&type=3#meadow_preview');
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.farmland {
-    background-image: url('project://database/Assets/UI/GameUI/Resources/farmland_preview.png?fileID=2800000&guid=9d52b71143f1e9c48b87158f4a15fe4a&type=3#farmland_preview');
+    background-image: url('project://database/Assets/UI/MainLevelUI/Resources/farmland_preview.png?fileID=2800000&guid=9d52b71143f1e9c48b87158f4a15fe4a&type=3#farmland_preview');
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.forestPine {
-    background-image: url('project://database/Assets/UI/GameUI/Resources/forest_pine_preview.png?fileID=2800000&guid=3f75086cef0807d48afc412860c6a9e9&type=3#forest_pine_preview');
+    background-image: url('project://database/Assets/UI/MainLevelUI/Resources/forest_pine_preview.png.png?fileID=2800000&guid=3f75086cef0807d48afc412860c6a9e9&type=3#forest_pine_preview');
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.forestDeciduous {
-    background-image: url('project://database/Assets/UI/GameUI/Resources/forest_deciduous_preview.png?fileID=2800000&guid=7f156bbb050f6834b8bcb37bab627f62&type=3#forest_deciduous_preview');
+    background-image: url('project://database/Assets/UI/MainLevelUI/Resources/forest_deciduous_preview.png?fileID=2800000&guid=7f156bbb050f6834b8bcb37bab627f62&type=3#forest_deciduous_preview');
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.forestMixed {
-    background-image: url('project://database/Assets/UI/GameUI/Resources/forest_mixed_preview.png?fileID=2800000&guid=cfeb8cb5f76a89d4bba1a87d94e8d194&type=3#forest_mixed_preview');
+    background-image: url('project://database/Assets/UI/MainLevelUI/Resources/forest_mixed_preview.png?fileID=2800000&guid=cfeb8cb5f76a89d4bba1a87d94e8d194&type=3#forest_mixed_preview');
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.river {
-    background-image: url('project://database/Assets/UI/GameUI/Resources/river_straight_preview.png?fileID=2800000&guid=a47a1e57d9f456742bce11568b913fd0&type=3#river_straight_preview');
+    background-image: url('project://database/Assets/UI/MainLevelUI/Resources/river_straight_preview.png?fileID=2800000&guid=a47a1e57d9f456742bce11568b913fd0&type=3#river_straight_preview');
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
