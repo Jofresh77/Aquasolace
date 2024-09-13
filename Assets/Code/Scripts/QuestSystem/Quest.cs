@@ -14,7 +14,6 @@ namespace Code.Scripts.QuestSystem
         public string questName;
         [TextArea] public string description;
         public bool isPersistAchievement = true;
-        public bool isRemoveQuestAfterAchieved;
         [FormerlySerializedAs("isEndRequired")] public bool isRequired;
         [HideInInspector] public bool isSelected;
         

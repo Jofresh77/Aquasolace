@@ -186,6 +186,9 @@ namespace Code.Scripts.Singletons
         {
             _corneredRiversInfluence = GridHelper.Instance.GetCorneredRiversInfluence(corneredRiverInfluenceCap);
             GroundWaterLevel += gwlInfluence * _corneredRiversInfluence + gwlConsumption;
+
+            QuestBoard.Instance.CheckProperEnvironmentAchievement();
+            
             StartEnvConditionsCooldown();
         }
 
