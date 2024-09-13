@@ -113,7 +113,6 @@ namespace Code.Scripts.Singletons
         private void Start()
         {
             InitializeResources();
-            InitializeHabitatSuitabilityProcess();
             
             tutorialUIController.IsMainLevelLoaded = true;
             
@@ -162,11 +161,6 @@ namespace Code.Scripts.Singletons
                 { Biome.River, 35 },
                 { Biome.Farmland, 70 }
             };
-        }
-
-        private void InitializeHabitatSuitabilityProcess()
-        {
-            HabitatSuitabilityManager.Instance.InitializeMap(GridHelper.Instance.widthAndHeight);
         }
 
         #endregion

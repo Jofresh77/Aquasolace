@@ -31,7 +31,12 @@ namespace Code.Scripts.Tile.HabitatSuitability
             }
         }
 
-        public void InitializeMap(int mapSize)
+        private void Start()
+        {
+            InitializeMap(GridHelper.Instance.widthAndHeight);
+        }
+
+        private void InitializeMap(int mapSize)
         {
             _mapSize = mapSize;
             _biomeMap = new Biome[mapSize * mapSize];

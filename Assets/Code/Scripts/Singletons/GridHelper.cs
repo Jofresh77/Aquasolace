@@ -18,14 +18,12 @@ namespace Code.Scripts.Singletons
 
         private SortedDictionary<Coordinate, TileData> _tempTileMap = new();
 
-        public IReadOnlyDictionary<Coordinate, TileData> TileMapReadOnly => _tileMap;
-
         private readonly SortedDictionary<Coordinate, Transform> _coordinateToTransformMap = new();
 
         public int widthAndHeight;
 
         private List<Coordinate> _riverSources = new();
-        private List<Transform> _sealedBorders = new List<Transform>();
+        private List<Transform> _sealedBorders = new();
 
         private void Awake()
         {
@@ -594,7 +592,7 @@ namespace Code.Scripts.Singletons
                         for (int z = -1; z <= 1; z++)
                         {
                             Coordinate coord = new Coordinate(center.X + x, center.Z + z);
-                            
+
                             if (_tileMap.ContainsKey(coord))
                                 tiles.Add(coord);
                         }
