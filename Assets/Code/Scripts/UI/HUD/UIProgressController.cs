@@ -27,10 +27,12 @@ namespace Code.Scripts.UI.HUD
         private const String UpCaret = "∧";
         private const String DownCaret = "∨";
         private const float FillUpdateSpeed = 0.01f;
+        
+        private WaterDropProgressBar _waterDropProgressBar;
 
         private void Start()
         {
-            // get water drop progress bar canvas object
+            /*// get water drop progress bar canvas object
             var canvasObject = GameObject.Find("WaterDropCanvas");
             if (canvasObject == null)
             {
@@ -58,14 +60,16 @@ namespace Code.Scripts.UI.HUD
             if (_waterDropProgressLabel == null)
             {
                 throw new Exception("WaterDropProgressLabel not found!");
-            }
+            }*/
 
             var root = GetComponent<UIDocument>().rootVisualElement;
 
+            _waterDropProgressBar = root.Q<WaterDropProgressBar>("waterDropProgressBar");
+            
             _elapsedTimeLabel = root.Q<Label>("elapsedTimeLabel");
             SetTimerText();
 
-            _waterLevel = root.Q<ProgressBar>("waterLevelBar");
+            /*_waterLevel = root.Q<ProgressBar>("waterLevelBar");
 
             // setting boundaries
             _maxWaterLevel = GameManager.Instance.GetGwlPosThreshold();
@@ -92,7 +96,7 @@ namespace Code.Scripts.UI.HUD
             else
             {
                 UpdateWaterLevel();
-            }
+            }*/
         }
 
         private void Update()
@@ -100,9 +104,19 @@ namespace Code.Scripts.UI.HUD
             if (!GameManager.Instance.IsGameInTutorial || GameManager.Instance.IsGamePaused) return;
 
             UpdateWaterLevel();
-            UpdateWaterLevelCaret();
+            //UpdateWaterLevelCaret();
 
             SetTimerText();
+        }
+
+        private void UpdateWaterLevel()
+        {
+            float currWaterLevel = Mathf.Round(GameManager.Instance.GroundWaterLevel);
+            float percentage = CalculatePercentage(GameManager.Instance.GetGwlNegThreshold(), 
+                GameManager.Instance.GetGwlPosThreshold(), 
+                currWaterLevel);
+        
+            _waterDropProgressBar.SetPercentage(percentage / 100f);
         }
 
         private float CalculatePercentage(float minValue, float maxValue, float currentValue)
@@ -113,7 +127,7 @@ namespace Code.Scripts.UI.HUD
             return percentage;
         }
 
-        private void UpdateWaterLevel()
+        /*private void UpdateWaterLevel()
         {
             if (useCanvasAsWaterProgressBar)
             {
@@ -168,7 +182,7 @@ namespace Code.Scripts.UI.HUD
             {
                 _waterLevelCaret.text = DownCaret;
             }
-        }
+        }*/
 
         private void SetTimerText()
         {
