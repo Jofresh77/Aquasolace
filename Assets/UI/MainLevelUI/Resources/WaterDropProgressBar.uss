@@ -1,0 +1,42 @@
+.water-drop-progress-bar {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 5%;
+    height: 8.89%;
+}
+
+.water-drop-outline {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: resource("water-drop-outline");
+}
+
+.water-drop-fill-mask {
+    position: absolute;
+    align-self: center;
+    width: 63%;
+    height: 90%;
+    background-image: url("project://database/Assets/UI/MainLevelUI/Resources/svg/water-drop-mask-alpha.svg");
+    background-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+.water-drop-fill-rectangle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 153, 255, 0.8);
+}
+
+.water-drop-percentage-label {
+    position: absolute;
+    align-self: center;
+    width: 100%;
+    bottom: 27.5%;
+    -unity-text-align: middle-center;
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: white;
+}

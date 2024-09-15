@@ -154,6 +154,8 @@ namespace Code.Scripts.UI.HUD
 
             #endregion
 
+            #region pause-help-btns
+
             _pauseBtn = root.Q<Button>("PauseBtn");
             _pauseBtn.RegisterCallback<MouseEnterEvent>(evt =>
             {
@@ -171,11 +173,13 @@ namespace Code.Scripts.UI.HUD
             });
             _helpBtn.RegisterCallback<MouseLeaveEvent>(OnMouseLeaveElement);
             _helpBtn.clicked += GameManager.Instance.GetTutorialUIController().Initialize;
+
+            #endregion
         }
 
         private void Update()
         {
-            if (!GameManager.Instance.IsGameInTutorial || GameManager.Instance.IsGamePaused) return;
+            if (GameManager.Instance.IsGameInTutorial || GameManager.Instance.IsGamePaused) return;
 
             if (useTileLabelAsResourceCount)
             {

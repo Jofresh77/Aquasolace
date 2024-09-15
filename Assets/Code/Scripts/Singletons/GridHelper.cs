@@ -10,6 +10,8 @@ namespace Code.Scripts.Singletons
 {
     public class GridHelper : MonoBehaviour
     {
+        #region properties
+
         public static GridHelper Instance { get; private set; }
 
         public string RestrictionMsg { get; set; }
@@ -24,6 +26,10 @@ namespace Code.Scripts.Singletons
 
         private List<Coordinate> _riverSources = new();
         private List<Transform> _sealedBorders = new();
+
+        #endregion
+
+        #region life-cycle
 
         private void Awake()
         {
@@ -74,6 +80,10 @@ namespace Code.Scripts.Singletons
             // get the river tile that are located on the border
             _riverSources = FindBorderRiverSources(_tileMap);
         }
+
+        #endregion
+
+        #region sealed
 
         public List<(Transform, Transform[])> GetSealedBorders()
         {
@@ -142,6 +152,8 @@ namespace Code.Scripts.Singletons
                 }
             }
         }
+
+        #endregion
 
         #region quest-conditionnals
 

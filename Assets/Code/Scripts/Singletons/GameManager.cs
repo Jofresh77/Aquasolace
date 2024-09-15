@@ -263,13 +263,6 @@ namespace Code.Scripts.Singletons
 
                 _ => amount >= 1
             };
-            /*return brushSize switch
-            {
-                BrushSize.Sm => amount >= 1,
-                BrushSize.Md => biome == Biome.River ? amount >= 3 : amount >= 5,
-                BrushSize.Lg => biome == Biome.River ? amount >= 5 : amount >= 9,
-                _ => true
-            };*/
         }
 
         #endregion

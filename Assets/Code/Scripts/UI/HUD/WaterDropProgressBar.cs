@@ -7,58 +7,47 @@ namespace Code.Scripts.UI.HUD
     {
         public new class UxmlFactory : UxmlFactory<WaterDropProgressBar, UxmlTraits> { }
 
-        private readonly VisualElement _fill;
+        private readonly VisualElement _fillRectangle;
         private readonly Label _percentageLabel;
 
         private float _percentage;
 
         public WaterDropProgressBar()
         {
+            // Load and apply the USS
+            var stylesheet = Resources.Load<StyleSheet>("WaterDropProgressBar");
+            styleSheets.Add(stylesheet);
+
+            AddToClassList("water-drop-progress-bar");
+
             // Create and add the outline image
-            var outline = new VisualElement
-            {
-                style =
-                {
-                    backgroundImage = new StyleBackground(Resources.Load<Texture2D>("water-drop-outline")),
-                    width = new StyleLength(Length.Percent(100)),
-                    height = new StyleLength(Length.Percent(100))
-                }
-            };
+            var outline = new VisualElement();
+            outline.AddToClassList("water-drop-outline");
             hierarchy.Add(outline);
 
-            // Create and add the fill image
-            _fill = new VisualElement
-            {
-                style =
-                {
-                    backgroundImage = new StyleBackground(Resources.Load<Texture2D>("water-drop-inside")),
-                    width = new StyleLength(Length.Percent(100)),
-                    height = new StyleLength(Length.Percent(0)), // Start empty
-                    position = Position.Absolute,
-                    bottom = 0
-                }
-            };
-            hierarchy.Add(_fill);
+            // Create the fill mask (droplet shape)
+            var fillMask = new VisualElement();
+            fillMask.AddToClassList("water-drop-fill-mask");
+            hierarchy.Add(fillMask);
+
+            // Create the fill rectangle
+            _fillRectangle = new VisualElement();
+            _fillRectangle.AddToClassList("water-drop-fill-rectangle");
+            fillMask.Add(_fillRectangle);
 
             // Create and add the percentage label
-            _percentageLabel = new Label("0%")
-            {
-                style =
-                {
-                    unityTextAlign = TextAnchor.MiddleCenter,
-                    position = Position.Absolute,
-                    top = new StyleLength(Length.Percent(50)),
-                    left = new StyleLength(Length.Percent(50)),
-                    //translate = new StyleTranslate(new Translate(-50, -50, 0))
-                }
-            };
+            _percentageLabel = new Label("0%");
+            _percentageLabel.AddToClassList("water-drop-percentage-label");
             hierarchy.Add(_percentageLabel);
+
+            // Initialize with 0%
+            SetPercentage(0);
         }
 
         public void SetPercentage(float percentage)
         {
             _percentage = Mathf.Clamp01(percentage);
-            _fill.style.height = new StyleLength(Length.Percent(_percentage * 100));
+            _fillRectangle.style.bottom = new StyleLength(Length.Percent(_percentage * 100 - 100));
             _percentageLabel.text = $"{_percentage:P0}";
         }
     }
