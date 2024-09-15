@@ -46,7 +46,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
 
         public static void UpdateAllHabitats()
         {
-            var reviveSpeciesQuests = QuestManager.Instance.questList.quests.OfType<ReviveSpecies>();
+            var reviveSpeciesQuests = QuestBoard.Instance.questList.quests.OfType<ReviveSpecies>();
 
             foreach (var quest in reviveSpeciesQuests)
             {
@@ -56,7 +56,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
 
         public void UpdateAllAreas()
         {
-            var areaQuests = QuestManager.Instance.questList.quests.OfType<GetAreaSize>();
+            var areaQuests = QuestBoard.Instance.questList.quests.OfType<GetAreaSize>();
 
             foreach (GetAreaSize quest in areaQuests)
             {

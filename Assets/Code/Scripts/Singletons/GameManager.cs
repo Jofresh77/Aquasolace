@@ -22,14 +22,14 @@ namespace Code.Scripts.Singletons
         #endregion
 
         #region SerializeFields
-        
-        [Header("Brush")]
-        [SerializeField] private Biome selectedBiome = Biome.Meadow;
+
+        [Header("Brush")] [SerializeField] private Biome selectedBiome = Biome.Meadow;
         [SerializeField] private BrushShape brushShape = BrushShape.Nm0;
         [SerializeField] private Direction direction = Direction.PosZ;
 
-        [Header("GWL & Temperature")]
-        [SerializeField] private float gwlNegThreshold = 100f;
+        [Header("GWL & Temperature")] [SerializeField]
+        private float gwlNegThreshold = 100f;
+
         [SerializeField] private float gwlPosThreshold = 2000f;
 
         [SerializeField] private float tempInfluence = 0.01f;
@@ -39,16 +39,14 @@ namespace Code.Scripts.Singletons
 
         [SerializeField] private float coolDownDuration = 4f;
 
-        [Header("UI")]
-        [SerializeField] private GameStateUI gameStateUIScript;
+        [Header("UI")] [SerializeField] private GameStateUI gameStateUIScript;
         [SerializeField] private UIController uiController;
         [SerializeField] private NotificationsController notificationsController;
         [SerializeField] private TutorialUIController tutorialUIController;
         [SerializeField] private PauseMenu pauseMenu;
         [SerializeField] private QuestUIController questUIController;
-        
-        [Header("DEBUG")]
-        [SerializeField] private List<UIDocument> allUIs;
+
+        [Header("DEBUG")] [SerializeField] private List<UIDocument> allUIs;
         [SerializeField] private GameObject canvas;
 
         #endregion
@@ -75,8 +73,6 @@ namespace Code.Scripts.Singletons
         private PlayerInputActions _playerInputActions;
         private float _nextUpdateTick;
         private float _corneredRiversInfluence = 1f;
-        private readonly Dictionary<string, int> _amountSpawnedSpecies = new();
-        private const int MaxAmountSpawnedSpecies = 1000;
 
         #endregion
 
@@ -108,9 +104,9 @@ namespace Code.Scripts.Singletons
         private void Start()
         {
             InitializeResources();
-            
+
             tutorialUIController.IsMainLevelLoaded = true;
-            
+
             StartEnvConditionsCooldown();
         }
 
@@ -165,16 +161,16 @@ namespace Code.Scripts.Singletons
         {
             TileHelper.Instance.HidePreview();
             TileHelper.Instance.SelectedTile = null;
-            
+
             questUIController.FastCloseLog();
-            
+
             pauseMenu.GamePause(new InputAction.CallbackContext());
         }
 
         public void OnGameTimeEnd()
         {
             SetIsGamePaused(true);
-            IsGameWon = QuestManager.Instance.AreRequiredQuestsAchieved();
+            IsGameWon = QuestBoard.Instance.AreRequiredQuestsAchieved();
             gameStateUIScript.DisplayGameEnd(!IsGameWon);
         }
 
@@ -188,7 +184,7 @@ namespace Code.Scripts.Singletons
             GroundWaterLevel += gwlInfluence * _corneredRiversInfluence + gwlConsumption;
 
             QuestBoard.Instance.CheckProperEnvironmentAchievement();
-            
+
             StartEnvConditionsCooldown();
         }
 
@@ -218,7 +214,7 @@ namespace Code.Scripts.Singletons
                     ? DisplayStyle.Flex
                     : DisplayStyle.None;
             }
-            
+
             canvas.SetActive(!canvas.activeSelf);
         }
 
@@ -250,7 +246,7 @@ namespace Code.Scripts.Singletons
 
         public bool ResourceAvailable() => ResourceBiomeAvailable(selectedBiome);
 
-        public bool ResourceBiomeAvailable(Biome biome)
+        private bool ResourceBiomeAvailable(Biome biome)
         {
             float amount = RemainingResources[biome];
             return brushShape switch
@@ -265,6 +261,8 @@ namespace Code.Scripts.Singletons
             };
         }
 
+        public void UpdateResourcesCountUI() => uiController.UpdateResourceCountLabels();
+
         #endregion
 
         #region Notification System
@@ -276,47 +274,26 @@ namespace Code.Scripts.Singletons
 
         #endregion
 
-        #region Species Management
-
-        public bool AddSpawnedSpecies(string specieName)
-        {
-            if (_amountSpawnedSpecies.TryAdd(specieName, 1)) return true;
-            if (_amountSpawnedSpecies[specieName] > MaxAmountSpawnedSpecies) return false;
-            _amountSpawnedSpecies[specieName]++;
-            return true;
-        }
-
-        public void RemoveSpawnedSpecie(string specieName)
-        {
-            if (!_amountSpawnedSpecies.TryGetValue(specieName, out int count)) return;
-            if (count > 1)
-            {
-                _amountSpawnedSpecies[specieName]--;
-            }
-            else
-            {
-                _amountSpawnedSpecies.Remove(specieName);
-            }
-        }
-
-        #endregion
-
         #region Getters and Setters
 
         public TutorialUIController GetTutorialUIController() => tutorialUIController;
+
         public BrushShape BrushShape
         {
             get => brushShape;
             set => brushShape = value;
         }
+
         public Biome GetSelectedBiome() => selectedBiome;
         public void SetSelectedBiome(Biome newBiome) => selectedBiome = newBiome;
         public Direction GetDirection() => direction;
+
         public void SetIsGamePaused(bool newIsGamePaused)
         {
             IsGamePaused = newIsGamePaused;
             Time.timeScale = IsGamePaused ? 0 : 1;
         }
+
         public float GetGwlNegThreshold() => gwlNegThreshold;
         public float GetGwlPosThreshold() => gwlPosThreshold;
         public float GetTempInfluence() => tempInfluence;

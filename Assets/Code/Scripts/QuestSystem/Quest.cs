@@ -48,6 +48,7 @@ namespace Code.Scripts.QuestSystem
                 if (IsRewarded) return;
                 
                 GameManager.Instance.RemainingResources[rewardBiome] += rewardAmount;
+                GameManager.Instance.UpdateResourcesCountUI();
                 IsRewarded = true;
             }
         }

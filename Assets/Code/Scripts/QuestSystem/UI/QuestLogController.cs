@@ -111,7 +111,7 @@ namespace Code.Scripts.QuestSystem.UI
 
         public void UpdateQuestLogList(bool isAchieved)
         {
-            _questLogList.Clear(); // remove all elements in the list
+            _questLogList.Clear();
 
             if (QuestBoard.Instance.GetCountOfSelectedQuests() == 0)
             {
@@ -153,7 +153,7 @@ namespace Code.Scripts.QuestSystem.UI
 
         private void SubscribeToQuestsAchievementChange()
         {
-            foreach (var quest in QuestManager.Instance.questList.quests)
+            foreach (var quest in QuestBoard.Instance.questList.quests)
                 quest.OnAchievementChanged += UpdateQuestLogList;
         }
     }

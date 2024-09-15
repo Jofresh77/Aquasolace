@@ -16,7 +16,7 @@ namespace Code.Scripts.UI.HUD
 
             var root = GetComponent<UIDocument>().rootVisualElement;
 
-            _waterDropProgressBar = root.Q<WaterDropProgressBar>("gwlProgressBar");
+            _waterDropProgressBar = root.Q<WaterDropProgressBar>("GwlProgressBar");
             
             _elapsedTimeLabel = root.Q<Label>("elapsedTimeLabel");
             SetTimerText();

@@ -13,6 +13,8 @@ namespace Code.Scripts.Singletons
     {
         public static QuestBoard Instance { get; private set; }
 
+        public QuestList questList;
+
         [Serializable]
         public class QuestInfo
         {
@@ -27,10 +29,9 @@ namespace Code.Scripts.Singletons
             public int rewardAmount;
         }
 
-        [SerializeField] private int maxCountOfQuestsSelected = 2;
         [SerializeField] private List<QuestInfo> questInfoList = new();
         [SerializeField] private QuestBoardController questBoardController;
-        [SerializeField] private QuestLogController questLogController;
+        [SerializeField] private int maxCountOfQuestsSelected = 2;
 
         private Transform _tile;
         private Biome _checkedTileBiome;
@@ -51,7 +52,7 @@ namespace Code.Scripts.Singletons
             }
 
             _properEnvironmentQuest =
-                QuestManager.Instance.questList.quests.OfType<ProperEnvironment>().FirstOrDefault();
+                questList.quests.OfType<ProperEnvironment>().FirstOrDefault();
         }
 
         private void Start()
@@ -62,7 +63,7 @@ namespace Code.Scripts.Singletons
 
         private void SubscribeToQuestsAchievementChange()
         {
-            foreach (var quest in QuestManager.Instance.questList.quests)
+            foreach (var quest in questList.quests)
                 quest.OnAchievementChanged += HandleQuestAchievementChange;
         }
 
@@ -73,12 +74,12 @@ namespace Code.Scripts.Singletons
 
         #region Achievement checks
 
-        public void CheckAchievement()
+        public void UpdateQuestList()
         {
             _tile = TileHelper.Instance.SelectedTile;
             _checkedTileBiome = _tile.GetComponent<Tile.Tile>().GetBiome();
 
-            foreach (var quest in QuestManager.Instance.questList.quests)
+            foreach (var quest in questList.quests)
             {
                 if (quest is ProperEnvironment or ReviveSpecies or GetAreaSize)
                     continue;
@@ -128,7 +129,7 @@ namespace Code.Scripts.Singletons
         {
             questInfoList.Clear();
 
-            foreach (var quest in QuestManager.Instance.questList.quests)
+            foreach (var quest in questList.quests)
             {
                 QuestInfo questInfo = new QuestInfo
                 {
@@ -155,10 +156,10 @@ namespace Code.Scripts.Singletons
 
         public QuestInfo ToggleQuestIsSelected(int index)
         {
-            if (index >= questInfoList.Count || index >= QuestManager.Instance.questList.quests.Count) return null;
+            if (index >= questInfoList.Count || index >= questList.quests.Count) return null;
 
             var questInfo = questInfoList[index];
-            var quest = QuestManager.Instance.questList.quests[index];
+            var quest = questList.quests[index];
 
 
             if (!questInfo.isSelected)
@@ -177,10 +178,22 @@ namespace Code.Scripts.Singletons
             }
 
             questInfoList[index] = questInfo;
-            QuestManager.Instance.questList.quests[index] = quest;
+            questList.quests[index] = quest;
             return questInfo;
         }
 
+        public bool AreRequiredQuestsAchieved()
+        {
+            foreach (Quest questSo in questList.quests)
+            {
+                if (questSo is { isRequired: true, IsAchieved: false })
+                    
+                    return false;
+            }
+
+            return true;
+        }
+        
         public List<QuestInfo> GetQuestInfoList()
         {
             return questInfoList;

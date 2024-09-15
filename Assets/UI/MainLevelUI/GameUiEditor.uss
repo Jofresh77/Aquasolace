@@ -44,36 +44,26 @@
 
 .biomeImage.meadow {
     background-image: url('project://database/Assets/UI/MainLevelUI/Resources/meadow_preview.png?fileID=2800000&guid=04f19e33faeabb845bf7550806bad474&type=3#meadow_preview');
-    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.farmland {
     background-image: url('project://database/Assets/UI/MainLevelUI/Resources/farmland_preview.png?fileID=2800000&guid=9d52b71143f1e9c48b87158f4a15fe4a&type=3#farmland_preview');
-    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.forestPine {
     background-image: url('project://database/Assets/UI/MainLevelUI/Resources/forest_pine_preview.png.png?fileID=2800000&guid=3f75086cef0807d48afc412860c6a9e9&type=3#forest_pine_preview');
-    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.forestDeciduous {
     background-image: url('project://database/Assets/UI/MainLevelUI/Resources/forest_deciduous_preview.png?fileID=2800000&guid=7f156bbb050f6834b8bcb37bab627f62&type=3#forest_deciduous_preview');
-    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.forestMixed {
     background-image: url('project://database/Assets/UI/MainLevelUI/Resources/forest_mixed_preview.png?fileID=2800000&guid=cfeb8cb5f76a89d4bba1a87d94e8d194&type=3#forest_mixed_preview');
-    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .biomeImage.river {
     background-image: url('project://database/Assets/UI/MainLevelUI/Resources/river_straight_preview.png?fileID=2800000&guid=a47a1e57d9f456742bce11568b913fd0&type=3#river_straight_preview');
-    -unity-background-image-tint-color: rgb(255, 255, 255);
-}
-
-.tileSelect.unavailable {
-    -unity-background-image-tint-color: rgba(255, 255, 255, 0.3);
 }
 
 .tileSelect--selected {
@@ -91,7 +81,39 @@
     border-bottom-left-radius: 20px;
 }
 
-.temperature-bar {
+.backgroundBlur {
+    background-color: rgba(0, 80, 140, 0.66);
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-left-color: rgba(106, 106, 106, 0);
+    border-right-color: rgba(106, 106, 106, 0);
+}
+
+.backgroundBlur.allCorners {
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.hide {
+    display: none;
+}
+
+.topLeftBtns {
+    background-color: #6F9ED4;
+    opacity: 60;
+}
+
+.topLeftBtns:hover {
+    background-color: #BBCDEB;
+    opacity: 60;
+}
+
+.topLeftBtns:focus {
+    background-color: #004f8C;
+    opacity: 60;
+}
+
+/*.temperature-bar {
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-top-width: 2px;
@@ -162,36 +184,4 @@
     border-bottom-left-radius: 25px;
     border-top-right-radius: 0;
     border-top-left-radius: 25px;
-}
-
-.backgroundBlur {
-    background-color: rgba(0, 80, 140, 0.66);
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-    border-left-color: rgba(106, 106, 106, 0);
-    border-right-color: rgba(106, 106, 106, 0);
-}
-
-.backgroundBlur.allCorners {
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-}
-
-.hide {
-    display: none;
-}
-
-.topLeftBtns {
-    background-color: #6F9ED4;
-    opacity: 60;
-}
-
-.topLeftBtns:hover {
-    background-color: #BBCDEB;
-    opacity: 60;
-}
-
-.topLeftBtns:focus {
-    background-color: #004f8C;
-    opacity: 60;
-}
+}*/

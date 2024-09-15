@@ -203,44 +203,10 @@ namespace Code.Scripts.UI.GameEnd
         {
             Destroy(TileHelper.Instance);
             Destroy(GridHelper.Instance);
-            Destroy(QuestManager.Instance);
             Destroy(TimeManager.Instance);
             Destroy(SealedAreaManager.Instance);
             Destroy(GameManager.Instance);
         }
-
-        /*public void StartFadeOut()
-        {
-            StartCoroutine(FadeOut());
-        }
-
-        private IEnumerator FadeOut()
-        {
-            // Ensure the Text component is assigned
-            if (invalidText != null)
-            {
-                Color startColor = invalidText.color;
-                float elapsedTime = 0f;
-
-                while (elapsedTime < fadeOutDuration)
-                {
-                    // Calculate the new alpha value using Lerp
-                    float newAlpha = Mathf.Lerp(startColor.a, 0f, elapsedTime / fadeOutDuration);
-
-                    // Set the text color with the new alpha value
-                    invalidText.color = new Color(startColor.r, startColor.g, startColor.b, newAlpha);
-
-                    // Increment the elapsed time
-                    elapsedTime += Time.deltaTime;
-
-                    // Yield until the next frame
-                    yield return null;
-                }
-
-                // Ensure the final alpha is set to 0
-                invalidText.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
-            }
-        }*/
 
         public void Update()
         {

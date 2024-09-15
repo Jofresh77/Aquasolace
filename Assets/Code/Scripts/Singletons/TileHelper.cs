@@ -489,9 +489,9 @@ namespace Code.Scripts.Singletons
                         GameManager.Instance.GetSelectedBiome());
                 }
 
-                QuestManager.Instance.CheckQuestList();
+                //QuestManager.Instance.UpdateQuestList();
             }
-
+            
             if (placedTile != 0)
             {
                 Biome biome = _neighborTiles[0].GetComponent<Tile.Tile>().GetBiome();
@@ -506,6 +506,9 @@ namespace Code.Scripts.Singletons
                 );
             }
 
+            GameManager.Instance.UpdateResourcesCountUI();
+            QuestBoard.Instance.UpdateQuestList();
+            
             _originalRotations.Clear();
             _originalRiverConfigurations.Clear();
             _riverTiles.Clear();
