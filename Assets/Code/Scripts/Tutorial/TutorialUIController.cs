@@ -151,7 +151,7 @@ namespace Code.Scripts.Tutorial
 
         #endregion
 
-        private void UpdateLeftRightSkipBtns()
+        public void UpdateLeftRightSkipBtns()
         {
             UpdateLeftButton();
 
@@ -206,7 +206,7 @@ namespace Code.Scripts.Tutorial
             _rightBtn.style.display = DisplayStyle.Flex;
         }
 
-        private void UpdateInfoLabelText()
+        public void UpdateInfoLabelText()
         {
             _infoLabel.text =
                 LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", _tutorialTexts[_currentStepIndex]);

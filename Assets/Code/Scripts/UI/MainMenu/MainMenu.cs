@@ -6,7 +6,6 @@ using Code.Scripts.Tutorial;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Code.Scripts.UI.MainMenu
@@ -108,6 +107,9 @@ namespace Code.Scripts.UI.MainMenu
         {
             SoundManager.Instance.PlaySound(SoundType.BtnClick);
 
+            /*tutorialUIController.UpdateLeftRightSkipBtns();
+            tutorialUIController.UpdateInfoLabelText();*/
+            
             FindObjectOfType<LocaleSelector>().ChangeLocale(_languages[@event.newValue]);
             LanguageManager.Instance.SetCurrentLocale(_languages[@event.newValue]);
         }
