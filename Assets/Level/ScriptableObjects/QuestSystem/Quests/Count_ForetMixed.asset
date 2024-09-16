@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: count_mixed_name
   description: count_mixed_description
   isPersistAchievement: 1
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 0
+  isRequired: 0
   isSelected: 0
   rewardBiome: 2
   rewardAmount: 10
   questIcon: {fileID: 2800000, guid: cfeb8cb5f76a89d4bba1a87d94e8d194, type: 3}
+  rewardIcon: {fileID: 2800000, guid: 3f75086cef0807d48afc412860c6a9e9, type: 3}
   achievementMsg: positive
   failureMsg: negative
   biome: 4

@@ -15,15 +15,11 @@ MonoBehaviour:
   questName: check_tmp_gwl_name
   description: check_tmp_gwl_description
   isPersistAchievement: 0
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 1
+  isRequired: 1
   isSelected: 0
   rewardBiome: 3
   rewardAmount: 9
   questIcon: {fileID: 2800000, guid: 38cb9a476aa7d794a934675facf00cd8, type: 3}
+  rewardIcon: {fileID: 2800000, guid: 7f156bbb050f6834b8bcb37bab627f62, type: 3}
   achievementMsg: positive
   failureMsg: negative
-  properTemp: 20
-  normalizedTemp: 10
-  properGwl: 500
-  normalizedGwl: 200

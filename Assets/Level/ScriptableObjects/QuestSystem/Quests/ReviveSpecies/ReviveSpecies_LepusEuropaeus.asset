@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: species_lepuseuropaeus_name
   description: species_lepuseuropaeus_description
   isPersistAchievement: 0
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 1
+  isRequired: 1
   isSelected: 0
   rewardBiome: 1
   rewardAmount: 14
   questIcon: {fileID: 2800000, guid: ea649117d5023e547a5708882a28be66, type: 3}
+  rewardIcon: {fileID: 2800000, guid: 9d52b71143f1e9c48b87158f4a15fe4a, type: 3}
   achievementMsg: positive
   failureMsg: negative
   speciesSo: {fileID: 11400000, guid: e69963ab004154e2fa5293fa7e576641, type: 2}

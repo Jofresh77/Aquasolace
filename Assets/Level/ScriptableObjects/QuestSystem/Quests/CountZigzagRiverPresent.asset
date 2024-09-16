@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: count_zigzag_name
   description: count_zigzag_description
   isPersistAchievement: 1
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 1
+  isRequired: 1
   isSelected: 0
   rewardBiome: 5
   rewardAmount: 11
   questIcon: {fileID: 2800000, guid: 6a12831f7159c8140a3cd4602d6778bc, type: 3}
+  rewardIcon: {fileID: 2800000, guid: a47a1e57d9f456742bce11568b913fd0, type: 3}
   achievementMsg: positive
   failureMsg: negative
   mustHave: 15

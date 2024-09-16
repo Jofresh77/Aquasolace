@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: count_meadow_name
   description: count_meadow_description
   isPersistAchievement: 1
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 0
+  isRequired: 0
   isSelected: 0
   rewardBiome: 4
   rewardAmount: 6
   questIcon: {fileID: 2800000, guid: 04f19e33faeabb845bf7550806bad474, type: 3}
+  rewardIcon: {fileID: 2800000, guid: cfeb8cb5f76a89d4bba1a87d94e8d194, type: 3}
   achievementMsg: positive
   failureMsg: negative
   biome: 0

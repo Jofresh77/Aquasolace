@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: species_bufobufo_name
   description: species_bufobufo_description
   isPersistAchievement: 0
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 1
+  isRequired: 1
   isSelected: 0
   rewardBiome: 3
   rewardAmount: 13
   questIcon: {fileID: 2800000, guid: dfc084c0fb50f49499f29b450cb2c87b, type: 3}
+  rewardIcon: {fileID: 2800000, guid: 7f156bbb050f6834b8bcb37bab627f62, type: 3}
   achievementMsg: positive
   failureMsg: negative
   speciesSo: {fileID: 11400000, guid: 3299a597761ff49129d34c9d0be5fc91, type: 2}

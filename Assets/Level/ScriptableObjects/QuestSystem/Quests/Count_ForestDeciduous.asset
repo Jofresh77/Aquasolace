@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: count_deciduous_name
   description: count_deciduous_description
   isPersistAchievement: 1
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 0
+  isRequired: 0
   isSelected: 0
   rewardBiome: 0
   rewardAmount: 13
   questIcon: {fileID: 2800000, guid: 7f156bbb050f6834b8bcb37bab627f62, type: 3}
+  rewardIcon: {fileID: 2800000, guid: 04f19e33faeabb845bf7550806bad474, type: 3}
   achievementMsg: positive
   failureMsg: negative
   biome: 3

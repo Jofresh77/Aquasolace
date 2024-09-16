@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: species_castorfiber_name
   description: species_castorfiber_description
   isPersistAchievement: 0
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 1
+  isRequired: 1
   isSelected: 0
   rewardBiome: 2
   rewardAmount: 15
   questIcon: {fileID: 2800000, guid: fe2ea87c0745de041800b3c16e2fd4d5, type: 3}
+  rewardIcon: {fileID: 2800000, guid: 3f75086cef0807d48afc412860c6a9e9, type: 3}
   achievementMsg: positive
   failureMsg: negative
   speciesSo: {fileID: 11400000, guid: 47e1ed75318c744bc985d638d778e9df, type: 2}

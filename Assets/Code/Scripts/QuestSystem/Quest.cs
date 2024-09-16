@@ -23,6 +23,7 @@ namespace Code.Scripts.QuestSystem
         
         [Header("Quest Icon and texts")]
         public Texture2D questIcon;
+        public Texture2D rewardIcon;
         public string achievementMsg = "Success!";
         public string failureMsg = "Failure!";
 
@@ -72,7 +73,7 @@ namespace Code.Scripts.QuestSystem
                 achieved ? NotificationType.QuestAchievement : NotificationType.QuestFailure,
                 message, 
                 4.5f, 
-                questIcon));
+                achieved ? rewardIcon : questIcon));
             
             QuestBoard.Instance.UpdateQuestBoardStatus(questName, achieved, IsRewarded);
         }

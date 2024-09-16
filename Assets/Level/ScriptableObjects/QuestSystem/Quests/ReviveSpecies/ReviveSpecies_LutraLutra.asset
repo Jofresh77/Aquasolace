@@ -15,12 +15,12 @@ MonoBehaviour:
   questName: species_lutralutra_name
   description: species_lutralutra_description
   isPersistAchievement: 0
-  isRemoveQuestAfterAchieved: 0
-  isEndRequired: 0
+  isRequired: 0
   isSelected: 0
   rewardBiome: 5
   rewardAmount: 13
   questIcon: {fileID: 2800000, guid: 3b1adf7c483208542861fd8ad00dc236, type: 3}
+  rewardIcon: {fileID: 2800000, guid: a47a1e57d9f456742bce11568b913fd0, type: 3}
   achievementMsg: positive
   failureMsg: negative
   speciesSo: {fileID: 11400000, guid: cf27ccaabde75443aac87865067e9dc1, type: 2}
