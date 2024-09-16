@@ -27,14 +27,12 @@ namespace Code.Scripts.Singletons
         [SerializeField] private BrushShape brushShape = BrushShape.Nm0;
         [SerializeField] private Direction direction = Direction.PosZ;
 
-        [Header("GWL & Temperature")] [SerializeField]
-        private float gwlNegThreshold = 100f;
+        [Header("GWL")] [SerializeField] private float gwlNegThreshold = 100f;
 
         [SerializeField] private float gwlPosThreshold = 2000f;
 
-        [SerializeField] private float gwlInfluence = -15f;
-        [SerializeField] private float corneredRiverInfluenceCap = 15f;
-        [SerializeField] private float gwlConsumption = -15f;
+        private float _gwlInfluence = -50f;
+        private const float GwlConsumption = 15f;
 
         [SerializeField] private float coolDownDuration = 4f;
 
@@ -178,7 +176,7 @@ namespace Code.Scripts.Singletons
 
         private void UpdateEnvironmentalConditions()
         {
-            GroundWaterLevel += gwlInfluence * _corneredRiversInfluence + gwlConsumption;
+            GroundWaterLevel += GetGwlInfluenceFinal();
 
             QuestBoard.Instance.CheckProperEnvironmentAchievement();
 
@@ -187,12 +185,11 @@ namespace Code.Scripts.Singletons
 
         private void CheckGroundWaterThreshold()
         {
-            if (GroundWaterLevel <= gwlNegThreshold)
-            {
-                IsGameWon = false;
-                SetIsGamePaused(true);
-                gameStateUIScript.DisplayGameEnd();
-            }
+            if (!(GroundWaterLevel <= gwlNegThreshold)) return;
+
+            IsGameWon = false;
+            SetIsGamePaused(true);
+            gameStateUIScript.DisplayGameEnd();
         }
 
         private bool EnvConditionsCoolDown() => Time.time < _nextUpdateTick;
@@ -268,6 +265,24 @@ namespace Code.Scripts.Singletons
 
         #region Getters and Setters
 
+        public float GetGwlInfluenceFinal()
+        {
+            if (!QuestBoard.Instance.CountZigzagRiverPresent.IsRewarded)
+            {
+                _corneredRiversInfluence = GridHelper.Instance.CountCorneredRiverTiles() * 0.26f;
+            }
+            else
+            {
+                _corneredRiversInfluence = 5;
+            }
+
+            return _gwlInfluence * (_gwlInfluence > 0
+                       ? Mathf.Max(1, _corneredRiversInfluence / 2)
+                       : Mathf.Lerp(0.5f, 1f, 1f - Mathf.InverseLerp(1f, 5f, _corneredRiversInfluence)))
+                   - GwlConsumption;
+        }
+
+        public float GetCorneredRiversInfluence() => _corneredRiversInfluence;
         public TutorialUIController GetTutorialUIController() => tutorialUIController;
 
         public BrushShape BrushShape
@@ -288,8 +303,8 @@ namespace Code.Scripts.Singletons
 
         public float GetGwlNegThreshold() => gwlNegThreshold;
         public float GetGwlPosThreshold() => gwlPosThreshold;
-        public void SetGwlInfluence(float influence) => gwlInfluence += influence;
-        public float GetGwlInfluence() => gwlInfluence;
+        public void SetGwlInfluence(float influence) => _gwlInfluence += influence;
+        public float GetGwlInfluence() => _gwlInfluence;
         public bool ScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;
 
         #endregion

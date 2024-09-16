@@ -39,6 +39,7 @@ namespace Code.Scripts.Singletons
         private int _countOfQuestsSelected;
 
         private ProperEnvironment _properEnvironmentQuest;
+        public CountZigzagRiverPresent CountZigzagRiverPresent { get; private set; }
 
         private void Awake()
         {
@@ -53,6 +54,8 @@ namespace Code.Scripts.Singletons
 
             _properEnvironmentQuest =
                 questList.quests.OfType<ProperEnvironment>().FirstOrDefault();
+            CountZigzagRiverPresent =
+                questList.quests.OfType<CountZigzagRiverPresent>().FirstOrDefault();
         }
 
         private void Start()
@@ -187,13 +190,13 @@ namespace Code.Scripts.Singletons
             foreach (Quest questSo in questList.quests)
             {
                 if (questSo is { isRequired: true, IsAchieved: false })
-                    
+
                     return false;
             }
 
             return true;
         }
-        
+
         public List<QuestInfo> GetQuestInfoList()
         {
             return questInfoList;

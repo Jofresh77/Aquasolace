@@ -32,7 +32,7 @@ namespace Code.Scripts.Singletons
         private readonly List<SelfInfluence> _negativeSelfInfluences = new();
         private readonly List<NeighborInfluence> _neighborInfluences = new();
 
-        private const float GwlFactor = 0.1f;
+        private const float GwlFactor = 0.6f;
 
         //Shader props
         private readonly int _enableHighlight = Shader.PropertyToID("_Enable_Highlight");
@@ -471,11 +471,9 @@ namespace Code.Scripts.Singletons
                 if (tile.GetBiome() == tile.GetPreviousBiome()) continue;
 
                 placedTile++;
+                
                 GameManager.Instance.RemainingResources[GameManager.Instance.GetSelectedBiome()]--;
-
-                float gwlInfluence = PlacedTileEnvironmentInfluence(neighborTile);
-
-                GameManager.Instance.SetGwlInfluence(gwlInfluence);
+                GameManager.Instance.SetGwlInfluence(PlacedTileEnvironmentInfluence(neighborTile));
 
                 tile.previewTile = null;
 
@@ -485,6 +483,7 @@ namespace Code.Scripts.Singletons
 
                     GridHelper.Instance.UpdateGridAt(coord,
                         new TileData(tile.GetBiome(), tile.GetDirection(), tile.GetRiverConfiguration()));
+                    
                     HabitatSuitabilityManager.Instance.UpdateTile(coord.X, coord.Z,
                         GameManager.Instance.GetSelectedBiome());
                 }
@@ -506,13 +505,12 @@ namespace Code.Scripts.Singletons
 
             GameManager.Instance.UpdateResourcesCountUI();
             QuestBoard.Instance.UpdateQuestList();
+            HabitatSuitabilityManager.UpdateAllHabitats();
+            HabitatSuitabilityManager.Instance.UpdateAllAreas();
             
             _originalRotations.Clear();
             _originalRiverConfigurations.Clear();
             _riverTiles.Clear();
-
-            HabitatSuitabilityManager.UpdateAllHabitats();
-            HabitatSuitabilityManager.Instance.UpdateAllAreas();
         }
 
         private float PlacedTileEnvironmentInfluence(Transform tile)
@@ -559,6 +557,7 @@ namespace Code.Scripts.Singletons
                 gwl += neighborInfluence.GroundWater;
             }
 
+            //Debug.Log(gwl);
             return gwl;
         }
 

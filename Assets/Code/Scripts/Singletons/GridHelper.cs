@@ -16,16 +16,16 @@ namespace Code.Scripts.Singletons
 
         public string RestrictionMsg { get; private set; }
 
-        private readonly SortedDictionary<Coordinate, TileData> _tileMap = new();
-
-        private SortedDictionary<Coordinate, TileData> _tempTileMap = new();
+        public int widthAndHeight;
 
         private readonly SortedDictionary<Coordinate, Transform> _coordinateToTransformMap = new();
-
-        public int widthAndHeight;
+        private readonly SortedDictionary<Coordinate, TileData> _tileMap = new();
+        private SortedDictionary<Coordinate, TileData> _tempTileMap = new();
 
         private List<Coordinate> _riverSources = new();
         private List<Transform> _sealedBorders = new();
+
+        private int _onSceneLoadExistingRiverCornerTiles;
 
         #endregion
 
@@ -73,13 +73,13 @@ namespace Code.Scripts.Singletons
                     new TileData(tileComponent.GetBiome(), tileComponent.GetDirection(),
                         tileComponent.GetRiverConfiguration()));
                 _coordinateToTransformMap.Add(coordinate, tile);
-                //Debug.Log(tileComponent.GetRiverConfiguration());
             }
 
             widthAndHeight = (int)Mathf.Sqrt(_tileMap.Count) - 1; //WORKS ONLY WITH SQUARED GRID-MAPS
 
-            // get the river tile that are located on the border
             _riverSources = FindBorderRiverSources(_tileMap);
+
+            _onSceneLoadExistingRiverCornerTiles = CountCorneredRiverTiles();
         }
 
         #endregion
@@ -156,7 +156,7 @@ namespace Code.Scripts.Singletons
 
         #endregion
 
-        #region quest-conditionnals
+        /*#region quest-conditionnals
 
         public float CountZigzagRiverPresent()
         {
@@ -199,7 +199,7 @@ namespace Code.Scripts.Singletons
             return count;
         }
 
-        #endregion
+        #endregion*/
 
         #region restrictions-check
 
@@ -306,8 +306,8 @@ namespace Code.Scripts.Singletons
                     RiverConfiguration: (RiverConfiguration.RiverCorner or RiverConfiguration.RiverSplit
                     or RiverConfiguration.RiverCross)
                 });
-            
-            return count;
+
+            return count - _onSceneLoadExistingRiverCornerTiles;
         }
         
         #region RiverDisconnection
@@ -728,7 +728,7 @@ namespace Code.Scripts.Singletons
                 Mathf.Sqrt(CountCorneredRiverTiles(tileMap) / corneredRiverInfluenceCap), 4) + 1;
         }*/
 
-        private float GetRiverCornerFactor(int x, int z,
+        /*private float GetRiverCornerFactor(int x, int z,
             SortedDictionary<Coordinate, TileData> tileMap = null)
         {
             tileMap ??= _tileMap;
@@ -740,7 +740,7 @@ namespace Code.Scripts.Singletons
                 RiverConfiguration.RiverCross => 1.06f,
                 _ => 1.0f
             };
-        }
+        }*/
 
         #endregion
 
