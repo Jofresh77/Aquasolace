@@ -32,7 +32,6 @@ namespace Code.Scripts.Singletons
 
         [SerializeField] private float gwlPosThreshold = 2000f;
 
-        [SerializeField] private float tempInfluence = 0.01f;
         [SerializeField] private float gwlInfluence = -15f;
         [SerializeField] private float corneredRiverInfluenceCap = 15f;
         [SerializeField] private float gwlConsumption = -15f;
@@ -179,7 +178,6 @@ namespace Code.Scripts.Singletons
 
         private void UpdateEnvironmentalConditions()
         {
-            _corneredRiversInfluence = GridHelper.Instance.GetCorneredRiversInfluence(corneredRiverInfluenceCap);
             GroundWaterLevel += gwlInfluence * _corneredRiversInfluence + gwlConsumption;
 
             QuestBoard.Instance.CheckProperEnvironmentAchievement();
@@ -290,7 +288,6 @@ namespace Code.Scripts.Singletons
 
         public float GetGwlNegThreshold() => gwlNegThreshold;
         public float GetGwlPosThreshold() => gwlPosThreshold;
-        public float GetTempInfluence() => tempInfluence;
         public void SetGwlInfluence(float influence) => gwlInfluence += influence;
         public float GetGwlInfluence() => gwlInfluence;
         public bool ScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;

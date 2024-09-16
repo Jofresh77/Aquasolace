@@ -19,8 +19,8 @@
     <ui:VisualElement name="Debug" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; display: flex; bottom: 0; position: absolute;">
         <ui:Label tabindex="-1" text="GWL Influence:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
         <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="gwlinf" style="color: rgb(255, 255, 255);" />
-        <ui:Label tabindex="-1" text="Temperature Influence:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
-        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="tempinf" style="color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Bonus:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="gwlbonus" style="color: rgb(255, 255, 255);" />
     </ui:VisualElement>
     <ui:GroupBox name="BlurContainer" class="backgroundBlur" style="width: auto; align-self: center; margin-top: 0; padding-top: 0; padding-bottom: 7px; margin-left: 0; padding-left: 0; margin-right: 0; margin-bottom: 0; position: absolute; bottom: 0;">
         <ui:GroupBox name="TileSelectGroup" style="flex-direction: row; justify-content: space-between; align-items: stretch; align-self: center; padding-bottom: 0; margin-bottom: 0;">

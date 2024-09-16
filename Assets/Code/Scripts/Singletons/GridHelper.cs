@@ -14,7 +14,7 @@ namespace Code.Scripts.Singletons
 
         public static GridHelper Instance { get; private set; }
 
-        public string RestrictionMsg { get; set; }
+        public string RestrictionMsg { get; private set; }
 
         private readonly SortedDictionary<Coordinate, TileData> _tileMap = new();
 
@@ -73,6 +73,7 @@ namespace Code.Scripts.Singletons
                     new TileData(tileComponent.GetBiome(), tileComponent.GetDirection(),
                         tileComponent.GetRiverConfiguration()));
                 _coordinateToTransformMap.Add(coordinate, tile);
+                //Debug.Log(tileComponent.GetRiverConfiguration());
             }
 
             widthAndHeight = (int)Mathf.Sqrt(_tileMap.Count) - 1; //WORKS ONLY WITH SQUARED GRID-MAPS
@@ -160,27 +161,38 @@ namespace Code.Scripts.Singletons
         public float CountZigzagRiverPresent()
         {
             int count = 0;
-            var startRiver = _riverSources.First();
+            var riverParts = FindRiverParts(_tileMap);
 
-            Queue<Coordinate> queue = new Queue<Coordinate>();
-            List<Coordinate> visited = new List<Coordinate> { startRiver };
-
-            queue.Enqueue(startRiver);
-
-            while (queue.Count != 0)
+            Debug.Log(riverParts.Count);
+            
+            foreach (var (start, _) in riverParts)
             {
-                Coordinate currentCoordinate = queue.Dequeue();
+                count += CountZigzagInRiverPart(start);
+            }
 
-                foreach (Coordinate nextRiver in FindNextRiversOld(currentCoordinate))
+            return count;
+        }
+
+        private int CountZigzagInRiverPart(Coordinate start)
+        {
+            int count = 0;
+            var visited = new HashSet<Coordinate>();
+            var queue = new Queue<Coordinate>();
+            queue.Enqueue(start);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+
+                if (!visited.Add(current)) continue;
+
+                if (GetRiverCornerFactor(current.X, current.Z) > 1.0f)
+                    count++;
+                
+                foreach (var next in FindNextRivers(current, _tileMap))
                 {
-                    if (!visited.Contains(nextRiver))
-                    {
-                        if (GetRiverCornerFactor(nextRiver.X, nextRiver.Z) > 1.0f)
-                            count++;
-
-                        visited.Add(nextRiver);
-                        queue.Enqueue(nextRiver);
-                    }
+                    if (!visited.Contains(next))
+                        queue.Enqueue(next);
                 }
             }
 
@@ -255,7 +267,7 @@ namespace Code.Scripts.Singletons
                 bool isConnected = false;
                 foreach (Coordinate at in coordinates)
                 {
-                    List<Coordinate> nextRivers = FindNextRiversOld(at);
+                    List<Coordinate> nextRivers = FindNextRivers(at, _tileMap);
                     HashSet<Coordinate> coordinatesHash = new HashSet<Coordinate>(coordinates); // "clone"
                     nextRivers.RemoveAll(coordinate => coordinatesHash.Contains(coordinate));
 
@@ -283,19 +295,21 @@ namespace Code.Scripts.Singletons
             return true;
         }
 
-        //TODO delete
-        /*private static int CountRiverTiles(SortedDictionary<Coordinate, TileData> tileMap) =>
-            tileMap.Count(kvp => kvp.Value.Biome == Biome.River);*/
-
-        private static int CountCorneredRiverTiles(SortedDictionary<Coordinate, TileData> tileMap) =>
-            tileMap.Count(kvp =>
+        public int CountCorneredRiverTiles(SortedDictionary<Coordinate, TileData> tileMap = null)
+        {
+            tileMap ??= _tileMap;
+            
+            int count = tileMap.Count(kvp =>
                 kvp.Value is
                 {
                     Biome: Biome.River,
-                    RiverConfiguration: not (RiverConfiguration.None or RiverConfiguration.RiverStraight
-                    or RiverConfiguration.RiverEnd)
+                    RiverConfiguration: (RiverConfiguration.RiverCorner or RiverConfiguration.RiverSplit
+                    or RiverConfiguration.RiverCross)
                 });
-
+            
+            return count;
+        }
+        
         #region RiverDisconnection
 
         private bool CheckRiverDisconnection()
@@ -617,101 +631,6 @@ namespace Code.Scripts.Singletons
             return tiles;
         }
 
-        public List<Coordinate> GetTilesWithinBrush(Coordinate center, BrushSize brushSize, Direction direction,
-            bool isRiver)
-        {
-            List<Coordinate> tilesWithinBrush = new List<Coordinate>();
-
-            if (brushSize == BrushSize.Sm)
-            {
-                tilesWithinBrush.Add(center);
-                return tilesWithinBrush;
-            }
-
-            if (isRiver)
-            {
-                List<Coordinate> allTiles = new List<Coordinate>();
-                if (direction == Direction.PosX || direction == Direction.NegX)
-                {
-                    for (int x = -2; x <= 2; x++)
-                    {
-                        Coordinate coord = new Coordinate(center.X + x, center.Z);
-                        if (_tileMap.ContainsKey(coord))
-                        {
-                            allTiles.Add(coord);
-                        }
-                    }
-                }
-                else
-                {
-                    for (int z = -2; z <= 2; z++)
-                    {
-                        Coordinate coord = new Coordinate(center.X, center.Z + z);
-                        if (_tileMap.ContainsKey(coord))
-                        {
-                            allTiles.Add(coord);
-                        }
-                    }
-                }
-
-                if (brushSize == BrushSize.Md)
-                {
-                    int startIndex = (allTiles.Count - 3) / 2;
-                    tilesWithinBrush = allTiles.Skip(startIndex).Take(3).ToList();
-                }
-                else
-                {
-                    tilesWithinBrush = allTiles;
-                }
-            }
-            else
-            {
-                if (brushSize == BrushSize.Md)
-                {
-                    // Add center coordinate directly
-                    tilesWithinBrush.Add(center);
-
-                    // Loop through offsets and check if coordinates are valid before adding
-                    int[] offsets = { -1, 1 };
-                    foreach (int offset in offsets)
-                    {
-                        Coordinate coord = new Coordinate(center.X + offset, center.Z);
-                        if (_tileMap.ContainsKey(coord)) // Check before adding
-                        {
-                            tilesWithinBrush.Add(coord);
-                        }
-                    }
-
-                    // Similar check for Z offsets
-                    foreach (int offset in offsets)
-                    {
-                        Coordinate coord = new Coordinate(center.X, center.Z + offset);
-                        if (_tileMap.ContainsKey(coord)) // Check before adding
-                        {
-                            tilesWithinBrush.Add(coord);
-                        }
-                    }
-                }
-                else
-                {
-                    // Similar logic for larger brush, check all neighbors
-                    for (int x = -1; x <= 1; x++)
-                    {
-                        for (int z = -1; z <= 1; z++)
-                        {
-                            Coordinate coord = new Coordinate(center.X + x, center.Z + z);
-                            if (_tileMap.ContainsKey(coord)) // Check before adding
-                            {
-                                tilesWithinBrush.Add(coord);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return tilesWithinBrush;
-        }
-
         public List<Transform> GetTransformsFromCoordinates(List<Coordinate> coordinates)
         {
             return coordinates.Select(coord => _coordinateToTransformMap[coord]).ToList();
@@ -773,7 +692,7 @@ namespace Code.Scripts.Singletons
             return coordinate;
         }
 
-        public Transform GetTransformFromCoordinate(Coordinate coordinate)
+        private Transform GetTransformFromCoordinate(Coordinate coordinate)
         {
             return _coordinateToTransformMap.GetValueOrDefault(coordinate);
         }
@@ -788,49 +707,6 @@ namespace Code.Scripts.Singletons
             return Biome.Meadow;
         }
 
-        /*private List<Coordinate> GetPermanentRiverSources(SortedDictionary<Coordinate, TileData> tileMap = null)
-        {
-            tileMap ??= _tileMap;
-
-            for (int i = 0; i <= widthAndHeight; i++) // This will go from 0 to 63
-            {
-                if (BiomeEqual(i, 0, Biome.River, tileMap))
-                    _riverSources.Add(new Coordinate(i, 0));
-
-                if (BiomeEqual(i, widthAndHeight, Biome.River, tileMap))
-                    _riverSources.Add(new Coordinate(i, widthAndHeight));
-
-                if (BiomeEqual(0, i, Biome.River, tileMap))
-                    _riverSources.Add(new Coordinate(0, i));
-
-                if (BiomeEqual(widthAndHeight, i, Biome.River, tileMap))
-                    _riverSources.Add(new Coordinate(widthAndHeight, i));
-            }
-
-            return _riverSources;
-        }*/
-
-        private List<Coordinate> FindNextRiversOld(Coordinate at,
-            SortedDictionary<Coordinate, TileData> tileMap = null)
-        {
-            tileMap ??= _tileMap;
-            List<Coordinate> nextRivers = new List<Coordinate>();
-
-            if (at.X < widthAndHeight && BiomeEqual(at.X + 1, at.Z, Biome.River, tileMap))
-                nextRivers.Add(new Coordinate(at.X + 1, at.Z));
-
-            if (at.X > 0 && BiomeEqual(at.X - 1, at.Z, Biome.River, tileMap))
-                nextRivers.Add(new Coordinate(at.X - 1, at.Z));
-
-            if (at.Z < widthAndHeight && BiomeEqual(at.X, at.Z + 1, Biome.River, tileMap))
-                nextRivers.Add(new Coordinate(at.X, at.Z + 1));
-
-            if (at.Z > 0 && BiomeEqual(at.X, at.Z - 1, Biome.River, tileMap))
-                nextRivers.Add(new Coordinate(at.X, at.Z - 1));
-
-            return nextRivers;
-        }
-
         private bool BiomeEqual(int x, int z, Biome biome,
             SortedDictionary<Coordinate, TileData> tileMap = null)
         {
@@ -839,27 +715,18 @@ namespace Code.Scripts.Singletons
             return tileMap[new Coordinate(x, z)].Biome == biome;
         }
 
-        //TODO remove
-        /*private bool IsDirectionEqual(int x, int z, Direction direction,
-            SortedDictionary<Coordinate, TileData> tileMap = null)
-        {
-            tileMap ??= _tileMap;
-
-            return tileMap[new Coordinate(x, z)].Direction == direction;
-        }*/
-
-        public float GetCorneredRiversInfluence(float corneredRiverInfluenceCap,
+        /*public float GetCorneredRiversInfluence(float corneredRiverInfluenceCap,
             SortedDictionary<Coordinate, TileData> tileMap = null)
         {
             tileMap ??= _tileMap;
 
             //formula: srqt(x/C)^4 + 1 ;
             //
-            //x := total of cornerd tiles,
+            //x := total of cornered tiles,
             //C := constant defined in GameManager (how much until 2X bonus cap) 
             return Mathf.Pow(
                 Mathf.Sqrt(CountCorneredRiverTiles(tileMap) / corneredRiverInfluenceCap), 4) + 1;
-        }
+        }*/
 
         private float GetRiverCornerFactor(int x, int z,
             SortedDictionary<Coordinate, TileData> tileMap = null)

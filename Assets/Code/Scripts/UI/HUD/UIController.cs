@@ -62,7 +62,7 @@ namespace Code.Scripts.UI.HUD
         private void InitializeDebugLabels(VisualElement root)
         {
             _gwlInf = root.Q<Label>("gwlinf");
-            _tempInf = root.Q<Label>("tempinf");
+            _tempInf = root.Q<Label>("gwlbonus");
         }
 
         private void InitializeHotbar(VisualElement root)
@@ -136,7 +136,7 @@ namespace Code.Scripts.UI.HUD
         private void UpdateDebugLabels()
         {
             _gwlInf.text = $"{GameManager.Instance.GetGwlInfluence()}";
-            _tempInf.text = $"{GameManager.Instance.GetTempInfluence()}";
+            _tempInf.text = $"{GameManager.Instance.GetGwlInfluence()}";
         }
        
         /*private void UpdateBiomeNameLabels()

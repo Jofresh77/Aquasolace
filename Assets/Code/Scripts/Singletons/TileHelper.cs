@@ -488,8 +488,6 @@ namespace Code.Scripts.Singletons
                     HabitatSuitabilityManager.Instance.UpdateTile(coord.X, coord.Z,
                         GameManager.Instance.GetSelectedBiome());
                 }
-
-                //QuestManager.Instance.UpdateQuestList();
             }
             
             if (placedTile != 0)
@@ -824,12 +822,12 @@ namespace Code.Scripts.Singletons
             return parent.transform.Cast<Transform>().FirstOrDefault(child => child.CompareTag(childTag));
         }
 
-        private Transform FindActiveTile(GameObject parent)
+        public Transform FindActiveTile(GameObject parent)
         {
             return parent.transform.Cast<Transform>().FirstOrDefault(child => child.gameObject.activeSelf);
         }
 
-        public static List<Transform> FindCloseByNeighbors(Transform source)
+        private static List<Transform> FindCloseByNeighbors(Transform source)
         {
             Coordinate sourceCoord = GridHelper.Instance.GetTileCoordinate(source);
             List<Coordinate> neighborCoords = GridHelper.Instance.GetCloseByNeighbors(sourceCoord);

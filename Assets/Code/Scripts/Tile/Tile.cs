@@ -68,7 +68,7 @@ namespace Code.Scripts.Tile
 
         public Biome GetBiome()
         {
-            return Enum.Parse<Biome>(placedTile.tag);
+            return Enum.Parse<Biome>(TileHelper.Instance.FindActiveTile(gameObject).tag);
         }
 
         public Biome GetPreviousBiome()
@@ -111,9 +111,8 @@ namespace Code.Scripts.Tile
 
         public RiverConfiguration GetRiverConfiguration()
         {
-            if (GetBiome() != Biome.River
-                || GetBiome() != Biome.RiverSealed) return RiverConfiguration.None;
-
+            if (GetBiome() != Biome.River) return RiverConfiguration.None;
+            
             foreach (Transform child in transform.GetChild(5))
             {
                 if (child.gameObject.activeSelf) return Enum.Parse<RiverConfiguration>(child.tag);

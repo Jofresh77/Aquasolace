@@ -1,3 +1,4 @@
+using Code.Scripts.Singletons;
 using UnityEngine;
 
 namespace Code.Scripts.QuestSystem

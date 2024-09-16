@@ -13,7 +13,6 @@ namespace Code.Scripts.UI.HUD
 
         private void Start()
         {
-
             var root = GetComponent<UIDocument>().rootVisualElement;
 
             _waterDropProgressBar = root.Q<WaterDropProgressBar>("GwlProgressBar");

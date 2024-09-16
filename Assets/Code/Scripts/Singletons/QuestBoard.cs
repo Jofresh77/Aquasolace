@@ -207,24 +207,9 @@ namespace Code.Scripts.Singletons
 
         private bool CheckCountZigZagRiver(CountZigzagRiverPresent countZigzagRiverPresent)
         {
-            var isNeighborRiver = false;
-            var neighborList = TileHelper.FindCloseByNeighbors(_tile);
+            countZigzagRiverPresent.count = GridHelper.Instance.CountCorneredRiverTiles();
 
-            foreach (var neighbor in neighborList)
-            {
-                if (neighbor.GetComponent<Tile.Tile>().GetBiome() == Biome.River)
-                {
-                    isNeighborRiver = true;
-                    break;
-                }
-            }
-
-            if (!isNeighborRiver) return countZigzagRiverPresent.IsAchieved;
-
-            var countZigZag = GridHelper.Instance.CountZigzagRiverPresent();
-            countZigzagRiverPresent.count = countZigZag;
-
-            return countZigZag >= countZigzagRiverPresent.mustHave;
+            return countZigzagRiverPresent.count >= countZigzagRiverPresent.mustHave;
         }
 
         #endregion
