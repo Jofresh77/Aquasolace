@@ -100,6 +100,9 @@ namespace Code.Scripts.Tutorial
                 GameManager.Instance.SetIsGamePaused(true);
             }
                 
+            UpdateLeftRightSkipBtns();
+            UpdateInfoLabelText();
+            
             _root.style.display = DisplayStyle.Flex;
         }
 
@@ -151,7 +154,7 @@ namespace Code.Scripts.Tutorial
 
         #endregion
 
-        public void UpdateLeftRightSkipBtns()
+        private void UpdateLeftRightSkipBtns()
         {
             UpdateLeftButton();
 
@@ -206,7 +209,7 @@ namespace Code.Scripts.Tutorial
             _rightBtn.style.display = DisplayStyle.Flex;
         }
 
-        public void UpdateInfoLabelText()
+        private void UpdateInfoLabelText()
         {
             _infoLabel.text =
                 LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial", _tutorialTexts[_currentStepIndex]);

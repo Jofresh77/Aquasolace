@@ -106,9 +106,6 @@ namespace Code.Scripts.UI.MainMenu
         private void ChangeLanguage(ChangeEvent<string> @event)
         {
             SoundManager.Instance.PlaySound(SoundType.BtnClick);
-
-            /*tutorialUIController.UpdateLeftRightSkipBtns();
-            tutorialUIController.UpdateInfoLabelText();*/
             
             FindObjectOfType<LocaleSelector>().ChangeLocale(_languages[@event.newValue]);
             LanguageManager.Instance.SetCurrentLocale(_languages[@event.newValue]);
