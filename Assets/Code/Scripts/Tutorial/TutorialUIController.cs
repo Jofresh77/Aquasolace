@@ -223,7 +223,7 @@ namespace Code.Scripts.Tutorial
             videoPlayer.Play();
         }
 
-        private void EndTutorial()
+        public void EndTutorial()
         {
             _currentStepIndex = 0;
             

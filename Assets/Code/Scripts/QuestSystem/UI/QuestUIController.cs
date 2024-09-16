@@ -29,7 +29,6 @@ namespace Code.Scripts.QuestSystem.UI
         private const string RelativeClass = "relative";
         private const string InClass = "in";
         private const string OutClass = "out";
-        private const string HideClass = "hide";
         private const string FadeInClass = "fadeIn";
         private const string FadeOutClass = "fadeOut";
 
@@ -60,7 +59,6 @@ namespace Code.Scripts.QuestSystem.UI
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.PlayerActionMap.QuestMenu.performed += OnLPress;
-            _playerInputActions.PlayerActionMap.Pause.performed += CloseMenu;
 
             var root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -95,6 +93,8 @@ namespace Code.Scripts.QuestSystem.UI
 
         public void FastCloseLog()
         {
+            if (!IsQuestLogOpen) return;
+            
             _innerLogContainer.RemoveFromClassList(InClass);
             _innerLogContainer.RemoveFromClassList(FadeInClass);
             _innerLogContainer.RemoveFromClassList(RelativeClass);
@@ -122,8 +122,6 @@ namespace Code.Scripts.QuestSystem.UI
             }
             else
             {
-                _boardContainer.ToggleInClassList(HideClass);
-                
                 FastCloseLog();
                 
                 SoundManager.Instance.PlaySound(SoundType.QuestBoardOpen);
@@ -132,19 +130,17 @@ namespace Code.Scripts.QuestSystem.UI
 
                 TileHelper.Instance.HidePreview();
 
-                GameManager.Instance.IsQuestMenuOpened = _isQuestBoardOpen;
+                GameManager.Instance.IsQuestMenuOpened = true;
                 GameManager.Instance.SetIsGamePaused(true);
                 
                 _isQuestBoardOpen = true;
             }
         }
 
-        private void CloseMenu(InputAction.CallbackContext obj)
+        public void CloseMenu(InputAction.CallbackContext obj)
         {
             if (_boardContainer.style.display == DisplayStyle.None
                 || GameManager.Instance.IsPauseMenuOpened) return;
-
-            _boardContainer.ToggleInClassList(HideClass);
 
             if (IsQuestLogOpen)
                 _questLogController.OpenLog();
@@ -170,7 +166,6 @@ namespace Code.Scripts.QuestSystem.UI
         private void OnDisable()
         {
             _playerInputActions.PlayerActionMap.QuestMenu.performed -= OnLPress;
-            _playerInputActions.PlayerActionMap.Pause.performed -= CloseMenu;
             _playerInputActions.Disable();
         }
     }

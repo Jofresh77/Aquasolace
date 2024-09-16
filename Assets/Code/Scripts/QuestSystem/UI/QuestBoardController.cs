@@ -24,8 +24,6 @@ namespace Code.Scripts.QuestSystem.UI
 
         private const string RequiredIconPath = "quest_required_icon2";
 
-        private PlayerInputActions _playerInputActions;
-
         #region information popup window variables
 
         private VisualElement _informationContainer;
@@ -78,10 +76,6 @@ namespace Code.Scripts.QuestSystem.UI
 
         private void Start()
         {
-            _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();
-            _playerInputActions.PlayerActionMap.Pause.performed += OnEscPress;
-
             var questInfoList = QuestBoard.Instance.GetQuestInfoList();
             var curIndex = 0;
             var rowIndex = 0;
@@ -146,7 +140,6 @@ namespace Code.Scripts.QuestSystem.UI
                         SoundManager.Instance.PlaySound(SoundType.QuestBoardEntryHover));
 
                     var questContainer = row.Q<VisualElement>("quest" + i);
-                    //boardEntry.SetIcon(questContainer.style.backgroundImage.value.texture);
                     questContainer.Add(boardEntry);
                     curIndex++;
 
@@ -215,7 +208,7 @@ namespace Code.Scripts.QuestSystem.UI
             _closeBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("Quest", "closeBtnText");
         }
 
-        private void OnEscPress(InputAction.CallbackContext obj) => OnCloseBtnClicked();
+        public void OnEscPress(InputAction.CallbackContext obj) => OnCloseBtnClicked();
 
         private void OnCloseBtnClicked()
         {
@@ -244,12 +237,6 @@ namespace Code.Scripts.QuestSystem.UI
             {
                 entry.SetSelected(isSelected);
             }
-        }
-
-        private void OnDisable()
-        {
-            _playerInputActions.PlayerActionMap.Pause.performed -= OnEscPress;
-            _playerInputActions.Disable();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.QuestSystem.UI;
 using Code.Scripts.Singletons;
@@ -15,6 +16,8 @@ namespace Code.Scripts.PlayerControllers.UI
         [SerializeField] private Sprite keymapEn;
         [SerializeField] private Sprite keymapDe;
         [SerializeField] private QuestUIController questUIController;
+        [SerializeField] private List<UIDocument> otherDocs;
+        private readonly List<UIDocument> _toRevertDocs = new ();
         
         private VisualElement _pauseMenu;
 
@@ -101,9 +104,22 @@ namespace Code.Scripts.PlayerControllers.UI
                 LanguageManager.Instance.GetCurrentLocale().Identifier.Code == "en" ? keymapEn : keymapDe);
             
             _pauseMenu.style.display = GameManager.Instance.IsGamePaused ? DisplayStyle.Flex : DisplayStyle.None;
-            
-            if (!GameManager.Instance.IsGamePaused)
+
+            if (GameManager.Instance.IsGamePaused)
+            {
+                foreach (UIDocument document in otherDocs)
+                {
+                    if (document.rootVisualElement.style.display == DisplayStyle.None) continue;
+
+                    _toRevertDocs.Add(document);
+                    document.rootVisualElement.style.display = DisplayStyle.None;
+                }    
+            }
+            else
+            {
+                RevertDisabledDocuments();
                 questUIController.OnUnpause();
+            }
         }
 
         private void BackToMainMenu()
@@ -114,7 +130,7 @@ namespace Code.Scripts.PlayerControllers.UI
             SceneManager.LoadScene("LoadingScene");
         }
 
-        private void Resume()
+        public void Resume()
         {
             SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
             GamePause(new InputAction.CallbackContext());
@@ -132,6 +148,15 @@ namespace Code.Scripts.PlayerControllers.UI
             _backToMenuBtn.text = LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_back_to_main_menu_btn");
             _quitBtn.text = _quitBtn.text =
                 LocalizationSettings.StringDatabase.GetLocalizedString("StringTable", "pause_menu_quit_btn");
+        }
+        
+        private void RevertDisabledDocuments()
+        {
+            foreach (UIDocument document in _toRevertDocs)
+            {
+                document.rootVisualElement.style.display = DisplayStyle.Flex;
+            }
+            _toRevertDocs.Clear();
         }
     }
 }

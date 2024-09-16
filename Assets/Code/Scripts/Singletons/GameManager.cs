@@ -136,7 +136,6 @@ namespace Code.Scripts.Singletons
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.PlayerActionMap.TileRotate.performed += OnTileRotate;
-            _playerInputActions.PlayerActionMap.Pause.performed += OnPauseGame;
             _playerInputActions.PlayerActionMap.UIDebug.performed += OnDebugUI;
         }
 
@@ -235,11 +234,6 @@ namespace Code.Scripts.Singletons
             TileHelper.Instance.ShowPreview();
         }
 
-        private void OnPauseGame(InputAction.CallbackContext obj)
-        {
-            PauseGame();
-        }
-
         #endregion
 
         #region Resource Management
@@ -310,7 +304,6 @@ namespace Code.Scripts.Singletons
             if (_playerInputActions == null) return;
 
             _playerInputActions.PlayerActionMap.TileRotate.performed -= OnTileRotate;
-            _playerInputActions.PlayerActionMap.Pause.performed -= OnPauseGame;
             _playerInputActions.PlayerActionMap.UIDebug.performed -= OnDebugUI;
             _playerInputActions.Disable();
             _playerInputActions = null;
