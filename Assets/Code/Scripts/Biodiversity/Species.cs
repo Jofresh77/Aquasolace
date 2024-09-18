@@ -164,21 +164,14 @@ namespace Code.Scripts.Biodiversity
         
         public void Reset()
         {
-            Debug.Log($"[Species] Reset called. Current habitat count: {_spawnedSpeciesPerHabitat.Count}");
-        
-            // Create a separate list of habitats to despawn
             List<List<Coordinate>> habitatsToDespawn = new List<List<Coordinate>>(_spawnedSpeciesPerHabitat.Keys);
         
-            // Despawn all habitats
             foreach (List<Coordinate> habitat in habitatsToDespawn)
             {
                 DespawnFromHabitat(habitat);
             }
         
-            // Clear the dictionary
             _spawnedSpeciesPerHabitat.Clear();
-        
-            Debug.Log($"[Species] After reset, habitat count: {_spawnedSpeciesPerHabitat.Count}");
         }
     }
 }
