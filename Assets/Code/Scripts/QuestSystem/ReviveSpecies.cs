@@ -111,7 +111,7 @@ namespace Code.Scripts.QuestSystem
         private bool AreClustersMergeable(List<Coordinate> cluster1, List<Coordinate> cluster2)
         {
             int smallerClusterSize = Math.Min(cluster1.Count, cluster2.Count);
-            int threshold = Mathf.CeilToInt(smallerClusterSize * 0.5f); // 50% of the smaller cluster
+            int threshold = Mathf.CeilToInt(smallerClusterSize * 0.5f);
 
             int commonCoordinates = cluster1.Count(c1 => cluster2.Any(c2 => AreCoordinatesClose(c1, c2)));
             return commonCoordinates >= threshold;
