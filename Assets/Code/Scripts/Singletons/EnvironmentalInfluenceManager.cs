@@ -17,7 +17,8 @@ namespace Code.Scripts.Singletons
         [SerializeField] private int maxCheckDistance = 3;
         
         [Header("Common Influence")]
-        [SerializeField] private float maxInfluence = 5f;
+        [SerializeField] private float maxInfluence = 8f;
+        [SerializeField] private float minInfluence = -3f;
         [SerializeField] private float influenceScaleFactor = 1f;
 
         [Header("Specific Influence")]
@@ -55,10 +56,25 @@ namespace Code.Scripts.Singletons
             influenceChange += CalculateForestInfluence(mixedForestClusters, mixedForestBaseInfluence, "Mixed forest");
 
             influenceChange *= influenceScaleFactor;
-            influenceChange = Mathf.Clamp(influenceChange, -maxInfluence, maxInfluence);
+            influenceChange = Mathf.Clamp(influenceChange, minInfluence, maxInfluence);
+            influenceChange *= Mathf.Min(3, GridHelper.Instance.CountCorneredRiverTiles() * 0.3f + 1);
 
             Debug.Log($"Total environmental influence: {influenceChange}");
             return influenceChange;
+        }
+        
+        private List<(List<Coordinate> Cluster, bool ConditionMet)> AnalyzeExpandedClusters(Biome biomeType)
+        {
+            var baseClusters = HabitatSuitabilityManager.Instance.AnalyzeMapConfigurations(biomeType, minClusterSize);
+            var expandedClusters = new List<(List<Coordinate> Cluster, bool ConditionMet)>();
+
+            foreach (var cluster in baseClusters)
+            {
+                bool conditionMet = CheckClusterCondition(biomeType, cluster);
+                expandedClusters.Add((cluster, conditionMet));
+            }
+
+            return expandedClusters;
         }
 
         private float CalculateFarmlandInfluence(List<(List<Coordinate> Cluster, bool ConditionMet)> clusters)
@@ -92,20 +108,6 @@ namespace Code.Scripts.Singletons
             }
             Debug.Log($"{forestType} influence: {totalInfluence}");
             return totalInfluence;
-        }
-
-        private List<(List<Coordinate> Cluster, bool ConditionMet)> AnalyzeExpandedClusters(Biome biomeType)
-        {
-            var baseClusters = HabitatSuitabilityManager.Instance.AnalyzeMapConfigurations(biomeType, minClusterSize);
-            var expandedClusters = new List<(List<Coordinate> Cluster, bool ConditionMet)>();
-
-            foreach (var cluster in baseClusters)
-            {
-                bool conditionMet = CheckClusterCondition(biomeType, cluster);
-                expandedClusters.Add((cluster, conditionMet));
-            }
-
-            return expandedClusters;
         }
 
         private bool CheckClusterCondition(Biome biomeType, List<Coordinate> cluster)
@@ -155,7 +157,7 @@ namespace Code.Scripts.Singletons
             );
         }
 
-        private IEnumerable<Coordinate> GetNearbyCoordinates(Coordinate center, int distance)
+        private static IEnumerable<Coordinate> GetNearbyCoordinates(Coordinate center, int distance)
         {
             for (int dx = -distance; dx <= distance; dx++)
             {

@@ -23,5 +23,5 @@ MonoBehaviour:
   rewardIcon: {fileID: 2800000, guid: a47a1e57d9f456742bce11568b913fd0, type: 3}
   achievementMsg: positive
   failureMsg: negative
-  mustHave: 15
+  mustHave: 7
   count: 0

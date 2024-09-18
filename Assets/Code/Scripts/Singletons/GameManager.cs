@@ -158,7 +158,7 @@ namespace Code.Scripts.Singletons
         {
             Debug.Log("old: " + CurrentGwlPercentage);
             CurrentGwlPercentage +=
-                EnvironmentalInfluenceManager.Instance.CalculateEnvironmentalInfluence(); //todo add again decrease rate
+                EnvironmentalInfluenceManager.Instance.CalculateEnvironmentalInfluence();
             Debug.Log("new: " + CurrentGwlPercentage);
             CurrentGwlPercentage = Mathf.Clamp(CurrentGwlPercentage, 0f, 100f);
 
