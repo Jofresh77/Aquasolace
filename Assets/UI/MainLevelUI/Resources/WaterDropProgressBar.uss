@@ -34,7 +34,7 @@
     position: absolute;
     align-self: center;
     width: 100%;
-    bottom: 27.5%;
+    bottom: 8%;
     -unity-text-align: middle-center;
     font-size: 14px;
     -unity-font-style: bold;

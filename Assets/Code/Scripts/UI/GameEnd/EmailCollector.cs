@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Net.Mail;
 using Code.Scripts.Singletons;
+using Code.Scripts.Tile.HabitatSuitability;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Networking;
@@ -181,7 +182,7 @@ namespace Code.Scripts.UI.GameEnd
                     canvas.enabled = false;
                     gameHudUI.rootVisualElement.style.display = DisplayStyle.Flex;
                     questUI.rootVisualElement.style.display = DisplayStyle.Flex;
-                    GameManager.Instance.IsGameEndStateOpened = false;
+                    GameManager.Instance.IsGameEndStateOpen = false;
                     break;
                 case GameState.Restart:
                     CleanUpLevel();
@@ -196,8 +197,15 @@ namespace Code.Scripts.UI.GameEnd
             }
         }
 
-        private void CleanUpLevel()
+        public static void CleanUpLevel()
         {
+            QuestBoard.Instance.ResetAllQuests();
+            SoundManager.Instance.StopAllSpeciesSounds();
+            
+            Destroy(QuestBoard.Instance);
+            Destroy(InputManager.Instance);
+            Destroy(EnvironmentalInfluenceManager.Instance);
+            Destroy(HabitatSuitabilityManager.Instance);
             Destroy(TileHelper.Instance);
             Destroy(GridHelper.Instance);
             Destroy(TimeManager.Instance);

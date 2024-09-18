@@ -54,7 +54,7 @@ namespace Code.Scripts.UI.GameEnd
 
         public void DisplayGameEnd(bool gwlLoss = true)
         {
-            GameManager.Instance.IsGameEndStateOpened = true;
+            GameManager.Instance.IsGameEndStateOpen = true;
             
             gameHud.rootVisualElement.style.display = DisplayStyle.None;
             questUI.rootVisualElement.style.display = DisplayStyle.None;

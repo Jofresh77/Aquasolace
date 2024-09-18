@@ -9,7 +9,7 @@ namespace Code.Scripts.Singletons
 {
     public class InputManager : MonoBehaviour
     {
-        private static InputManager Instance { get; set; }
+        public static InputManager Instance { get; private set; }
 
         [SerializeField] private QuestUIController questUIController;
         [SerializeField] private QuestBoardController questBoardController;

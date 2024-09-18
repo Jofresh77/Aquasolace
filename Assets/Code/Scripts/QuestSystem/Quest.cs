@@ -77,5 +77,11 @@ namespace Code.Scripts.QuestSystem
             
             QuestBoard.Instance.UpdateQuestBoardStatus(questName, achieved, IsRewarded);
         }
+
+        public void Reset()
+        {
+            IsAchieved = false;
+            IsRewarded = false;
+        }
     }
 }

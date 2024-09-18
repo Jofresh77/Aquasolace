@@ -36,10 +36,13 @@ namespace Code.Scripts.QuestSystem
 
         public override void UpdateClusters()
         {
+            Debug.Log($"[ReviveSpecies] UpdateClusters called. Current habitat count: {_currentHabitats.Count}");
             Dictionary<Biome, int> biomeRequirementDict =
                 biomeRequirements.ToDictionary(br => br.biome, br => br.minCount);
             List<List<Coordinate>> newHabitats =
                 HabitatSuitabilityManager.Instance.FindSuitableHabitats(biomeRequirementDict, minTotalHabitatSize, maxDistanceFromCentroid, maxAmountTileInHabitat);
+
+            Debug.Log($"[ReviveSpecies] Found {newHabitats.Count} new habitats");
 
             List<List<Coordinate>> modifiedHabitats = new List<List<Coordinate>>();
             List<List<Coordinate>> removedHabitats = new List<List<Coordinate>>(_currentHabitats);
@@ -60,13 +63,19 @@ namespace Code.Scripts.QuestSystem
                 }
             }
 
+            Debug.Log($"[ReviveSpecies] Modified habitats: {modifiedHabitats.Count}, Removed habitats: {removedHabitats.Count}, Added habitats: {addedHabitats.Count}");
+
             // Merge close clusters
             List<List<Coordinate>> mergedHabitats = MergeCloseClusters(modifiedHabitats.Concat(addedHabitats).ToList());
+
+            Debug.Log($"[ReviveSpecies] After merging, total habitats: {mergedHabitats.Count}");
 
             HandleHabitatChanges(mergedHabitats, removedHabitats);
 
             _currentHabitats = mergedHabitats;
             UpdateAchievementStatus();
+
+            Debug.Log($"[ReviveSpecies] Final habitat count: {_currentHabitats.Count}");
         }
 
         private void HandleHabitatChanges(List<List<Coordinate>> mergedHabitats, List<List<Coordinate>> removedHabitats)
@@ -137,10 +146,10 @@ namespace Code.Scripts.QuestSystem
 
         private void UpdateAchievementStatus()
         {
-            bool wasAchieved = IsAchieved;
+            bool previousStatus = IsAchieved;
             IsAchieved = _currentHabitats.Count > 0;
-
-            if (IsAchieved == wasAchieved) return;
+            
+            if (IsAchieved == previousStatus) return;
             
             NotifyAchievementChange(IsAchieved);
             if (IsAchieved)
@@ -174,6 +183,15 @@ namespace Code.Scripts.QuestSystem
                     Gizmos.DrawCube(position, Vector3.one * 0.9f); 
                 }
             }
+        }
+
+        public new void Reset()
+        {
+            Debug.Log("[ReviveSpecies] Reset called");
+            base.Reset();
+            speciesSo.Reset();
+            _currentHabitats = new List<List<Coordinate>>();
+            Debug.Log($"[ReviveSpecies] After reset, current habitat count: {_currentHabitats.Count}");
         }
     }
 }

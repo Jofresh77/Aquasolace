@@ -1,3 +1,4 @@
+using Code.Scripts.Singletons;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -5,7 +6,9 @@ namespace Code.Scripts.UI.HUD
 {
     public class WaterDropProgressBar : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<WaterDropProgressBar, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<WaterDropProgressBar, UxmlTraits>
+        {
+        }
 
         private readonly VisualElement _fillRectangle;
         private readonly Label _percentageLabel;
@@ -41,14 +44,15 @@ namespace Code.Scripts.UI.HUD
             hierarchy.Add(_percentageLabel);
 
             // Initialize with 0%
-            SetPercentage(0);
+            SetPercentage(0, false);
         }
 
-        public void SetPercentage(float percentage)
+        public void SetPercentage(float percentage, bool isPositive)
         {
             _percentage = Mathf.Clamp01(percentage);
             _fillRectangle.style.bottom = new StyleLength(Length.Percent(_percentage * 100 - 100));
-            _percentageLabel.text = $"{_percentage:P0}";
+            _percentageLabel.text =
+                $"{_percentage:P0} %\n{(isPositive ? "^" : "v")}";
         }
     }
 }

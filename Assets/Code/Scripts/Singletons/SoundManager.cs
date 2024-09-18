@@ -89,8 +89,6 @@ namespace Code.Scripts.Singletons
 
         public void PlaySound(SoundType soundType)
         {
-            //Debug.Log(soundType);
-            
             if (_currentSoundData is null) return;
 
             AudioClip clip = _currentSoundData.GetClip(soundType);
@@ -132,7 +130,7 @@ namespace Code.Scripts.Singletons
                 _audioSources.Add(availableSource);
             }
 
-            availableSource.time = 0f; // Reset the AudioSource
+            availableSource.time = 0f;
             return availableSource;
         }
 
@@ -148,6 +146,12 @@ namespace Code.Scripts.Singletons
                 Destroy(source);
             }
         }
+        
+        public void StopAllSpeciesSounds()
+        {
+            StopPeriodicSounds();
+            _speciesAudioSource.Stop();
+        }
 
         public void SetMusicMasterVolume(float value) 
             => musicMixer.SetFloat("MasterVolume", LinearToDecibel(value));
@@ -158,7 +162,7 @@ namespace Code.Scripts.Singletons
         public static float DecibelToLinear(float dB) 
             => Mathf.Clamp(Mathf.Pow(10f, dB / 20f), 0.0001f, 1f);
 
-        public  static float LinearToDecibel(float linear) 
+        private static float LinearToDecibel(float linear) 
             => Mathf.Log10(linear) * 20f;
         
         public AudioMixer GetMusicMixer() => musicMixer;

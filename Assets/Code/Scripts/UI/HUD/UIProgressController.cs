@@ -36,7 +36,7 @@ namespace Code.Scripts.UI.HUD
                 GameManager.Instance.GetGwlPosThreshold(), 
                 currWaterLevel);*/
         
-            _waterDropProgressBar.SetPercentage(currWaterLevel / 100f);
+            _waterDropProgressBar.SetPercentage(currWaterLevel / 100f, EnvironmentalInfluenceManager.Instance.CurrentInfluenceSign);
         }
 
         /*private float CalculatePercentage(float minValue, float maxValue, float currentValue)

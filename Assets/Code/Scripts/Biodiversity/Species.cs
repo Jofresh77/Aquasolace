@@ -69,18 +69,21 @@ namespace Code.Scripts.Biodiversity
 
         public void UpdatePopulationInHabitat(List<Coordinate> habitat, int desiredPopulation)
         {
+            Debug.Log($"[Species] UpdatePopulationInHabitat called. Habitat size: {habitat.Count}, Desired population: {desiredPopulation}");
 
             if (!_spawnedSpeciesPerHabitat.TryGetValue(habitat, out var speciesInHabitat))
             {
                 var similarHabitat = _spawnedSpeciesPerHabitat.Keys.FirstOrDefault(h => AreSimilarHabitats(h, habitat));
                 if (similarHabitat != null)
                 {
+                    Debug.Log("[Species] Updating existing habitat");
                     speciesInHabitat = _spawnedSpeciesPerHabitat[similarHabitat];
                     _spawnedSpeciesPerHabitat.Remove(similarHabitat);
                     _spawnedSpeciesPerHabitat[habitat] = speciesInHabitat;
                 }
                 else
                 {
+                    Debug.Log("[Species] Spawning in new habitat");
                     SpawnInHabitat(habitat, desiredPopulation);
                     return;
                 }
@@ -112,7 +115,7 @@ namespace Code.Scripts.Biodiversity
 
             // Update habitat reference
             _spawnedSpeciesPerHabitat[habitat] = speciesInHabitat;
-
+            Debug.Log($"[Species] After update, species in habitat: {speciesInHabitat.Count}");
         }
 
         private SpawnedSpeciesInfo SpawnNewSpecies(List<Coordinate> habitat)
@@ -158,5 +161,24 @@ namespace Code.Scripts.Biodiversity
         public AudioClip SpawnSound => spawnSound;
         public AudioClip DespawnSound => despawnSound;
         public List<AudioClip> PeriodicSounds => periodicSounds;
+        
+        public void Reset()
+        {
+            Debug.Log($"[Species] Reset called. Current habitat count: {_spawnedSpeciesPerHabitat.Count}");
+        
+            // Create a separate list of habitats to despawn
+            List<List<Coordinate>> habitatsToDespawn = new List<List<Coordinate>>(_spawnedSpeciesPerHabitat.Keys);
+        
+            // Despawn all habitats
+            foreach (List<Coordinate> habitat in habitatsToDespawn)
+            {
+                DespawnFromHabitat(habitat);
+            }
+        
+            // Clear the dictionary
+            _spawnedSpeciesPerHabitat.Clear();
+        
+            Debug.Log($"[Species] After reset, habitat count: {_spawnedSpeciesPerHabitat.Count}");
+        }
     }
 }

@@ -17,8 +17,7 @@ namespace Code.Scripts.Level
         [SerializeField] private float minPlaneHeight = 2.11f;
         [SerializeField] private float maxPlaneHeight = 5.72f;
 
-        private Material _boxMaterial; // the box outside
-        // private Material _planeMaterial; // the plane inside the box fit foam and so on
+        private Material _boxMaterial;
 
         private float _minWaterLevel;
         private float _maxWaterLevel;
@@ -26,20 +25,16 @@ namespace Code.Scripts.Level
         
         private static readonly int Fill = Shader.PropertyToID("_Fill");
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             if (!waterBox || !waterPlane) return;
             
             // getting the materials
             _boxMaterial = waterBox.GetComponent<MeshRenderer>().material;
-            // _planeMaterial = waterPlane.GetComponent<MeshRenderer>().material;
             
             // setting min and max
-            //_minWaterLevel = GameManager.Instance.GetGwlNegThreshold();
             _minWaterLevel = 0;
-            //_maxWaterLevel = GameManager.Instance.GetGwlPosThreshold();
-            _maxWaterLevel = 100;
+            _maxWaterLevel = 85;
             _currentWaterLevel = GameManager.Instance.CurrentGwlPercentage;
             
             // first set the values and fills
@@ -47,14 +42,31 @@ namespace Code.Scripts.Level
             AdjustWaterPlaneHeight();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            if (WaterLevelChanged())
-            {
-                AdjustWaterBoxFill();
-                AdjustWaterPlaneHeight();
-            }
+            if (!WaterLevelChanged()) return;
+            
+            AdjustWaterBoxFill();
+            AdjustWaterPlaneHeight();
+        }
+
+        private void AdjustWaterBoxFill()
+        {
+            // Ensure that the current value is within the limits
+            var waterLevel = MathF.Round(GameManager.Instance.CurrentGwlPercentage, 2);
+            var progressValue = ValidateProgressValue(_minWaterLevel, _maxWaterLevel, waterLevel);
+
+            // Calculate the percentage
+            float percentage = (progressValue - _minWaterLevel) / (_maxWaterLevel - _minWaterLevel);
+
+            if (percentage > 1f) percentage = 1f;
+            
+            float fillValue = minFillHeight + percentage * (1 - minFillHeight);
+
+            fillValue = ValidateProgressValue(minFillHeight, 1, fillValue);
+            
+            // set the result
+            _boxMaterial.SetFloat(Fill, fillValue);
         }
 
         private void AdjustWaterPlaneHeight()
@@ -75,25 +87,6 @@ namespace Code.Scripts.Level
             var planePosition = waterPlane.transform.position;
             planePosition.y = newPlaneHeight - Math.Abs(waterPlane.transform.parent.position.y);
             waterPlane.transform.position = planePosition;
-        }
-
-        private void AdjustWaterBoxFill()
-        {
-            // Ensure that the current value is within the limits
-            var waterLevel = MathF.Round(GameManager.Instance.CurrentGwlPercentage, 2);
-            var progressValue = ValidateProgressValue(_minWaterLevel, _maxWaterLevel, waterLevel);
-
-            // Calculate the percentage
-            float percentage = (progressValue - _minWaterLevel) / (_maxWaterLevel - _minWaterLevel);
-
-            if (percentage > 1f) percentage = 1f;
-            
-            float fillValue = minFillHeight + percentage * (1 - minFillHeight);
-
-            fillValue = ValidateProgressValue(minFillHeight, 1, fillValue);
-            
-            // set the result
-            _boxMaterial.SetFloat(Fill, fillValue);
         }
 
         private bool WaterLevelChanged()

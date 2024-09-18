@@ -45,5 +45,11 @@ namespace Code.Scripts.QuestSystem
                 IsAchieved = false;
             }
         }
+        
+        public new void Reset()
+        {
+            base.Reset();
+            _largestArea = new List<Coordinate>();
+        }
     }
 }

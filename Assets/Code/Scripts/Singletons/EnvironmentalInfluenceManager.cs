@@ -29,6 +29,8 @@ namespace Code.Scripts.Singletons
         [SerializeField] private float mixedForestBaseInfluence = 0.3f;
         [SerializeField] private float forestNegativeBonus = -0.1f;
 
+        public bool CurrentInfluenceSign { get; private set; }
+
         private void Awake()
         {
             if (Instance == null)
@@ -59,7 +61,9 @@ namespace Code.Scripts.Singletons
             influenceChange = Mathf.Clamp(influenceChange, minInfluence, maxInfluence);
             influenceChange *= Mathf.Min(3, GridHelper.Instance.CountCorneredRiverTiles() * 0.3f + 1);
 
-            Debug.Log($"Total environmental influence: {influenceChange}");
+            CurrentInfluenceSign = influenceChange > 0;
+            
+            //Debug.Log($"Total environmental influence: {influenceChange}");
             return influenceChange;
         }
         
@@ -89,7 +93,7 @@ namespace Code.Scripts.Singletons
                 }
                 totalInfluence += clusterInfluence;
             }
-            Debug.Log($"Farmland influence: {totalInfluence}");
+            //Debug.Log($"Farmland influence: {totalInfluence}");
             return totalInfluence;
         }
 
@@ -106,7 +110,7 @@ namespace Code.Scripts.Singletons
                 }
                 totalInfluence += clusterInfluence;
             }
-            Debug.Log($"{forestType} influence: {totalInfluence}");
+            //Debug.Log($"{forestType} influence: {totalInfluence}");
             return totalInfluence;
         }
 

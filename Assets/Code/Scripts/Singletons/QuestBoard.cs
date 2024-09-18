@@ -216,5 +216,30 @@ namespace Code.Scripts.Singletons
         }
 
         #endregion
+
+        public void ResetAllQuests()
+        {
+            foreach (Quest quest in questList.quests)
+            {
+                switch (quest)
+                {
+                    case ReviveSpecies reviveSpecies:
+                        reviveSpecies.Reset();
+                        break;
+                    case CountPlacedBiome countPlacedBiome:
+                        countPlacedBiome.Reset();
+                        break;
+                    case CountZigzagRiverPresent countZigzagRiver:
+                        countZigzagRiver.Reset();
+                        break;
+                    case GetAreaSize getAreaSize:
+                        getAreaSize.Reset();
+                        break;
+                    default:
+                        quest.Reset();
+                        break;
+                }
+            }
+        }
     }
 }

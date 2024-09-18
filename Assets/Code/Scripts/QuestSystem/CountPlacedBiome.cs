@@ -15,5 +15,11 @@ namespace Code.Scripts.QuestSystem
             count = 0;
             isPersistAchievement = true; // since this quest must only be achieved once!
         }
+
+        public new void Reset()
+        {
+            base.Reset();
+            count = 0;
+        }
     }
 }

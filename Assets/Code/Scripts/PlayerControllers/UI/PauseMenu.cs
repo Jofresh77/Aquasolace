@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Code.Scripts.Enums;
 using Code.Scripts.QuestSystem.UI;
 using Code.Scripts.Singletons;
+using Code.Scripts.UI.GameEnd;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
@@ -89,7 +90,7 @@ namespace Code.Scripts.PlayerControllers.UI
         public void GamePause(InputAction.CallbackContext obj)
         {
             if (GameManager.Instance.IsQuestMenuOpened
-                || GameManager.Instance.IsGameEndStateOpened) return;
+                || GameManager.Instance.IsGameEndStateOpen) return;
 
             GameManager.Instance.IsPauseMenuOpened = !GameManager.Instance.IsPauseMenuOpened;
             GameManager.Instance.SetIsGamePaused(!GameManager.Instance.IsGamePaused);
@@ -126,6 +127,9 @@ namespace Code.Scripts.PlayerControllers.UI
         {
             Time.timeScale = 1;
             SoundManager.Instance.PlaySound(SoundType.PlayBtnClick);
+            
+            EmailCollector.CleanUpLevel();
+            
             PlayerPrefs.SetString("Scene to go to", "MainMenu");
             SceneManager.LoadScene("LoadingScene");
         }

@@ -48,7 +48,7 @@ namespace Code.Scripts.Singletons
         public bool IsGamePaused { get; private set; }
         public bool IsPauseMenuOpened { get; set; }
         public bool IsQuestMenuOpened { get; set; }
-        public bool IsGameEndStateOpened { get; set; }
+        public bool IsGameEndStateOpen { get; set; }
         public bool IsGameInTutorial { get; set; }
         public bool IsMouseOverUi { get; set; }
         public bool IsPaletteOpen { get; set; }
@@ -83,7 +83,7 @@ namespace Code.Scripts.Singletons
             IsGameWon = false;
             IsPauseMenuOpened = false;
             IsQuestMenuOpened = false;
-            IsGameEndStateOpened = false;
+            IsGameEndStateOpen = false;
             IsGameInTutorial = false;
             IsPaletteOpen = false;
 
@@ -156,10 +156,8 @@ namespace Code.Scripts.Singletons
 
         private void UpdateEnvironmentalConditions()
         {
-            Debug.Log("old: " + CurrentGwlPercentage);
             CurrentGwlPercentage +=
                 EnvironmentalInfluenceManager.Instance.CalculateEnvironmentalInfluence();
-            Debug.Log("new: " + CurrentGwlPercentage);
             CurrentGwlPercentage = Mathf.Clamp(CurrentGwlPercentage, 0f, 100f);
 
             QuestBoard.Instance.CheckProperEnvironmentAchievement();
@@ -259,7 +257,7 @@ namespace Code.Scripts.Singletons
             Time.timeScale = IsGamePaused ? 0 : 1;
         }
 
-        public bool ScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpened;
+        public bool ScreenOpen() => IsPauseMenuOpened || IsQuestMenuOpened || IsGameEndStateOpen;
 
         #endregion
 
