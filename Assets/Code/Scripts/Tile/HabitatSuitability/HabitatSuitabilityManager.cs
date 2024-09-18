@@ -16,7 +16,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
         private int _mapSize;
 
         private Coroutine _updateCoroutine;
-        
+
         public bool IsInit { get; private set; }
 
         private void Awake()
@@ -79,7 +79,8 @@ namespace Code.Scripts.Tile.HabitatSuitability
             }
         }
 
-        public List<List<Coordinate>> FindSuitableHabitats(Dictionary<Biome, int> biomeRequirements, int minTotalSize, float maxDistanceFromCenter, int maxAmountTile)
+        public List<List<Coordinate>> FindSuitableHabitats(Dictionary<Biome, int> biomeRequirements, int minTotalSize,
+            float maxDistanceFromCenter, int maxAmountTile)
         {
             bool[] visited = new bool[_mapSize * _mapSize];
             List<List<Coordinate>> suitableHabitats = new List<List<Coordinate>>();
@@ -88,7 +89,8 @@ namespace Code.Scripts.Tile.HabitatSuitability
             {
                 if (!visited[i] && biomeRequirements.ContainsKey(_biomeMap[i]))
                 {
-                    List<Coordinate> cluster = FloodFill(i, visited, biomeRequirements.Keys.ToHashSet(), maxDistanceFromCenter, maxAmountTile);
+                    List<Coordinate> cluster = FloodFill(i, visited, biomeRequirements.Keys.ToHashSet(),
+                        maxDistanceFromCenter, maxAmountTile);
                     if (SuitableHabitat(cluster, biomeRequirements) && cluster.Count >= minTotalSize)
                     {
                         suitableHabitats.Add(cluster);
@@ -99,7 +101,29 @@ namespace Code.Scripts.Tile.HabitatSuitability
             return MergeClosebyHabitats(suitableHabitats);
         }
 
-        private List<Coordinate> FloodFill(int startIndex, bool[] visited, HashSet<Biome> allowedBiomes,float maxDistanceFromCenter, int maxAmountTile)
+        public List<List<Coordinate>> AnalyzeMapConfigurations(Biome targetBiome, int minClusterSize)
+        {
+            bool[] visited = new bool[_mapSize * _mapSize];
+            List<List<Coordinate>> clusters = new List<List<Coordinate>>();
+
+            for (int i = 0; i < _biomeMap.Length; i++)
+            {
+                if (!visited[i] && _biomeMap[i] == targetBiome)
+                {
+                    List<Coordinate> cluster = FloodFill(i, visited, new HashSet<Biome> { targetBiome },
+                        float.MaxValue, int.MaxValue);
+                    if (cluster.Count >= minClusterSize)
+                    {
+                        clusters.Add(cluster);
+                    }
+                }
+            }
+
+            return clusters;
+        }
+
+        private List<Coordinate> FloodFill(int startIndex, bool[] visited, HashSet<Biome> allowedBiomes,
+            float maxDistanceFromCenter, int maxAmountTile)
         {
             List<Coordinate> cluster = new List<Coordinate>();
             Queue<int> queue = new Queue<int>();
@@ -133,7 +157,8 @@ namespace Code.Scripts.Tile.HabitatSuitability
             return cluster;
         }
 
-        private static bool WithinCentroidDistance(Coordinate coord, (float X, float Z) centroid, int clusterSize, float maxDistanceFromCenter)
+        private static bool WithinCentroidDistance(Coordinate coord, (float X, float Z) centroid, int clusterSize,
+            float maxDistanceFromCenter)
         {
             if (clusterSize == 0) return true;
 
@@ -238,7 +263,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
         {
             return (Mathf.Abs(coord1.X - coord2.X) + Mathf.Abs(coord1.Z - coord2.Z)) == 1;
         }
-        
+
         public int GetTotalBiomeArea(Biome biome)
         {
             int totalArea = 0;
@@ -249,6 +274,7 @@ namespace Code.Scripts.Tile.HabitatSuitability
                     totalArea++;
                 }
             }
+
             return totalArea;
         }
     }

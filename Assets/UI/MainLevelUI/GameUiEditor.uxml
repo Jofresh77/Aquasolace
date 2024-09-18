@@ -16,7 +16,7 @@
             <ui:Label tabindex="-1" text="March 2021" parse-escape-sequences="true" display-tooltip-when-elided="true" name="elapsedTimeLabel" enable-rich-text="true" style="margin-top: 4px; margin-right: 0; margin-left: 0; padding-right: 10px; font-size: 20px; -unity-font-style: bold; -unity-text-align: middle-center; -unity-text-outline-color: rgba(255, 255, 255, 0); letter-spacing: 1px; word-spacing: 1px; width: auto; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; color: rgb(255, 255, 255);" />
         </ui:GroupBox>
     </ui:VisualElement>
-    <ui:VisualElement name="Debug" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; display: flex; bottom: 0; position: absolute;">
+    <ui:VisualElement name="Debug" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; display: none; bottom: 0; position: absolute;">
         <ui:Label tabindex="-1" text="GWL Influence:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
         <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="gwlinf" style="color: rgb(255, 255, 255);" />
         <ui:Label tabindex="-1" text="Bonus:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />

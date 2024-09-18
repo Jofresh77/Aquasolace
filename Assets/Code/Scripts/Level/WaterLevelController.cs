@@ -23,6 +23,8 @@ namespace Code.Scripts.Level
         private float _minWaterLevel;
         private float _maxWaterLevel;
         private float _currentWaterLevel;
+        
+        private static readonly int Fill = Shader.PropertyToID("_Fill");
 
         // Start is called before the first frame update
         void Start()
@@ -34,9 +36,11 @@ namespace Code.Scripts.Level
             // _planeMaterial = waterPlane.GetComponent<MeshRenderer>().material;
             
             // setting min and max
-            _minWaterLevel = GameManager.Instance.GetGwlNegThreshold();
-            _maxWaterLevel = GameManager.Instance.GetGwlPosThreshold();
-            _currentWaterLevel = GameManager.Instance.GroundWaterLevel;
+            //_minWaterLevel = GameManager.Instance.GetGwlNegThreshold();
+            _minWaterLevel = 0;
+            //_maxWaterLevel = GameManager.Instance.GetGwlPosThreshold();
+            _maxWaterLevel = 100;
+            _currentWaterLevel = GameManager.Instance.CurrentGwlPercentage;
             
             // first set the values and fills
             AdjustWaterBoxFill();
@@ -56,8 +60,8 @@ namespace Code.Scripts.Level
         private void AdjustWaterPlaneHeight()
         {
             // Ensure that the current value is within the limits
-            var waterLevel = MathF.Round(GameManager.Instance.GroundWaterLevel, 2);
-            var progressValue = ValidateProgressValue(GameManager.Instance.GetGwlNegThreshold(), GameManager.Instance.GetGwlPosThreshold(), waterLevel);
+            var waterLevel = MathF.Round(GameManager.Instance.CurrentGwlPercentage, 2);
+            var progressValue = ValidateProgressValue(_minWaterLevel, _maxWaterLevel, waterLevel);
 
             // Calculate the percentage
             float percentage = (progressValue - _minWaterLevel) / (_maxWaterLevel - _minWaterLevel);
@@ -76,8 +80,8 @@ namespace Code.Scripts.Level
         private void AdjustWaterBoxFill()
         {
             // Ensure that the current value is within the limits
-            var waterLevel = MathF.Round(GameManager.Instance.GroundWaterLevel, 2);
-            var progressValue = ValidateProgressValue(GameManager.Instance.GetGwlNegThreshold(), GameManager.Instance.GetGwlPosThreshold(), waterLevel);
+            var waterLevel = MathF.Round(GameManager.Instance.CurrentGwlPercentage, 2);
+            var progressValue = ValidateProgressValue(_minWaterLevel, _maxWaterLevel, waterLevel);
 
             // Calculate the percentage
             float percentage = (progressValue - _minWaterLevel) / (_maxWaterLevel - _minWaterLevel);
@@ -89,13 +93,13 @@ namespace Code.Scripts.Level
             fillValue = ValidateProgressValue(minFillHeight, 1, fillValue);
             
             // set the result
-            _boxMaterial.SetFloat("_Fill", fillValue);
+            _boxMaterial.SetFloat(Fill, fillValue);
         }
 
         private bool WaterLevelChanged()
         {
-            var waterLevel = MathF.Round(GameManager.Instance.GroundWaterLevel, 0);
-            var progressValue = ValidateProgressValue(GameManager.Instance.GetGwlNegThreshold(), GameManager.Instance.GetGwlPosThreshold(), waterLevel);
+            var waterLevel = MathF.Round(GameManager.Instance.CurrentGwlPercentage, 0);
+            var progressValue = ValidateProgressValue(_minWaterLevel, _maxWaterLevel, waterLevel);
 
             if (Math.Abs(_currentWaterLevel - progressValue) > 0.1f)
             {

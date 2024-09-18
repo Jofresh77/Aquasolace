@@ -108,8 +108,8 @@ namespace Code.Scripts.Singletons
 
         public void CheckProperEnvironmentAchievement()
         {
-            _properEnvironmentQuest.IsAchieved = GameManager.Instance.GroundWaterLevel >=
-                                                 GameManager.Instance.GetGwlPosThreshold() * 0.6;
+            _properEnvironmentQuest.IsAchieved =
+                GameManager.Instance.CurrentGwlPercentage >= _properEnvironmentQuest.gwlThreshold;
 
             UpdateQuestBoardStatus(_properEnvironmentQuest.questName, _properEnvironmentQuest.IsAchieved,
                 _properEnvironmentQuest.IsRewarded);

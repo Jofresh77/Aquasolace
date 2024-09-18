@@ -31,21 +31,21 @@ namespace Code.Scripts.UI.HUD
 
         private void UpdateWaterLevel()
         {
-            float currWaterLevel = Mathf.Round(GameManager.Instance.GroundWaterLevel);
-            float percentage = CalculatePercentage(GameManager.Instance.GetGwlNegThreshold(), 
+            float currWaterLevel = Mathf.Round(GameManager.Instance.CurrentGwlPercentage);
+            /*float percentage = CalculatePercentage(GameManager.Instance.GetGwlNegThreshold(), 
                 GameManager.Instance.GetGwlPosThreshold(), 
-                currWaterLevel);
+                currWaterLevel);*/
         
-            _waterDropProgressBar.SetPercentage(percentage / 100f);
+            _waterDropProgressBar.SetPercentage(currWaterLevel / 100f);
         }
 
-        private float CalculatePercentage(float minValue, float maxValue, float currentValue)
+        /*private float CalculatePercentage(float minValue, float maxValue, float currentValue)
         {
             var clampedValue = Mathf.Clamp(currentValue, minValue, maxValue);
             var percentage = Mathf.InverseLerp(minValue, maxValue, clampedValue) * 100f;
 
             return percentage;
-        }
+        }*/
 
         private void SetTimerText()
         {

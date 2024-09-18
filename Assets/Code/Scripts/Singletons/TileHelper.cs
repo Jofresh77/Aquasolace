@@ -473,7 +473,7 @@ namespace Code.Scripts.Singletons
                 placedTile++;
                 
                 GameManager.Instance.RemainingResources[GameManager.Instance.GetSelectedBiome()]--;
-                GameManager.Instance.SetGwlInfluence(PlacedTileEnvironmentInfluence(neighborTile));
+                //GameManager.Instance.SetGwlInfluence(PlacedTileEnvironmentInfluence(neighborTile));
 
                 tile.previewTile = null;
 
@@ -503,6 +503,7 @@ namespace Code.Scripts.Singletons
                 );
             }
 
+            //EnvironmentalInfluenceManager.Instance.CalculateEnvironmentalInfluence();
             GameManager.Instance.UpdateResourcesCountUI();
             QuestBoard.Instance.UpdateQuestList();
             HabitatSuitabilityManager.UpdateAllHabitats();

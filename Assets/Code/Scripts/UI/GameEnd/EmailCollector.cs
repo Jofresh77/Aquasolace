@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Net.Mail;
-using Code.Scripts.QuestSystem;
 using Code.Scripts.Singletons;
-using Code.Scripts.Tile;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Networking;
@@ -29,10 +27,10 @@ namespace Code.Scripts.UI.GameEnd
 
         //private const string kReceiverEmailAddress = "me@gmail.com";
 
-        private const string kGFormBaseURL =
+        private const string KgFormBaseURL =
             "https://docs.google.com/forms/d/e/1FAIpQLSeamoa9Y5zvGoUJiwtSXiqSzpUcH1KTvehMPr9bSVfGFRoDRw/";
 
-        private const string kGFormEntryID = "entry.745963594";
+        private const string KgFormEntryID = "entry.745963594";
 
         public GameState state;
 
@@ -73,7 +71,7 @@ namespace Code.Scripts.UI.GameEnd
             // string email = emailInputField.text;
             Debug.Log("Attempting to validate email: " + txtData.text);
             string emailAddress = txtData.text;
-            if (IsValid(emailAddress) && IsValidRegex(emailAddress))
+            if (Valid(emailAddress) && ValidRegex(emailAddress))
             {
                 Debug.Log("Email is valid");
                 Debug.Log("Checkbox status before validation: " + checkbox.isOn);
@@ -108,8 +106,8 @@ namespace Code.Scripts.UI.GameEnd
             string jsonData = isString ? dataContainer.ToString() : JsonUtility.ToJson(dataContainer);
 
             WWWForm form = new WWWForm();
-            form.AddField(kGFormEntryID, jsonData);
-            string urlGFormResponse = kGFormBaseURL + "formResponse";
+            form.AddField(KgFormEntryID, jsonData);
+            string urlGFormResponse = KgFormBaseURL + "formResponse";
             using (UnityWebRequest www = UnityWebRequest.Post(urlGFormResponse, form))
             {
                 yield return www.SendWebRequest();
@@ -124,7 +122,7 @@ namespace Code.Scripts.UI.GameEnd
             Application.OpenURL(linkNoSpaces);
         }*/
 
-        private bool IsValid(string emailaddress)
+        private static bool Valid(string emailaddress)
         {
             try
             {
@@ -138,7 +136,7 @@ namespace Code.Scripts.UI.GameEnd
             }
         }
 
-        private bool IsValidRegex(string email)
+        private static bool ValidRegex(string email)
         {
             if (email == null)
             {
@@ -176,8 +174,7 @@ namespace Code.Scripts.UI.GameEnd
         private void StateCycle(GameState selectedState)
         {
             GameManager.Instance.SetIsGamePaused(false);
-            GameManager.Instance.IsGameContinue = true;
-            
+
             switch (selectedState)
             {
                 case GameState.Continue:

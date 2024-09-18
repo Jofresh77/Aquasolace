@@ -124,7 +124,7 @@ namespace Code.Scripts.UI.HUD
                 UpdateTileResourceCount(tile, biome);
             }
             
-            UpdateDebugLabels();
+            //UpdateDebugLabels();
         }
 
         private void UpdateTileResourceCount(VisualElement tile, Biome biome)
@@ -133,21 +133,10 @@ namespace Code.Scripts.UI.HUD
             label.text = $"{GameManager.Instance.RemainingResources[biome]}";
         }
         
-        private void UpdateDebugLabels()
+        /*private void UpdateDebugLabels()
         {
             _gwlInf.text = $"{GameManager.Instance.GetGwlInfluenceFinal()}";
             _tempInf.text = $"{GameManager.Instance.GetCorneredRiversInfluence()}";
-        }
-       
-        /*private void UpdateBiomeNameLabels()
-        {
-            foreach (var tile in _tiles)
-            {
-                Enum.TryParse<Biome>(tile.name, out var biome);
-                var biomeNameLabel = tile.Q<Label>("BiomeNameLabel");
-                biomeNameLabel.text =
-                    LocalizationSettings.StringDatabase.GetLocalizedString("Biomes", biome.ToString());
-            }
         }*/
 
         #endregion
